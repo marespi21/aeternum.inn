@@ -31,7 +31,7 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
     location: v.location,
     coverUrl: v.cover_url,
     youtubeUrl: v.youtube_url,
-    youtubeId: v.youtube_url?.split('v=')[1] || v.youtube_url?.split('youtu.be/')[1] || '',
+    youtubeId: (v.youtube_url?.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]{11})/) || [])[1] || '',
     releaseDate: v.created_at || new Date().toISOString(),
     description: '',
     bpm: 125,
