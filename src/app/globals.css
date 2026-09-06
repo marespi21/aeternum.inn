@@ -1,26 +1,153 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #050505;
+    --foreground: #f4f4f5;
+    --card: #0a0a0a;
+    --card-foreground: #fafafa;
+    --border: #1f1f23;
+    --accent: #ffffff;
+    --muted: #71717a;
+    --neon-green: #22c55e;
+    --neon-cyan: #06b6d4;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    background-color: #050505;
+    color: #f4f4f5;
+    font-family: var(--font-body), "Rajdhani", sans-serif;
+  }
+
+  body {
+    background-color: #050505;
+    color: #f4f4f5;
+    overflow-x: hidden;
+    font-family: var(--font-body), "Rajdhani", sans-serif;
+    selection-background-color: #ffffff;
+    selection-color: #000000;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-title {
+    font-family: var(--font-title), "Orbitron", sans-serif;
+    letter-spacing: 0.05em;
+  }
+
+  p, span, a, input, select, textarea, button, .font-body {
+    font-family: var(--font-body), "Rajdhani", sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono-tech), "Chakra Petch", monospace;
+  }
+
+  ::selection {
+    background-color: #ffffff;
+    color: #000000;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom Film Grain Overlay */
+.grain-bg {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  content: "";
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 99;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Glowing text and borders */
+.glow-text {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 0 40px rgba(255, 255, 255, 0.2);
+}
+
+.glow-box {
+  box-shadow: 0 0 30px -5px rgba(255, 255, 255, 0.07);
+}
+
+.glow-box-green {
+  box-shadow: 0 0 20px -2px rgba(34, 197, 94, 0.35);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Animated Equalizer Bars */
+@keyframes equalizer-1 {
+  0%, 100% { height: 4px; }
+  50% { height: 18px; }
+}
+@keyframes equalizer-2 {
+  0%, 100% { height: 16px; }
+  50% { height: 6px; }
+}
+@keyframes equalizer-3 {
+  0%, 100% { height: 8px; }
+  50% { height: 20px; }
+}
+@keyframes equalizer-4 {
+  0%, 100% { height: 19px; }
+  50% { height: 7px; }
+}
+@keyframes equalizer-5 {
+  0%, 100% { height: 6px; }
+  50% { height: 15px; }
+}
+
+.animate-eq-1 { animation: equalizer-1 0.75s ease-in-out infinite; }
+.animate-eq-2 { animation: equalizer-2 0.6s ease-in-out infinite 0.1s; }
+.animate-eq-3 { animation: equalizer-3 0.9s ease-in-out infinite 0.2s; }
+.animate-eq-4 { animation: equalizer-4 0.65s ease-in-out infinite 0.15s; }
+.animate-eq-5 { animation: equalizer-5 0.8s ease-in-out infinite 0.25s; }
+
+/* Infinite Marquee Keyframe */
+@keyframes marquee-scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Grid overlay background */
+.cyber-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
