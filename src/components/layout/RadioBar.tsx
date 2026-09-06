@@ -14,6 +14,9 @@ import {
 import { AudioEqualizer } from "@/components/ui/AudioEqualizer";
 import ReactPlayer from 'react-player';
 
+// Avoid strict TS errors with ReactPlayer props in Next.js 15+
+const Player = ReactPlayer as any;
+
 export function RadioBar({ track }: { track?: any }) {
   const currentTrack = track || null;
   const [isPlaying, setIsPlaying] = useState(false);
@@ -101,8 +104,7 @@ export function RadioBar({ track }: { track?: any }) {
 
   return (
     <>
-      {/* @ts-ignore */}
-      <ReactPlayer
+      <Player
         url={currentTrack.audio_url}
         playing={isPlaying}
         volume={volume}
@@ -115,7 +117,7 @@ export function RadioBar({ track }: { track?: any }) {
           soundcloud: {
             options: { auto_play: false }
           }
-        } as any}
+        }}
       />
 
       <div className="fixed bottom-0 left-0 right-0 z-50 px-2 sm:px-4 pb-2 sm:pb-3 pointer-events-none">
