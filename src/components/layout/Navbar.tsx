@@ -53,7 +53,7 @@ export function Navbar() {
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="text-lg sm:text-xl font-black tracking-[0.25em] text-white font-mono uppercase group-hover:text-zinc-200 transition-colors">
+                <span className="text-lg sm:text-xl font-black tracking-[0.25em] text-white font-title uppercase group-hover:text-zinc-200 transition-colors">
                   AETERNUM
                 </span>
                 <span className="text-[10px] tracking-widest text-zinc-500 font-mono hidden sm:inline">
@@ -132,7 +132,7 @@ export function Navbar() {
                   />
                 </div>
                 <div>
-                  <div className="text-lg font-bold font-mono text-white tracking-widest">
+                  <div className="text-lg font-bold font-title text-white tracking-widest">
                     AETERNUM
                   </div>
                   <div className="text-[10px] font-mono text-emerald-400">

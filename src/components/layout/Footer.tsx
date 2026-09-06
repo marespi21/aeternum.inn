@@ -30,7 +30,7 @@ export function Footer() {
     {
       name: "SoundCloud",
       handle: "Aeternum Radio",
-      url: "https://soundcloud.com",
+      url: "https://soundcloud.com/aeternum-inn",
       icon: <SoundcloudIcon className="w-5 h-5" />,
     },
     {
@@ -65,7 +65,7 @@ export function Footer() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <span className="text-2xl font-black font-mono tracking-[0.25em] text-white uppercase inline-block">
+              <span className="text-2xl font-black font-title tracking-[0.25em] text-white uppercase inline-block">
                 AETERNUM
               </span>
             </a>

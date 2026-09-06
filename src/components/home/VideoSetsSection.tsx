@@ -69,7 +69,7 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
   const filterTabs: { label: string; value: FilterType; count: number }[] = [
     { label: "TODOS LOS SETS", value: "ALL", count: mappedVideos.length },
     {
-      label: "CAPÍTULOS",
+      label: "CAPITULOS",
       value: "CAPITULOS",
       count: mappedVideos.filter((i) => i.category === "CAPITULOS").length,
     },
@@ -98,7 +98,7 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
             CANAL OFICIAL // YOUTUBE @AETERNUM-INN
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-mono uppercase tracking-tight text-white">
-            LUGARES DE PELÍCULA
+            LUGARES DE PELICULA
           </h2>
         </div>
 
@@ -183,7 +183,7 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
                 {/* Chapter or Badge */}
                 {item.chapterNumber && (
                   <div className="absolute top-3 left-3 bg-black/85 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/20 text-[10px] font-mono font-bold text-white tracking-widest">
-                    CAPÍTULO 0{item.chapterNumber}
+                    CAPITULO 0{item.chapterNumber}
                   </div>
                 )}
 

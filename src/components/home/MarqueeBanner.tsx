@@ -6,11 +6,11 @@ import { Disc, Radio, Zap } from "lucide-react";
 export function MarqueeBanner() {
   const marqueeItems = [
     "POTENCIAMOS DJS NACIONALES",
-    "RAVES EN LUGARES DE PELÍCULA",
-    "MOMENTOS PARA LA ETERNIDAD",
-    "MEDELLÍN UNDERGROUND",
-    "SONIDO FUNKTION-ONE",
-    "TRANSMISIÓN 24/7",
+    "RAVES EN LUGARES DE PELICULA",
+    "HARD TECHNO",
+    "MEDELLIN UNDERGROUND",
+    "MOMENTOS ETERNOS",
+    "TRANSMISION 24/7",
     "AETERNUM SESSIONS",
   ];
 

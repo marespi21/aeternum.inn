@@ -65,7 +65,7 @@ export function GuestListSection() {
             </div>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black font-mono text-white tracking-tight uppercase leading-tight">
-              ÚNETE A LA GUEST LIST
+              UNETE A LA GUEST LIST
             </h2>
 
             <p className="text-sm sm:text-base text-zinc-300 font-sans leading-relaxed">

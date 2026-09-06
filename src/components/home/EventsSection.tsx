@@ -25,7 +25,7 @@ export async function EventsSection() {
             TEMPORADA 2026 // LINEUP OFICIAL
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-mono uppercase tracking-tight text-white">
-            PRÓXIMOS EVENTOS
+            PROXIMOS EVENTOS
           </h2>
         </div>
         <p className="max-w-md text-xs sm:text-sm font-sans text-zinc-400 leading-relaxed">

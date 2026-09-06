@@ -1,23 +1,18 @@
 import type { Metadata } from "next";
-import { Orbitron, Rajdhani, Chakra_Petch } from "next/font/google";
+import { Montserrat } from "next/font/google";
+import localFont from 'next/font/local'
 import "./globals.css";
 
-const fontTitle = Orbitron({
-  variable: "--font-title",
+const fontOmniumAlt = Montserrat({
+  variable: "--font-omnium-alt",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
-const fontBody = Rajdhani({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-const fontMonoTech = Chakra_Petch({
-  variable: "--font-mono-tech",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+const fontTitle = localFont({
+  src: '../../public/fonts/sloth_rounded.ttf',
+  variable: '--font-title',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -57,9 +52,9 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${fontTitle.variable} ${fontBody.variable} ${fontMonoTech.variable} dark h-full antialiased scroll-smooth`}
+      className={`${fontTitle.variable} ${fontOmniumAlt.variable} dark h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-[#050505] text-[#f4f4f5] font-body selection:bg-white selection:text-black">
+      <body className="min-h-full flex flex-col bg-[#050505] text-[#f4f4f5] selection:bg-white selection:text-black">
         <div className="noise-overlay" aria-hidden="true" />
         {children}
       </body>

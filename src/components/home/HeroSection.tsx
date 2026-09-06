@@ -14,7 +14,7 @@ export function HeroSection() {
     },
     {
       pilar: "02",
-      title: "RAVES EN LUGARES DE PELÍCULA",
+      title: "RAVES EN LUGARES DE PELICULA",
       desc: "Locaciones secretas, plantas industriales y miradores.",
     },
     {
@@ -34,7 +34,7 @@ export function HeroSection() {
         <div className="w-full flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-zinc-500 uppercase tracking-widest border-b border-white/10 pb-2.5 mb-6 sm:mb-8">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-zinc-300">MEDELLÍN // 6.2442° N, 75.5812° W</span>
+            <span className="text-zinc-300">MEDELLIN // 6.2442° N, 75.5812° W</span>
           </div>
           <div className="flex items-center gap-2 sm:gap-4 text-zinc-400">
             <span>SEASON 2026</span>
@@ -56,8 +56,8 @@ export function HeroSection() {
             <span>UNDERGROUND TECHNO & AUDIOVISUAL PLATFORM</span>
           </div>
 
-          {/* ZERO-PADDING TIGHT LOGO DISPLAY */}
-          <div className="relative w-full max-w-[260px] xs:max-w-[320px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[560px] aspect-[506/419] flex items-center justify-center my-0 select-none">
+          {/* Main Logo */}
+          <div className="relative w-full max-w-[200px] sm:max-w-[260px] md:max-w-[320px] aspect-square mx-auto mb-6 sm:mb-8 drop-shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:scale-105 transition-transform duration-700 ease-out flex items-center justify-center my-0 select-none">
             <Image
               src="/images/logo.png"
               alt="AETERNUM"
@@ -73,9 +73,6 @@ export function HeroSection() {
             <p className="text-xs sm:text-sm md:text-base text-zinc-300 font-body tracking-wide font-normal leading-relaxed">
               Colectivo y plataforma de música electrónica en Medellín. Transformamos espacios icónicos en templos sónicos para la eternidad.
             </p>
-            <div className="text-[10px] sm:text-[11px] font-title text-zinc-500 uppercase tracking-widest">
-              POTENCIAMOS DJS NACIONALES · RAVES DE PELÍCULA · MOMENTOS ETERNOS
-            </div>
           </div>
 
           {/* Compact CTA Buttons */}

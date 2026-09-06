@@ -15,6 +15,12 @@
   --color-emerald-600: #608a2c;
   --color-emerald-900: #1c280d;
   --color-emerald-950: #0e1406;
+
+  /* Mapeo de la tipografía personalizada para que las clases de Tailwind la reconozcan */
+  --font-title: var(--font-title), "Orbitron", sans-serif;
+  --font-mono: var(--font-omnium-alt), monospace;
+  --font-body: var(--font-omnium-alt), sans-serif;
+  --font-sans: var(--font-omnium-alt), sans-serif;
 }
 
 @layer base {
@@ -39,29 +45,30 @@
     color-scheme: dark;
     background-color: #050505;
     color: #f4f4f5;
-    font-family: var(--font-body), "Rajdhani", sans-serif;
+    font-family: var(--font-omnium-alt), sans-serif;
   }
 
   body {
     background-color: #050505;
     color: #f4f4f5;
     overflow-x: hidden;
-    font-family: var(--font-body), "Rajdhani", sans-serif;
+    font-family: var(--font-omnium-alt), sans-serif;
     selection-background-color: #ffffff;
     selection-color: #000000;
   }
 
-  h1, h2, h3, h4, h5, h6, .font-title {
-    font-family: var(--font-title), "Orbitron", sans-serif;
+  h1, h2, .font-title {
+    font-family: var(--font-title) !important;
     letter-spacing: 0.05em;
   }
 
-  p, span, a, input, select, textarea, button, .font-body {
-    font-family: var(--font-body), "Rajdhani", sans-serif;
+  h3, h4, h5, h6 {
+    font-family: var(--font-omnium-alt) !important;
+    letter-spacing: 0.05em;
   }
 
-  code, pre, .font-mono {
-    font-family: var(--font-mono-tech), "Chakra Petch", monospace;
+  body, p, span, a, input, select, textarea, button, .font-body, .font-mono {
+    font-family: var(--font-omnium-alt), sans-serif;
   }
 
   ::selection {

@@ -24,13 +24,13 @@ export function ManifestoSection() {
   const tabs: { key: TabKey; label: string; num: string; icon: React.ReactNode }[] = [
     {
       key: "quienes-somos",
-      label: "¿QUIÉNES SOMOS?",
+      label: "¿QUIENES SOMOS?",
       num: "01",
       icon: <Compass className="w-3.5 h-3.5" />,
     },
     {
       key: "mision-vision",
-      label: "MISIÓN & VISIÓN",
+      label: "MISION & VISION",
       num: "02",
       icon: <Target className="w-3.5 h-3.5" />,
     },
@@ -42,7 +42,7 @@ export function ManifestoSection() {
     },
     {
       key: "unicos",
-      label: "¿QUÉ NOS HACE ÚNICOS?",
+      label: "¿QUE NOS HACE UNICOS?",
       num: "04",
       icon: <Sparkles className="w-3.5 h-3.5" />,
     },
@@ -73,7 +73,7 @@ export function ManifestoSection() {
           </div>
 
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-black font-title tracking-wide text-white uppercase leading-tight">
-            nuestra razón de ser
+            nuestra razon de ser
           </h2>
 
           <blockquote className="text-base sm:text-xl font-body text-zinc-300 font-normal leading-relaxed">
@@ -119,7 +119,7 @@ export function ManifestoSection() {
                       <Compass className="w-4 h-4 text-emerald-400" />
                       El Colectivo
                     </span>
-                    <span className="text-[10px] font-mono text-zinc-500">MEDELLÍN UNDERGROUND</span>
+                    <span className="text-[10px] font-mono text-zinc-500">MEDELLIN UNDERGROUND</span>
                   </div>
 
                   <p className="text-sm sm:text-base text-zinc-300 font-body leading-relaxed">
@@ -148,7 +148,7 @@ export function ManifestoSection() {
                   <div className="p-6 rounded-2xl bg-black/90 border border-white/15 space-y-2.5 shadow-xl">
                     <span className="text-xs font-title font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
                       <Target className="w-4 h-4" />
-                      Misión
+                      MISION
                     </span>
                     <p className="text-xs sm:text-sm text-zinc-300 font-body leading-relaxed">
                       Impulsar el talento local a través de <span className="text-white font-semibold">live sets profesionales</span>, embellecer espacios patrimoniales y resignificar la cultura electrónica como arte, pasión y expresión colectiva.
@@ -159,7 +159,7 @@ export function ManifestoSection() {
                   <div className="p-6 rounded-2xl bg-black/90 border border-white/15 space-y-2.5 shadow-xl">
                     <span className="text-xs font-title font-bold text-white uppercase tracking-wider flex items-center gap-2">
                       <Globe className="w-4 h-4" />
-                      Visión
+                      VISION
                     </span>
                     <p className="text-xs sm:text-sm text-zinc-300 font-body leading-relaxed">
                       Consolidarnos como <span className="text-white font-semibold">plataforma referente en Latinoamérica</span> para DJs emergentes, visibilizando sus proyectos y proyectando a Colombia como escenario vivo de música ante el mundo.
@@ -216,7 +216,7 @@ export function ManifestoSection() {
                     },
                     {
                       icon: <Globe className="w-4 h-4 text-emerald-400" />,
-                      title: "Proyección Global",
+                      title: "PROYECCION GLOBAL",
                       desc: "Conexión directa con audiencias y festivales de LATAM y el mundo.",
                     },
                     {
@@ -259,7 +259,7 @@ export function ManifestoSection() {
             “Esto apenas comienza...”
           </h3>
           <p className="text-xs sm:text-sm text-zinc-400 font-body max-w-md mx-auto leading-relaxed">
-            Únete a la comunidad Aeternum y vive la música electrónica como nunca antes.
+            Unete a la comunidad Aeternum y vive la música electrónica como nunca antes.
           </p>
           <div className="pt-2 flex items-center justify-center gap-3">
             <a

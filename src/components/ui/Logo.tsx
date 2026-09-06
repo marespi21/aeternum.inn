@@ -38,7 +38,7 @@ export function Logo({
             priority
           />
         </div>
-        <span className="text-xs font-mono font-bold tracking-[0.2em] text-white uppercase group-hover:text-zinc-200 transition-colors">
+        <span className="text-xs font-title font-bold tracking-[0.2em] text-white uppercase group-hover:text-zinc-200 transition-colors">
           AETERNUM
         </span>
       </div>
