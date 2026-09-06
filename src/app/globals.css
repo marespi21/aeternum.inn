@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+@theme {
+  /* AETERNUM Brand Pink (#EE3485) mapped to red for global replacement */
+  --color-red-300: #f199c2;
+  --color-red-400: #eb4d94;
+  --color-red-500: #ee3485;
+  --color-red-600: #d62f78;
+  --color-red-700: #b32764;
+  
+  /* AETERNUM Brand Green (#89C53F) mapped to emerald for global replacement */
+  --color-emerald-300: #acd785;
+  --color-emerald-400: #89c53f;
+  --color-emerald-500: #7bb139;
+  --color-emerald-600: #608a2c;
+  --color-emerald-900: #1c280d;
+  --color-emerald-950: #0e1406;
+}
+
 @layer base {
   :root {
     --background: #050505;
@@ -82,7 +99,11 @@
 }
 
 .glow-box-green {
-  box-shadow: 0 0 20px -2px rgba(34, 197, 94, 0.35);
+  box-shadow: 0 0 20px -2px rgba(137, 197, 63, 0.35);
+}
+
+.glow-box-pink {
+  box-shadow: 0 0 20px -2px rgba(238, 52, 133, 0.35);
 }
 
 /* Custom Scrollbar */
