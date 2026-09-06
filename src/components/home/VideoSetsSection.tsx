@@ -23,6 +23,19 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
   const [selectedSet, setSelectedSet] = useState<VideoSetItem | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
+  // Robust YouTube ID extractor
+  const getYoutubeId = (url: string | undefined | null) => {
+    if (!url) return '';
+    const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    if (match && match[2].length === 11) {
+      return match[2];
+    }
+    // Fallback for just the ID being pasted or other formats
+    const backupMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+    return backupMatch ? backupMatch[1] : '';
+  };
+
   // Mapeamos los datos de la base de datos al formato del frontend
   const mappedVideos = initialVideos.map(v => ({
     id: v.id,
@@ -31,7 +44,7 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
     location: v.location,
     coverUrl: v.cover_url,
     youtubeUrl: v.youtube_url,
-    youtubeId: (v.youtube_url?.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]{11})/) || [])[1] || '',
+    youtubeId: getYoutubeId(v.youtube_url),
     releaseDate: v.created_at || new Date().toISOString(),
     description: '',
     bpm: 125,

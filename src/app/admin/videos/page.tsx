@@ -23,9 +23,16 @@ export default async function AdminVideosPage() {
     const supabase = await createClient()
     const youtube_url = formData.get('youtube_url') as string
     
-    // Extract YouTube ID
-    const match = youtube_url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)
-    const youtubeId = match ? match[1] : null
+    // Robust YouTube ID extraction
+    const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    let youtubeId = ''
+    const match = youtube_url.match(regExp);
+    if (match && match[2].length === 11) {
+      youtubeId = match[2];
+    } else {
+      const backupMatch = youtube_url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+      youtubeId = backupMatch ? backupMatch[1] : '';
+    }
     const cover_url = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg` : ''
 
     await supabase.from('videos').insert({
