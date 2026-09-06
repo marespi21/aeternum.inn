@@ -101,6 +101,7 @@ export function RadioBar({ track }: { track?: any }) {
 
   return (
     <>
+      {/* @ts-ignore */}
       <ReactPlayer
         url={currentTrack.audio_url}
         playing={isPlaying}
