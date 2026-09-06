@@ -58,11 +58,20 @@ export default function AdminLayout({
           <div className="md:mt-4 hidden md:block">
             <Link 
               href="/admin/scanner" 
-              className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-white hover:bg-zinc-200 transition-colors text-black font-bold font-mono text-sm"
+              className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-white hover:bg-zinc-200 transition-colors text-black font-bold font-mono text-sm mb-2"
             >
               <QrCode className="w-4 h-4" />
               <span>Escáner QR</span>
             </Link>
+            
+            <form action="/auth/signout" method="post">
+              <button 
+                type="submit"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 transition-colors text-red-500 font-bold font-mono text-sm"
+              >
+                Cerrar Sesión
+              </button>
+            </form>
           </div>
         </nav>
       </aside>
