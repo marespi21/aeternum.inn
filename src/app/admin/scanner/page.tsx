@@ -65,7 +65,7 @@ export default function ScannerPage() {
     const { data: ticket, error } = await supabase
       .from('tickets')
       .select('*, profiles(email), events(title)')
-      .eq('qr_code', qrId)
+      .eq('id', qrId)
       .single()
 
     if (error || !ticket) {
@@ -152,7 +152,15 @@ export default function ScannerPage() {
               <h2 className="text-2xl font-bold text-green-500">{message}</h2>
               {ticketData && (
                 <div className="text-left bg-black/50 p-4 rounded-xl space-y-2 text-sm">
-                  <p><span className="text-zinc-500">Usuario:</span> {ticketData.profiles?.email}</p>
+                  {ticketData.receipt_url?.startsWith('manual_sale:') ? (
+                    <>
+                      <p><span className="text-zinc-500">Cliente (Manual):</span> {ticketData.receipt_url.split(':')[1]}</p>
+                      <p><span className="text-zinc-500">Nombre:</span> {ticketData.receipt_url.split(':')[2]}</p>
+                      <p><span className="text-zinc-500">Método de Pago:</span> <span className="capitalize">{ticketData.receipt_url.split(':')[3] || 'Efectivo'}</span></p>
+                    </>
+                  ) : (
+                    <p><span className="text-zinc-500">Usuario:</span> {ticketData.profiles?.email}</p>
+                  )}
                   <p><span className="text-zinc-500">Evento:</span> {ticketData.events?.title}</p>
                 </div>
               )}
@@ -172,7 +180,15 @@ export default function ScannerPage() {
               {ticketData && (
                 <div className="text-left bg-black/50 p-4 rounded-xl space-y-2 text-sm">
                   <p><span className="text-zinc-500">Estado actual:</span> {ticketData.status}</p>
-                  <p><span className="text-zinc-500">Usuario:</span> {ticketData.profiles?.email}</p>
+                  {ticketData.receipt_url?.startsWith('manual_sale:') ? (
+                    <>
+                      <p><span className="text-zinc-500">Cliente (Manual):</span> {ticketData.receipt_url.split(':')[1]}</p>
+                      <p><span className="text-zinc-500">Nombre:</span> {ticketData.receipt_url.split(':')[2]}</p>
+                      <p><span className="text-zinc-500">Método de Pago:</span> <span className="capitalize">{ticketData.receipt_url.split(':')[3] || 'Efectivo'}</span></p>
+                    </>
+                  ) : (
+                    <p><span className="text-zinc-500">Usuario:</span> {ticketData.profiles?.email}</p>
+                  )}
                 </div>
               )}
               <button 

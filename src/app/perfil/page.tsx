@@ -21,11 +21,13 @@ export default async function PerfilPage() {
     .single()
     
   const isAdmin = profile?.role === 'ADMIN'
-  const { data: tickets } = await supabase
+  const { data: ticketsData } = await supabase
     .from('tickets')
     .select('*, events(*)')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
+
+  const tickets = (ticketsData || []).filter(t => !t.receipt_url?.startsWith('manual_sale:'))
 
   return (
     <div className="relative min-h-screen bg-[#050505] text-[#f4f4f5] pt-24 px-4 sm:px-8 selection:bg-white selection:text-black">
@@ -70,14 +72,14 @@ export default async function PerfilPage() {
             Tus Entradas
           </h2>
           
-          {tickets?.length === 0 ? (
+          {tickets.length === 0 ? (
             <div className="text-center p-12 border border-white/10 border-dashed rounded-2xl bg-white/[0.02]">
               <p className="text-zinc-500 font-mono">No tienes entradas adquiridas.</p>
-              <a href="/eventos" className="inline-block mt-4 text-emerald-400 hover:text-emerald-300 font-bold font-mono uppercase">Ver Eventos →</a>
+              <a href="/#eventos" className="inline-block mt-4 text-emerald-400 hover:text-emerald-300 font-bold font-mono uppercase">Ver Eventos →</a>
             </div>
           ) : (
             <div className="grid sm:grid-cols-2 gap-6">
-              {tickets?.map((ticket: any) => (
+              {tickets.map((ticket: any) => (
                 <div key={ticket.id} className="bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.02)]">
                   <div className="p-6">
                     <div className="flex justify-between items-start mb-4">
@@ -98,7 +100,14 @@ export default async function PerfilPage() {
                     <div className="space-y-3 text-sm text-zinc-400 font-mono">
                       <p>• {new Date(ticket.events?.date).toLocaleDateString()}</p>
                       <p>• Medellín (Secret Location)</p>
-                      <p>• Valor: ${ticket.events?.price.toLocaleString('es-CO')} COP</p>
+                      <p>
+                        • Tipo: <span className="text-emerald-400 font-bold">{ticket.ticket_type === 'EARLY' ? 'EARLY (Antes de la 1AM)' : 'ANYTIME'}</span>
+                      </p>
+                      <p>
+                        • Valor: ${ticket.ticket_type === 'EARLY' 
+                          ? ticket.events?.early_price?.toLocaleString('es-CO') 
+                          : ticket.events?.anytime_price?.toLocaleString('es-CO')} COP
+                      </p>
                     </div>
 
                     {/* Si está aprobado, mostrar botón para ver QR */}

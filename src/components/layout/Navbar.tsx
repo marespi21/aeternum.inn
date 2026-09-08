@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Radio, Menu, X, ArrowUpRight, Sparkles } from "lucide-react";
 
-export function Navbar() {
+export function Navbar({ user }: { user: any }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -19,12 +19,12 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: "EVENTOS", href: "#eventos" },
-    { label: "VIDEO SETS", href: "#video-sets" },
-    { label: "ARTISTAS", href: "#artistas" },
-    { label: "GALERÍA", href: "#galeria" },
-    { label: "SOBRE NOSOTROS", href: "#manifiesto" },
-    { label: "COMUNIDAD", href: "#comunidad" },
+    { label: "EVENTOS", href: "/#eventos" },
+    { label: "VIDEO SETS", href: "/#video-sets" },
+    { label: "ARTISTAS", href: "/#artistas" },
+    { label: "GALERIA", href: "/#galeria" },
+    { label: "SOBRE NOSOTROS", href: "/#manifiesto" },
+    { label: "COMUNIDAD", href: "/#comunidad" },
   ];
 
   return (
@@ -40,7 +40,7 @@ export function Navbar() {
           {/* Brand Logo & On Air Badge */}
           <div className="flex items-center gap-4 sm:gap-6">
             <a
-              href="#"
+              href="/"
               className="group flex items-center gap-3 transition-all"
             >
               {/* Official Icon Emblem */}
@@ -84,10 +84,10 @@ export function Navbar() {
           {/* Action Button & Mobile Toggle */}
           <div className="flex items-center gap-3">
             <Link
-              href="/login"
+              href={user ? "/perfil" : "/login"}
               className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-zinc-200 transition-all shadow-md hover:shadow-white/10"
             >
-              <span>Ingresar</span>
+              <span>{user ? "Mi Perfil" : "Ingresar"}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
 
@@ -148,14 +148,23 @@ export function Navbar() {
 
             <div className="space-y-4 pt-8">
               <Link
-                href="/login"
+                href={user ? "/perfil" : "/login"}
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-white text-black font-mono text-sm font-bold uppercase tracking-widest"
               >
                 <Sparkles className="w-4 h-4" />
-                Ingresar a mi cuenta
+                {user ? "Ir a mi perfil" : "Ingresar a mi cuenta"}
               </Link>
-              <div className="text-center text-xs font-mono text-zinc-600">
+              
+              {user && (
+                <form action="/auth/signout" method="post" className="w-full">
+                  <button type="submit" className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 font-mono text-sm font-bold uppercase tracking-widest">
+                    Cerrar Sesión
+                  </button>
+                </form>
+              )}
+
+              <div className="text-center text-xs font-mono text-zinc-600 mt-4">
                 MEDELLÍN, COLOMBIA · AETERNUM SOCIETY
               </div>
             </div>

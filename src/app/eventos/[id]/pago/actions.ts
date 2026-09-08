@@ -3,16 +3,45 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 
-export async function uploadReceiptAndReserve(eventId: string, receipt_url: string) {
+export async function uploadReceiptAndReserve(formData: FormData) {
   const supabase = await createClient()
 
   // 1. Verificar usuario
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  if (!receipt_url) {
+  const eventId = formData.get('eventId') as string
+  const receiptUrl = formData.get('receiptUrl') as string
+  const ticketType = formData.get('ticketType') as string || 'ANYTIME'
+  const docType = formData.get('docType') as string
+  const docNumber = formData.get('docNumber') as string
+  const firstName = formData.get('firstName') as string
+  const lastName = formData.get('lastName') as string
+  const phoneCode = formData.get('phoneCode') as string
+  const phoneNumber = formData.get('phoneNumber') as string
+
+  if (!receiptUrl) {
     return { error: 'Debes subir un comprobante válido' }
   }
+  
+  if (!docNumber || !firstName || !lastName || !phoneNumber) {
+    return { error: 'Datos personales incompletos' }
+  }
+
+  // 2. Actualizar metadata del usuario con todos sus datos personales
+  await supabase.auth.updateUser({
+    data: { 
+      document_type: docType,
+      document_number: docNumber,
+      first_name: firstName,
+      last_name: lastName,
+      phone_code: phoneCode,
+      phone_number: phoneNumber,
+      // Keep old fields for backward compatibility if needed elsewhere
+      full_name: `${firstName} ${lastName}`.trim(),
+      whatsapp: `${phoneCode} ${phoneNumber}`.trim()
+    }
+  })
 
   // 4. Crear el Ticket en estado PENDING
   const { error: dbError } = await supabase
@@ -20,7 +49,8 @@ export async function uploadReceiptAndReserve(eventId: string, receipt_url: stri
     .insert({
       user_id: user.id,
       event_id: eventId,
-      receipt_url,
+      receipt_url: receiptUrl,
+      ticket_type: ticketType,
       status: 'PENDING'
     })
 

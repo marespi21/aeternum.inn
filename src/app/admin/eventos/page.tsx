@@ -32,7 +32,8 @@ export default async function AdminEventosPage() {
     
     const title = formData.get('title') as string
     const date = formData.get('date') as string
-    const price = formData.get('price') as string
+    const early_price = formData.get('early_price') as string
+    const anytime_price = formData.get('anytime_price') as string
     const capacity = formData.get('capacity') as string
     const flyerUrl = formData.get('flyerUrl') as string
     const description = formData.get('description') as string
@@ -40,7 +41,8 @@ export default async function AdminEventosPage() {
     const { error } = await supabase.from('events').insert({
       title,
       date: new Date(date).toISOString(),
-      price: Number(price),
+      early_price: Number(early_price),
+      anytime_price: Number(anytime_price),
       total_tickets: Number(capacity),
       flyer_url: flyerUrl || null,
       description: description || null
@@ -94,7 +96,8 @@ export default async function AdminEventosPage() {
                     <h3 className="font-bold font-mono text-lg text-emerald-400 uppercase">{event.title}</h3>
                     <div className="flex flex-wrap gap-2 text-xs text-zinc-400 font-mono">
                       <span className="bg-white/5 px-2 py-1 rounded">{new Date(event.date).toLocaleDateString()}</span>
-                      <span className="bg-white/5 px-2 py-1 rounded">${event.price.toLocaleString()}</span>
+                      <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early: ${(event.early_price || 0).toLocaleString()}</span>
+                      <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Anytime: ${(event.anytime_price || 0).toLocaleString()}</span>
                       <span className="bg-white/5 px-2 py-1 rounded">Aforo: {event.total_tickets}</span>
                     </div>
                     {event.description && (

@@ -61,20 +61,9 @@ export function HeroSection() {
       <MarqueeBanner />
 
       {/* Info & Pillars Section (Below the fold) */}
-      <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-black overflow-hidden border-t border-white/10">
+      <section className="relative w-full pt-16 pb-8 sm:pt-24 sm:pb-12 px-4 sm:px-6 lg:px-8 bg-black overflow-hidden border-t border-white/10">
         <div className="relative z-10 max-w-5xl mx-auto w-full flex flex-col items-center">
-          {/* Top Mini Bar */}
-          <div className="w-full flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-zinc-300 uppercase tracking-widest border-b border-white/20 pb-2.5 mb-10 sm:mb-12">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-white drop-shadow-md">MEDELLIN // 6.2442° N, 75.5812° W</span>
-            </div>
-            <div className="flex items-center gap-2 sm:gap-4 text-zinc-200">
-              <span className="drop-shadow-md">SEASON 2026</span>
-              <span className="text-white/50">//</span>
-              <span className="text-emerald-400 font-semibold drop-shadow-md">24/7 ON AIR</span>
-            </div>
-          </div>
+
 
           {/* Central Compact Block */}
           <motion.div
@@ -97,24 +86,7 @@ export function HeroSection() {
               </p>
             </div>
 
-            {/* Compact CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-4 w-full max-w-sm sm:max-w-md">
-              <a
-                href="#eventos"
-                className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white text-black font-title text-xs font-bold uppercase tracking-widest hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] group"
-              >
-                <Disc className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" />
-                <span>Explorar Eventos</span>
-              </a>
 
-              <a
-                href="#guest-list"
-                className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white border border-white/20 hover:border-white/30 font-title text-xs font-semibold uppercase tracking-widest transition-all"
-              >
-                <Sparkles className="w-4 h-4 text-emerald-400" />
-                <span>Guest List VIP</span>
-              </a>
-            </div>
           </motion.div>
 
           {/* 3 Pillars Grid */}

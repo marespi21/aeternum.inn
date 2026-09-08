@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, Suspense } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Mail, Lock, AlertCircle } from 'lucide-react'
-import { login, signup } from './actions'
+import { ArrowLeft, Mail, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react'
+import Link from 'next/link'
+import { resetPassword } from './actions'
 import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
-function LoginContent() {
-  const [isLogin, setIsLogin] = useState(true)
+function RecuperarContent() {
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
   const message = searchParams.get('message')
@@ -24,25 +24,35 @@ function LoginContent() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
+        <Link href="/login" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors mb-8">
+          <ArrowLeft className="w-4 h-4" />
+          Volver al inicio de sesión
+        </Link>
+
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold tracking-tighter mb-2">AETERNUM</h1>
-          <p className="text-zinc-400">
-            {isLogin ? 'Bienvenido de vuelta.' : 'Únete a la lista de invitados.'}
+          <h1 className="text-3xl font-bold tracking-tighter mb-2">Recuperar Contraseña</h1>
+          <p className="text-zinc-400 text-sm">
+            Ingresa tu correo y te enviaremos un enlace para crear una nueva contraseña.
           </p>
         </div>
 
         <div className="bg-zinc-900/50 backdrop-blur-xl border border-zinc-800 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
           
-          {error && (
+          {error === 'true' && message && (
             <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg flex items-start gap-3 text-red-400 text-sm">
               <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
               <p>{message}</p>
             </div>
           )}
 
-          <form action={isLogin ? login : signup} className="space-y-6">
-            <input type="hidden" name="nextUrl" value={searchParams.get('next') || '/perfil'} />
-            
+          {error === 'false' && message && (
+            <div className="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/50 rounded-lg flex items-start gap-3 text-emerald-400 text-sm">
+              <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
+              <p>{message}</p>
+            </div>
+          )}
+
+          <form action={resetPassword} className="space-y-6">
             <div className="space-y-2">
               <label className="text-sm font-medium text-zinc-300">Correo Electrónico</label>
               <div className="relative">
@@ -57,55 +67,24 @@ function LoginContent() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <label className="text-sm font-medium text-zinc-300">Contraseña</label>
-                {isLogin && (
-                  <a href="/recuperar" className="text-xs text-zinc-400 hover:text-emerald-400 transition-colors">
-                    ¿Olvidaste tu contraseña?
-                  </a>
-                )}
-              </div>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
-                <input 
-                  type="password" 
-                  name="password"
-                  required
-                  placeholder="••••••••"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
-                />
-              </div>
-            </div>
-
             <button 
               type="submit"
               className="w-full bg-white text-black font-semibold rounded-xl py-3 flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors active:scale-[0.98]"
             >
-              {isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}
+              Enviar Enlace
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
-
-          <div className="mt-6 text-center">
-            <button 
-              onClick={() => setIsLogin(!isLogin)}
-              type="button"
-              className="text-sm text-zinc-400 hover:text-white transition-colors"
-            >
-              {isLogin ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión'}
-            </button>
-          </div>
         </div>
       </motion.div>
     </div>
   )
 }
 
-export default function LoginPage() {
+export default function RecuperarPage() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center text-white">Cargando...</div>}>
-      <LoginContent />
+      <RecuperarContent />
     </Suspense>
   )
 }

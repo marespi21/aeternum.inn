@@ -4,21 +4,22 @@ import { CheckoutForm } from './CheckoutForm'
 import { Calendar, MapPin, Loader2 } from 'lucide-react'
 import { CloudinaryUpload } from '@/components/ui/CloudinaryUpload'
 
-export default async function CheckoutPage({ params }: { params: { id: string } }) {
+export default async function CheckoutPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient()
+  const { id } = await params
 
   // 1. Verificar sesión
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
     // Si no está logueado, redirigimos a login con un parámetro para que regrese
-    redirect(`/login?next=/eventos/${params.id}/pago`)
+    redirect(`/login?next=/eventos/${id}/pago`)
   }
 
   // 2. Traer info del evento
   const { data: event, error } = await supabase
     .from('events')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (error || !event) {
@@ -59,7 +60,10 @@ export default async function CheckoutPage({ params }: { params: { id: string } 
         <CheckoutForm 
           eventId={event.id} 
           eventTitle={event.title}
-          eventPrice={event.price}
+          earlyPrice={event.early_price}
+          anytimePrice={event.anytime_price}
+          userEmail={user.email || ''}
+          userMetadata={user.user_metadata || {}}
         />
         
       </div>

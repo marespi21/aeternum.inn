@@ -44,11 +44,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+import { Navbar } from "@/components/layout/Navbar";
+import { createClient } from "@/utils/supabase/server";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   return (
     <html
       lang="es"
@@ -56,6 +62,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[#050505] text-[#f4f4f5] selection:bg-white selection:text-black">
         <div className="noise-overlay" aria-hidden="true" />
+        <Navbar user={user} />
         {children}
       </body>
     </html>
