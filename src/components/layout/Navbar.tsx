@@ -21,8 +21,10 @@ export function Navbar() {
   const navLinks = [
     { label: "EVENTOS", href: "#eventos" },
     { label: "VIDEO SETS", href: "#video-sets" },
+    { label: "ARTISTAS", href: "#artistas" },
+    { label: "GALERÍA", href: "#galeria" },
     { label: "SOBRE NOSOTROS", href: "#manifiesto" },
-    { label: "GUEST LIST", href: "#guest-list" },
+    { label: "COMUNIDAD", href: "#comunidad" },
   ];
 
   return (
@@ -62,17 +64,7 @@ export function Navbar() {
               </div>
             </a>
 
-            {/* Live Stream 24/7 Indicator (Desktop) */}
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-950/80 border border-white/10 text-[11px] font-mono text-zinc-300">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-              </span>
-              <span className="tracking-wider text-zinc-400">
-                LIVE STREAM <span className="text-zinc-600">//</span>{" "}
-                <span className="text-emerald-400 font-semibold">24/7 ON AIR</span>
-              </span>
-            </div>
+
           </div>
 
           {/* Desktop Nav Links */}
@@ -135,9 +127,7 @@ export function Navbar() {
                   <div className="text-lg font-bold font-title text-white tracking-widest">
                     AETERNUM
                   </div>
-                  <div className="text-[10px] font-mono text-emerald-400">
-                    LIVE STREAM // 24/7 ON AIR
-                  </div>
+
                 </div>
               </div>
 

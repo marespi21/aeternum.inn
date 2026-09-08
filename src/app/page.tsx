@@ -28,7 +28,6 @@ export default async function Home() {
       {/* Main Sections */}
       <main className="flex-1 flex flex-col">
         <HeroSection />
-        <MarqueeBanner />
         <EventsSection />
         <VideoSetsWrapper />
         <ManifestoSection />

@@ -49,7 +49,22 @@ export function Footer() {
 
   return (
     <footer className="relative bg-black border-t border-white/10 pt-16 pb-28 sm:pb-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="max-w-7xl mx-auto w-full space-y-12">
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src="/videos/footer-bg.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-transparent" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto w-full space-y-12">
         {/* Top Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
           {/* Brand & Mission */}

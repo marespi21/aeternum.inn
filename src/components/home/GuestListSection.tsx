@@ -50,7 +50,7 @@ export function GuestListSection() {
   };
 
   return (
-    <section id="guest-list" className="py-24 sm:py-36 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+    <section id="comunidad" className="py-24 sm:py-36 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
       <div className="relative rounded-3xl bg-zinc-950 border border-white/15 p-6 sm:p-12 md:p-16 overflow-hidden shadow-2xl">
         {/* Glow ambient background inside card */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-white/[0.03] rounded-full blur-3xl pointer-events-none" />
@@ -65,7 +65,7 @@ export function GuestListSection() {
             </div>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black font-mono text-white tracking-tight uppercase leading-tight">
-              UNETE A LA GUEST LIST
+              UNETE A LA COMUNIDAD
             </h2>
 
             <p className="text-sm sm:text-base text-zinc-300 font-sans leading-relaxed">

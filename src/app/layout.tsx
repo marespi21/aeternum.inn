@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AETERNUM // Medellín Underground Techno",
     description:
-      "Potenciamos DJs nacionales · Raves en lugares de película · Momentos para la eternidad",
+      "Potenciamos DJs nacionales · Raves en lugares inéditos · Momentos para la eternidad",
     type: "website",
     locale: "es_CO",
     url: "https://aeternum.inn",
