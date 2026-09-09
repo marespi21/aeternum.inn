@@ -1,129 +1,191 @@
-import { createClient } from "@/utils/supabase/server";
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft, PlaySquare, Headphones, Camera, Video, Sparkles } from "lucide-react";
+import React from 'react'
+import { createClient } from '@/utils/supabase/server'
+import { notFound } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowLeft, Camera, MonitorPlay, Headphones, Sparkles, Play } from 'lucide-react'
 
-export default async function ArtistProfilePage({ params }: { params: { id: string } }) {
-  const supabase = await createClient();
+// Icon components mapping
+const SocialIcon = ({ type, className }: { type: string, className?: string }) => {
+  switch (type) {
+    case 'instagram':
+      return <Camera className={className} />
+    case 'youtube':
+      return <MonitorPlay className={className} />
+    case 'soundcloud':
+      return <Headphones className={className} />
+    default:
+      return null
+  }
+}
 
-  const [{ data: artist }, { data: gallery }, { data: otherArtists }] = await Promise.all([
-    supabase.from("artists").select("*").eq("id", params.id).single(),
-    supabase.from("artist_gallery").select("*").eq("artist_id", params.id).order("created_at", { ascending: false }),
-    supabase.from("artists").select("*").neq("id", params.id).limit(4)
-  ]);
+// Helper to extract YouTube video ID and create embed URL
+const getYouTubeEmbedUrl = (url: string) => {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
+}
 
-  if (!artist) {
-    notFound();
+export default async function ArtistProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const supabase = await createClient()
+
+  // 1. Fetch Artist Data
+  const { data: artist, error: artistError } = await supabase
+    .from('artists')
+    .select('*')
+    .eq('id', id)
+    .single()
+
+  if (artistError || !artist) {
+    notFound()
   }
 
+  // 2. Fetch Artist Gallery
+  const { data: gallery } = await supabase
+    .from('artist_gallery')
+    .select('*')
+    .eq('artist_id', id)
+    .order('created_at', { ascending: false })
+
+  const embedUrl = artist.youtube_url ? getYouTubeEmbedUrl(artist.youtube_url) : null;
+
   return (
-    <div className="min-h-screen bg-[#050505] text-[#f4f4f5]">
-      {/* Hero Section */}
-      <div className="relative h-[60vh] sm:h-[70vh] w-full">
-        <img 
-          src={artist.image_url} 
-          alt={artist.name} 
-          className="w-full h-full object-cover filter grayscale-[30%]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent" />
+    <div className="min-h-screen bg-black pt-28 pb-24 px-4 sm:px-6 lg:px-8 relative">
+      {/* Ambient background glow */}
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-5xl mx-auto space-y-16 relative z-10">
         
-        <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-12 md:p-24 max-w-7xl mx-auto">
-          <Link
-            href="/#artistas"
-            className="inline-flex items-center gap-2 text-zinc-400 hover:text-white font-mono text-sm mb-6 sm:mb-10 transition-colors w-fit"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Volver a Artistas</span>
-          </Link>
-          
-          <h1 className="text-6xl sm:text-8xl font-black font-mono uppercase tracking-tighter text-white drop-shadow-2xl">
-            {artist.name}
-          </h1>
-          
-          {/* Social Links */}
-          <div className="flex items-center gap-6 mt-8">
-            {artist.youtube_url && (
-              <a href={artist.youtube_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/20 hover:bg-white hover:text-black transition-all">
-                <PlaySquare className="w-5 h-5" />
-              </a>
-            )}
-            {artist.soundcloud_url && (
-              <a href={artist.soundcloud_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/20 hover:bg-white hover:text-black transition-all">
-                <Headphones className="w-5 h-5" />
-              </a>
-            )}
-            {artist.instagram_url && (
-              <a href={artist.instagram_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/20 hover:bg-white hover:text-black transition-all">
-                <Camera className="w-5 h-5" />
-              </a>
-            )}
+        {/* Navigation */}
+        <Link href="/#artistas" className="inline-flex items-center gap-2 text-zinc-400 hover:text-emerald-400 font-mono text-sm uppercase transition-colors">
+          <ArrowLeft className="w-4 h-4" /> Volver a los artistas
+        </Link>
+
+        {/* 
+          MAIN CARD 
+        */}
+        <div className="bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 rounded-[2rem] overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.03)]">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
+            
+            {/* Left: Artist Image */}
+            <div className="md:col-span-5 relative aspect-[4/5] md:aspect-auto h-full w-full bg-zinc-900 border-r border-white/10">
+              <Image
+                src={artist.image_url}
+                alt={artist.name}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover filter grayscale hover:grayscale-0 transition-all duration-700"
+                priority
+              />
+            </div>
+
+            {/* Right: Info */}
+            <div className="md:col-span-7 p-8 sm:p-12 lg:p-16 flex flex-col justify-center">
+              
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-4">
+                <Sparkles className="w-4 h-4" />
+                AETERNUM ROSTER
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-title uppercase tracking-tighter text-white mb-8">
+                {artist.name}
+              </h1>
+
+              {/* Biography */}
+              {artist.bio ? (
+                <div className="text-zinc-300 font-sans text-sm sm:text-base leading-relaxed whitespace-pre-wrap mb-10">
+                  {artist.bio}
+                </div>
+              ) : (
+                <div className="text-zinc-500 font-mono text-sm mb-10 italic">
+                  Sin descripción disponible.
+                </div>
+              )}
+
+              {/* Social Links */}
+              <div className="mt-auto">
+                <p className="text-xs font-mono uppercase text-zinc-500 mb-4 tracking-widest border-b border-white/10 pb-2">
+                  Conectar con el artista
+                </p>
+                <div className="flex items-center gap-4">
+                  {artist.instagram_url && (
+                    <a href={artist.instagram_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-zinc-400 hover:text-white hover:bg-white/10 transition-all group">
+                      <SocialIcon type="instagram" className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                      <span className="font-mono text-xs uppercase">Instagram</span>
+                    </a>
+                  )}
+                  {artist.soundcloud_url && (
+                    <a href={artist.soundcloud_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-zinc-400 hover:text-orange-400 hover:bg-orange-500/10 hover:border-orange-500/20 transition-all group">
+                      <SocialIcon type="soundcloud" className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                      <span className="font-mono text-xs uppercase">SoundCloud</span>
+                    </a>
+                  )}
+                  {artist.youtube_url && !embedUrl && (
+                    <a href={artist.youtube_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-zinc-400 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/20 transition-all group">
+                      <SocialIcon type="youtube" className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                      <span className="font-mono text-xs uppercase">YouTube</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+              
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-12 md:px-24 py-16 sm:py-24">
-        {/* Bio Section */}
-        {artist.bio && (
-          <div className="max-w-3xl mb-24">
-            <h2 className="text-emerald-400 font-mono text-xs uppercase tracking-widest mb-4">Biografía</h2>
-            <p className="text-zinc-300 font-sans text-lg sm:text-xl leading-relaxed">
-              {artist.bio}
-            </p>
+        {/* 
+          LIVE SET SECTION (Embed)
+        */}
+        {embedUrl && (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold font-mono uppercase text-white tracking-widest flex items-center gap-3">
+              <Play className="w-6 h-6 text-emerald-500" />
+              Live Set // Video
+            </h2>
+            <div className="relative w-full aspect-video rounded-3xl overflow-hidden bg-zinc-900 border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+              <iframe 
+                src={embedUrl} 
+                title={`${artist.name} Live Set`} 
+                className="absolute top-0 left-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowFullScreen
+              ></iframe>
+            </div>
           </div>
         )}
 
-        {/* Exclusive Event Gallery */}
+        {/* 
+          GALLERY SECTION
+        */}
         {gallery && gallery.length > 0 && (
-          <div className="mb-32">
-            <h2 className="text-3xl font-black font-mono uppercase tracking-tight text-white mb-10 flex items-center gap-3">
-              <Camera className="text-emerald-400" />
-              <span>Memorias del Evento</span>
+          <div className="space-y-8 pt-8 border-t border-white/10">
+            <h2 className="text-2xl font-bold font-mono uppercase text-white tracking-widest text-center">
+              Momentos // {artist.name}
             </h2>
             
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-              {gallery.map((item) => (
-                <div key={item.id} className="break-inside-avoid relative group rounded-xl overflow-hidden bg-zinc-900 border border-white/5">
-                  {item.type === 'video' ? (
-                    <video src={item.url} className="w-full h-auto" muted loop autoPlay playsInline />
-                  ) : (
-                    <img src={item.url} alt={`${artist.name} evento`} className="w-full h-auto object-cover" loading="lazy" />
-                  )}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                    {item.type === 'video' ? <Video className="w-8 h-8 text-white/50" /> : <Sparkles className="w-8 h-8 text-white/50" />}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {gallery.map((item, index) => (
+                <div key={item.id} className="relative aspect-square rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 group cursor-pointer">
+                  <Image
+                    src={item.url}
+                    alt={`${artist.name} gallery image ${index + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                    <Camera className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500" />
                   </div>
                 </div>
               ))}
             </div>
           </div>
         )}
-
-        {/* More Artists Section */}
-        {otherArtists && otherArtists.length > 0 && (
-          <div className="border-t border-white/10 pt-24">
-            <div className="flex items-end justify-between mb-10">
-              <h2 className="text-2xl sm:text-3xl font-black font-mono uppercase tracking-tight text-white">
-                Descubre Más Artistas
-              </h2>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {otherArtists.map((other) => (
-                <Link
-                  key={other.id}
-                  href={`/artistas/${other.id}`}
-                  className="group block relative aspect-square rounded-2xl overflow-hidden bg-zinc-900 border border-white/10"
-                >
-                  <img src={other.image_url} alt={other.name} className="w-full h-full object-cover filter grayscale-[50%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-xl font-bold font-mono text-white truncate group-hover:text-emerald-400 transition-colors">{other.name}</h3>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+        
       </div>
     </div>
-  );
+  )
 }

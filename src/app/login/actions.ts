@@ -42,6 +42,8 @@ export async function signup(formData: FormData) {
 
   const email = formData.get('email') as string
   const password = formData.get('password') as string
+  const phone = formData.get('phone') as string
+  const fullName = formData.get('fullName') as string
 
   // Secure Password Validation
   if (password.length < 8) {
@@ -56,7 +58,7 @@ export async function signup(formData: FormData) {
 
   const data = { email, password }
 
-  const { error } = await supabase.auth.signUp(data)
+  const { data: authData, error } = await supabase.auth.signUp(data)
 
   if (error) {
     let errorMessage = 'Error al crear la cuenta'
@@ -67,6 +69,17 @@ export async function signup(formData: FormData) {
     }
     
     redirect(`/login?error=true&message=${encodeURIComponent(errorMessage)}`)
+  }
+
+  // Update profile with phone number and full name if user was created
+  if (authData?.user) {
+    await supabase.from('profiles').upsert({
+      id: authData.user.id,
+      email: email,
+      phone: phone || null,
+      full_name: fullName || null,
+      role: 'USER'
+    }, { onConflict: 'id' })
   }
 
   const nextUrl = formData.get('nextUrl') as string || '/perfil'

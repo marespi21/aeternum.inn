@@ -34,6 +34,7 @@ export function Logo({
             src="/images/logo.png"
             alt="Aeternum Logo"
             fill
+            sizes="40px"
             className="object-cover scale-125"
             priority
           />
@@ -58,6 +59,7 @@ export function Logo({
           src="/images/logo.png"
           alt="Aeternum Logo"
           fill
+          sizes="(max-width: 768px) 100px, 150px"
           className="object-contain"
           priority
         />

@@ -9,6 +9,7 @@ export async function GallerySection() {
   const { data: items } = await supabase
     .from("gallery")
     .select("*")
+    .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false })
     .limit(5); // The accordion looks best with ~5 items
 
@@ -30,7 +31,7 @@ export async function GallerySection() {
   }));
 
   return (
-    <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <section id="experiencia" className="py-24 sm:py-36 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 border-b border-white/10 pb-6">
         <div>

@@ -63,7 +63,9 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col bg-[#050505] text-[#f4f4f5] selection:bg-white selection:text-black">
         <div className="noise-overlay" aria-hidden="true" />
         <Navbar user={user} />
-        {children}
+        <main className="flex-1 pb-24 md:pb-20">
+          {children}
+        </main>
       </body>
     </html>
   );

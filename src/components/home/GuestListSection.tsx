@@ -58,7 +58,7 @@ export function GuestListSection() {
             </div>
 
             <Link
-              href="/login"
+              href="/login?mode=signup"
               className="inline-flex px-8 py-3.5 rounded-full bg-white text-black font-mono text-[11px] font-bold uppercase tracking-widest hover:scale-105 hover:bg-zinc-200 transition-all items-center justify-center gap-2 shadow-lg hover:shadow-white/20"
             >
               <span>Registrarme Ahora</span>

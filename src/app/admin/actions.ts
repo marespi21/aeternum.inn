@@ -52,7 +52,9 @@ export async function createManualTicket(formData: FormData) {
   const eventId = formData.get('eventId') as string
   const guestEmail = formData.get('guestEmail') as string
   const guestName = formData.get('guestName') as string
+  const guestPhone = formData.get('guestPhone') as string
   const paymentMethod = formData.get('paymentMethod') as string
+  const ticketType = formData.get('ticketType') as string || 'ANYTIME'
   const supabase = await createClient()
 
   // Verify auth
@@ -67,8 +69,9 @@ export async function createManualTicket(formData: FormData) {
   const { data: ticket, error } = await supabase.from('tickets').insert({
     user_id: user.id,
     event_id: eventId,
+    ticket_type: ticketType,
     status: 'APPROVED', // Pre-approved since it's a direct sale
-    receipt_url: `manual_sale:${guestEmail}:${guestName || 'Sin Nombre'}:${paymentMethod}`
+    receipt_url: `manual_sale:${guestEmail}:${guestName || 'Sin Nombre'}:${paymentMethod}:${guestPhone || 'Sin Teléfono'}`
   }).select('id').single()
 
   if (error || !ticket) {

@@ -29,7 +29,7 @@ export default async function AdminDashboard() {
   // 3. Fetch All Tickets to calculate stats per event
   const { data: allTickets } = await supabase
     .from('tickets')
-    .select('id, event_id, status')
+    .select('id, event_id, status, ticket_type')
     
   const tickets = allTickets || []
 
@@ -50,9 +50,14 @@ export default async function AdminDashboard() {
             </h1>
             <p className="text-zinc-400 mt-1 font-mono text-sm">Resumen financiero y gestión por evento</p>
           </div>
-          <Link href="/admin/eventos" className="px-5 py-2.5 bg-white text-black font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-zinc-200 transition-colors">
-            Crear Evento Nuevo
-          </Link>
+          <div className="flex gap-4">
+            <Link href="/admin/finanzas" className="px-5 py-2.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-emerald-500/20 transition-colors">
+              Finanzas Globales
+            </Link>
+            <Link href="/admin/eventos" className="px-5 py-2.5 bg-white text-black font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-zinc-200 transition-colors">
+              Crear Evento Nuevo
+            </Link>
+          </div>
         </div>
 
         {/* Global Status Cards */}
@@ -86,8 +91,14 @@ export default async function AdminDashboard() {
               {events.map((event) => {
                 const eventTickets = tickets.filter(t => t.event_id === event.id)
                 const pendingCount = eventTickets.filter(t => t.status === 'PENDING').length
-                const approvedCount = eventTickets.filter(t => t.status === 'APPROVED' || t.status === 'USED').length
-                const income = approvedCount * event.price
+                
+                // Calculate income properly based on ticket type
+                const approvedTickets = eventTickets.filter(t => t.status === 'APPROVED' || t.status === 'USED')
+                const approvedCount = approvedTickets.length
+                const income = approvedTickets.reduce((acc, t) => {
+                  return acc + (t.ticket_type === 'EARLY' ? event.early_price : event.anytime_price);
+                }, 0)
+                
                 const dateFormatted = new Date(event.date).toLocaleDateString('es-CO', { month: 'short', day: 'numeric', year: 'numeric' })
                 
                 return (

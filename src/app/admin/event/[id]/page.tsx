@@ -42,16 +42,18 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
   // 3. Fetch Tickets for THIS event
   const { data: tickets } = await supabase
     .from('tickets')
-    .select('*, profiles(email)')
+    .select('*, profiles(email, phone, full_name)')
     .eq('event_id', id)
     .order('created_at', { ascending: false })
 
-  const pendingTickets = tickets?.filter(t => t.status === 'PENDING') || []
-  const historicalTickets = tickets?.filter(t => t.status !== 'PENDING') || []
-
+  // 4. Fetch the active prices for the tickets based on event price
   const formattedDate = new Date(event.date).toLocaleDateString('es-CO', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   })
+
+  // Separate tickets
+  const pendingTickets = tickets?.filter(t => t.status === 'PENDING') || []
+  const historicalTickets = tickets?.filter(t => t.status !== 'PENDING') || []
 
   return (
     <div className="p-4 sm:p-8 relative z-10">
@@ -66,10 +68,16 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
             <h1 className="text-3xl font-bold font-mono tracking-tighter text-emerald-400 uppercase">
               {event.title}
             </h1>
-            <p className="text-zinc-400 mt-1 font-mono text-sm capitalize">{formattedDate} · Precio: ${event.price.toLocaleString()}</p>
-          </div>            <div className="bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-center">
-             <p className="text-xs text-zinc-500 font-mono uppercase">Pendientes</p>
-             <p className="text-2xl font-bold text-yellow-400 font-mono">{pendingTickets.length}</p>
+            <p className="text-zinc-400 mt-1 font-mono text-sm capitalize">{formattedDate} · Early: ${event.early_price?.toLocaleString()} / Anytime: ${event.anytime_price?.toLocaleString()}</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href={`/admin/event/${id}/finanzas`} className="px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-colors">
+              P&G y Finanzas
+            </Link>
+            <div className="bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-center">
+              <p className="text-xs text-zinc-500 font-mono uppercase">Pendientes</p>
+              <p className="text-2xl font-bold text-yellow-400 font-mono">{pendingTickets.length}</p>
+            </div>
           </div>
         </div>
 
@@ -81,25 +89,36 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
           <p className="text-sm text-zinc-400 mb-6 font-mono">
             Vende una boleta manualmente. El cliente no necesita cuenta; se le generará el código QR y se enviará directamente a su correo.
           </p>
-          <form action={createManualTicket} className="grid sm:grid-cols-4 gap-4 items-end">
+          <form action={createManualTicket} className="grid sm:grid-cols-6 gap-4 items-end">
             <input type="hidden" name="eventId" value={id} />
             <div>
               <label className="block text-xs font-mono uppercase text-zinc-500 mb-2">Correo del Comprador</label>
               <input type="email" name="guestEmail" required placeholder="correo@ejemplo.com" className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 font-mono" />
             </div>
             <div>
+              <label className="block text-xs font-mono uppercase text-zinc-500 mb-2">Teléfono / WP</label>
+              <input type="tel" name="guestPhone" required placeholder="+57 300..." className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 font-mono" />
+            </div>
+            <div>
               <label className="block text-xs font-mono uppercase text-zinc-500 mb-2">Nombre (Opcional)</label>
               <input type="text" name="guestName" placeholder="Nombre completo" className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 font-mono" />
             </div>
             <div>
-              <label className="block text-xs font-mono uppercase text-zinc-500 mb-2">Método de Pago</label>
+              <label className="block text-xs font-mono uppercase text-zinc-500 mb-2">Tipo</label>
+              <select name="ticketType" className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 font-mono appearance-none">
+                <option value="EARLY" className="text-black">Early (${event.early_price?.toLocaleString()})</option>
+                <option value="ANYTIME" className="text-black">Anytime (${event.anytime_price?.toLocaleString()})</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-mono uppercase text-zinc-500 mb-2">Pago</label>
               <select name="paymentMethod" className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 font-mono appearance-none">
                 <option value="efectivo" className="text-black">Efectivo</option>
                 <option value="transferencia" className="text-black">Transferencia</option>
               </select>
             </div>
             <button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono uppercase py-3 rounded-xl transition-colors">
-              Generar Boleta
+              Generar
             </button>
           </form>
         </div>
@@ -142,8 +161,13 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                       <p className="font-semibold mb-3 truncate font-mono text-white">
                         {ticket.receipt_url?.startsWith('manual_sale:') 
                           ? ticket.receipt_url.split(':')[1] 
-                          : ticket.profiles?.email}
+                          : ticket.profiles?.full_name || ticket.profiles?.email}
                       </p>
+                      <div className="flex gap-2">
+                        <span className="px-2 py-1 bg-white/10 rounded text-xs font-mono font-bold text-white">
+                          {ticket.ticket_type || 'ANYTIME'}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="flex gap-3 mt-6">
@@ -180,31 +204,46 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                 <thead className="bg-white/5 border-b border-white/10 text-xs uppercase font-mono tracking-widest text-zinc-400">
                   <tr>
                     <th className="p-4 font-medium">Usuario / Cliente</th>
-                    <th className="p-4 font-medium">Fecha de Emisión</th>
+                    <th className="p-4 font-medium">Tipo / Valor</th>
+                    <th className="p-4 font-medium">Fecha</th>
                     <th className="p-4 font-medium">Estado</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/10 text-sm font-mono">
-                  {historicalTickets.map((ticket) => {
+                  {historicalTickets.map((ticket: any) => {
                     const isManual = ticket.receipt_url?.startsWith('manual_sale:');
                     const email = isManual ? ticket.receipt_url.split(':')[1] : ticket.profiles?.email;
-                    const name = isManual ? ticket.receipt_url.split(':')[2] : '';
+                    const name = isManual ? ticket.receipt_url.split(':')[2] : ticket.profiles?.full_name;
                     const paymentMethod = isManual ? (ticket.receipt_url.split(':')[3] || 'efectivo') : null;
+                    const manualPhone = isManual ? ticket.receipt_url.split(':')[4] : null;
+                    const phone = isManual ? manualPhone : ticket.profiles?.phone;
+                    
+                    const ticketPrice = ticket.ticket_type === 'EARLY' ? event.early_price : event.anytime_price;
 
                     return (
                       <tr key={ticket.id} className="hover:bg-white/[0.02] transition-colors">
                         <td className="p-4">
                           <div className="font-medium text-white flex flex-col">
-                            <span>{email}</span>
-                            {isManual && (
+                            <span>{name ? `${name} (${email})` : email}</span>
+                            {isManual ? (
                               <span className="text-xs text-emerald-500 mt-1 capitalize">
-                                {paymentMethod} - {name}
+                                {paymentMethod} {phone ? `· ${phone}` : ''}
+                              </span>
+                            ) : (
+                              <span className="text-xs text-zinc-500 mt-1">
+                                {phone || 'Sin teléfono'}
                               </span>
                             )}
                           </div>
                         </td>
+                        <td className="p-4">
+                          <div className="flex flex-col">
+                            <span className="font-bold text-white">{ticket.ticket_type || 'ANYTIME'}</span>
+                            <span className="text-xs text-zinc-400">${ticketPrice?.toLocaleString()}</span>
+                          </div>
+                        </td>
                         <td className="p-4 text-zinc-500">
-                          {new Date(ticket.created_at).toLocaleDateString('es-CO', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                          {new Date(ticket.created_at).toLocaleDateString('es-CO', { year: 'numeric', month: 'short', day: 'numeric' })}
                         </td>
                         <td className="p-4">
                           <span className={`px-2 py-1 rounded-full text-xs font-bold border ${
@@ -221,7 +260,7 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                   })}
                   {historicalTickets.length === 0 && (
                     <tr>
-                      <td colSpan={3} className="p-8 text-center text-zinc-500">
+                      <td colSpan={4} className="p-8 text-center text-zinc-500">
                         No hay historial para este evento todavía.
                       </td>
                     </tr>

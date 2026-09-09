@@ -47,6 +47,7 @@ export function EventsGrid({ events }: { events: any[] }) {
                 src={event.flyer_url || "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop"}
                 alt={event.title}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700 ease-out"
               />
               {/* Gradient Scrim */}

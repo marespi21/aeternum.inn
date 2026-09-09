@@ -50,7 +50,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-[5rem] font-black font-title tracking-[0.2em] text-white uppercase drop-shadow-2xl select-none"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-[7rem] font-black font-title tracking-[0.2em] text-white uppercase drop-shadow-2xl select-none leading-none"
           >
             AETERNUM
           </motion.h1>

@@ -15,6 +15,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { YoutubeIcon } from "@/components/icons/CustomIcons";
+import Link from "next/link";
 
 type TabKey = "quienes-somos" | "mision-vision" | "objetivos" | "unicos";
 
@@ -262,13 +263,13 @@ export function ManifestoSection() {
             Unete a la comunidad Aeternum y vive la música electrónica como nunca antes.
           </p>
           <div className="pt-2 flex items-center justify-center gap-3">
-            <a
-              href="#guest-list"
+            <Link
+              href="/login?mode=signup"
               className="px-5 py-2.5 rounded-xl bg-white text-black font-title text-xs font-bold uppercase tracking-wider hover:bg-zinc-200 transition-all flex items-center gap-1.5"
             >
-              <span>Unirse a la Guest List</span>
+              <span>Registrarme</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </a>
+            </Link>
           </div>
         </div>
 

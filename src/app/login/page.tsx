@@ -7,8 +7,9 @@ import { login, signup } from './actions'
 import { useSearchParams } from 'next/navigation'
 
 function LoginContent() {
-  const [isLogin, setIsLogin] = useState(true)
   const searchParams = useSearchParams()
+  const mode = searchParams.get('mode')
+  const [isLogin, setIsLogin] = useState(mode !== 'signup')
   const error = searchParams.get('error')
   const message = searchParams.get('message')
 
@@ -43,6 +44,19 @@ function LoginContent() {
           <form action={isLogin ? login : signup} className="space-y-6">
             <input type="hidden" name="nextUrl" value={searchParams.get('next') || '/perfil'} />
             
+            {!isLogin && (
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-zinc-300">Nombre Completo</label>
+                <input 
+                  type="text" 
+                  name="fullName"
+                  required
+                  placeholder="Tu nombre completo"
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
+                />
+              </div>
+            )}
+
             <div className="space-y-2">
               <label className="text-sm font-medium text-zinc-300">Correo Electrónico</label>
               <div className="relative">
@@ -56,6 +70,21 @@ function LoginContent() {
                 />
               </div>
             </div>
+
+            {!isLogin && (
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-zinc-300">Teléfono / WhatsApp</label>
+                <div className="relative">
+                  <input 
+                    type="tel" 
+                    name="phone"
+                    required
+                    placeholder="+57 300 000 0000"
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
+                  />
+                </div>
+              </div>
+            )}
 
             <div className="space-y-2">
               <div className="flex justify-between items-center">

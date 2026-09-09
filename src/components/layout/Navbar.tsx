@@ -22,7 +22,7 @@ export function Navbar({ user }: { user: any }) {
     { label: "EVENTOS", href: "/#eventos" },
     { label: "VIDEO SETS", href: "/#video-sets" },
     { label: "ARTISTAS", href: "/#artistas" },
-    { label: "GALERIA", href: "/#galeria" },
+    { label: "GALERIA", href: "/#experiencia" },
     { label: "SOBRE NOSOTROS", href: "/#manifiesto" },
     { label: "COMUNIDAD", href: "/#comunidad" },
   ];
@@ -120,6 +120,7 @@ export function Navbar({ user }: { user: any }) {
                     src="/images/logo.png"
                     alt="Aeternum Logo"
                     fill
+                    sizes="40px"
                     className="object-cover"
                   />
                 </div>
