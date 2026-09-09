@@ -2,6 +2,7 @@ import React from "react";
 import { Sparkles, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
+import { ScrollColorizer } from "@/components/ui/ScrollColorizer";
 
 export async function ArtistsSection() {
   const supabase = await createClient();
@@ -35,31 +36,32 @@ export async function ArtistsSection() {
       {/* Artists Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {artists.map((artist) => (
-          <Link
-            key={artist.id}
-            href={`/artistas/${artist.id}`}
-            className="group block relative rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 transform transition-transform duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-emerald-500/20"
-          >
-            <div className="aspect-[3/4] w-full overflow-hidden relative">
-              <img
-                src={artist.image_url}
-                alt={artist.name}
-                className="w-full h-full object-cover filter grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent opacity-90 group-hover:opacity-80 transition-opacity" />
-              
-              <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                <h3 className="text-2xl sm:text-3xl font-black font-mono uppercase tracking-tight text-white mb-1 group-hover:text-emerald-400 transition-colors">
-                  {artist.name}
-                </h3>
+          <ScrollColorizer key={artist.id}>
+            <Link
+              href={`/artistas/${artist.id}`}
+              className="group block relative rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 transform transition-transform duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-emerald-500/20 group-data-[inview=true]/colorizer:-translate-y-2 group-data-[inview=true]/colorizer:shadow-2xl group-data-[inview=true]/colorizer:shadow-emerald-500/20"
+            >
+              <div className="aspect-[3/4] w-full overflow-hidden relative">
+                <img
+                  src={artist.image_url}
+                  alt={artist.name}
+                  className="w-full h-full object-cover filter grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105 group-data-[inview=true]/colorizer:grayscale-0 group-data-[inview=true]/colorizer:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent opacity-90 group-hover:opacity-80 group-data-[inview=true]/colorizer:opacity-80 transition-opacity" />
                 
-                <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                  <span>Ver Perfil</span>
-                  <ArrowRight className="w-3 h-3" />
+                <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                  <h3 className="text-2xl sm:text-3xl font-black font-mono uppercase tracking-tight text-white mb-1 group-hover:text-emerald-400 group-data-[inview=true]/colorizer:text-emerald-400 transition-colors">
+                    {artist.name}
+                  </h3>
+                  
+                  <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 group-data-[inview=true]/colorizer:opacity-100 group-data-[inview=true]/colorizer:translate-y-0 transition-all duration-500">
+                    <span>Ver Perfil</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </ScrollColorizer>
         ))}
       </div>
     </section>

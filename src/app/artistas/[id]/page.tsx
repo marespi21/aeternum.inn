@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Camera, MonitorPlay, Headphones, Sparkles, Play } from 'lucide-react'
+import { ScrollColorizer } from "@/components/ui/ScrollColorizer"
 
 // Icon components mapping
 const SocialIcon = ({ type, className }: { type: string, className?: string }) => {
@@ -71,15 +72,17 @@ export default async function ArtistProfilePage({ params }: { params: Promise<{ 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
             
             {/* Left: Artist Image */}
-            <div className="md:col-span-5 relative aspect-[4/5] md:aspect-auto h-full w-full bg-zinc-900 border-r border-white/10">
-              <Image
-                src={artist.image_url}
-                alt={artist.name}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover filter grayscale hover:grayscale-0 transition-all duration-700"
-                priority
-              />
+            <div className="md:col-span-5 relative aspect-[4/5] md:aspect-auto h-full w-full bg-zinc-900 border-r border-white/10 group">
+              <ScrollColorizer className="w-full h-full">
+                <Image
+                  src={artist.image_url}
+                  alt={artist.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover filter grayscale hover:grayscale-0 group-data-[inview=true]/colorizer:grayscale-0 transition-all duration-700"
+                  priority
+                />
+              </ScrollColorizer>
             </div>
 
             {/* Right: Info */}
@@ -168,18 +171,20 @@ export default async function ArtistProfilePage({ params }: { params: Promise<{ 
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {gallery.map((item, index) => (
-                <div key={item.id} className="relative aspect-square rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 group cursor-pointer">
-                  <Image
-                    src={item.url}
-                    alt={`${artist.name} gallery image ${index + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <Camera className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500" />
+                <ScrollColorizer key={item.id}>
+                  <div className="relative aspect-square rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 group cursor-pointer">
+                    <Image
+                      src={item.url}
+                      alt={`${artist.name} gallery image ${index + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-105 group-data-[inview=true]/colorizer:grayscale-0 group-data-[inview=true]/colorizer:scale-105 transition-all duration-700"
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 group-data-[inview=true]/colorizer:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                      <Camera className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 group-data-[inview=true]/colorizer:opacity-100 transform translate-y-4 group-hover:translate-y-0 group-data-[inview=true]/colorizer:translate-y-0 transition-all duration-500" />
+                    </div>
                   </div>
-                </div>
+                </ScrollColorizer>
               ))}
             </div>
           </div>

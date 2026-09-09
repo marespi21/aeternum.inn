@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { ScrollColorizer } from "@/components/ui/ScrollColorizer";
 import { EventModal } from "@/components/ui/EventModal";
 import {
   Calendar,
@@ -32,24 +33,24 @@ export function EventsGrid({ events }: { events: any[] }) {
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {events.map((event, idx) => (
-          <motion.div
-            key={event.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: idx * 0.15 }}
-            onClick={() => handleBuy(event.id)}
-            className="group relative flex flex-col bg-zinc-950/80 border border-white/10 rounded-2xl overflow-hidden hover:border-white/30 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-white/5 cursor-pointer"
-          >
-            {/* Flyer Vertical Frame */}
-            <div className="relative aspect-[3/4] w-full overflow-hidden bg-zinc-900">
-              <Image
-                src={event.flyer_url || "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop"}
-                alt={event.title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700 ease-out"
-              />
+          <ScrollColorizer key={event.id}>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.15 }}
+              onClick={() => handleBuy(event.id)}
+              className="group relative flex flex-col bg-zinc-950/80 border border-white/10 rounded-2xl overflow-hidden hover:border-white/30 group-data-[inview=true]/colorizer:border-white/30 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-white/5 group-data-[inview=true]/colorizer:shadow-2xl group-data-[inview=true]/colorizer:shadow-white/5 cursor-pointer"
+            >
+              {/* Flyer Vertical Frame */}
+              <div className="relative aspect-[3/4] w-full overflow-hidden bg-zinc-900">
+                <Image
+                  src={event.flyer_url || "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop"}
+                  alt={event.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 group-data-[inview=true]/colorizer:scale-105 group-data-[inview=true]/colorizer:grayscale-0 transition-all duration-700 ease-out"
+                />
               {/* Gradient Scrim */}
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
 
@@ -92,15 +93,16 @@ export function EventsGrid({ events }: { events: any[] }) {
 
                 <button
                   onClick={(e) => handleBuy(event.id, e)}
-                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white text-black hover:bg-zinc-200 font-mono text-xs font-bold uppercase tracking-wider transition-all shadow hover:shadow-white/20"
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white text-black hover:bg-zinc-200 group-data-[inview=true]/colorizer:bg-white group-data-[inview=true]/colorizer:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all shadow hover:shadow-white/20"
                 >
                   <Ticket className="w-3.5 h-3.5" />
                   <span>Comprar</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </button>
               </div>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </ScrollColorizer>
         ))}
       </div>
 

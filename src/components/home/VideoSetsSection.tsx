@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { ScrollColorizer } from "@/components/ui/ScrollColorizer";
 import { motion, AnimatePresence } from "framer-motion";
 import { VideoSetItem } from "@/types";
 import { VideoModal } from "@/components/ui/VideoModal";
@@ -152,16 +153,16 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
       >
         <AnimatePresence>
           {filteredSets.map((item, idx) => (
-            <motion.div
-              layout
-              key={item.id}
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.35, delay: idx * 0.05 }}
-              onClick={() => handleOpenSet(item)}
-              className="group relative cursor-pointer bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-white/35 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-white/5 flex flex-col justify-between"
-            >
+            <ScrollColorizer key={item.id}>
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.35, delay: idx * 0.05 }}
+                onClick={() => handleOpenSet(item)}
+                className="group relative cursor-pointer bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-white/35 group-data-[inview=true]/colorizer:border-white/35 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-white/5 group-data-[inview=true]/colorizer:shadow-2xl group-data-[inview=true]/colorizer:shadow-white/5 flex flex-col justify-between"
+              >
               {/* Thumbnail Box */}
               <div className="relative aspect-video w-full overflow-hidden bg-zinc-900">
                 <Image
@@ -169,13 +170,13 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
                   alt={item.title}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover grayscale contrast-110 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700 ease-out"
+                  className="object-cover grayscale contrast-110 group-hover:scale-105 group-hover:grayscale-0 group-data-[inview=true]/colorizer:scale-105 group-data-[inview=true]/colorizer:grayscale-0 transition-all duration-700 ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
 
                 {/* Center Play Button */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/70 group-hover:bg-red-600 text-white border border-white/30 group-hover:border-red-500 flex items-center justify-center backdrop-blur-md transition-all duration-300 transform group-hover:scale-110 shadow-2xl">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/70 group-hover:bg-red-600 group-data-[inview=true]/colorizer:bg-red-600 text-white border border-white/30 group-hover:border-red-500 group-data-[inview=true]/colorizer:border-red-500 flex items-center justify-center backdrop-blur-md transition-all duration-300 transform group-hover:scale-110 group-data-[inview=true]/colorizer:scale-110 shadow-2xl">
                     <Play className="w-5 h-5 fill-current ml-0.5" />
                   </div>
                 </div>
@@ -213,7 +214,7 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
                     </span>
                   </div>
 
-                  <h3 className="text-sm sm:text-base font-bold font-mono text-zinc-200 group-hover:text-white transition-colors uppercase leading-snug line-clamp-2">
+                  <h3 className="text-sm sm:text-base font-bold font-mono text-zinc-200 group-hover:text-white group-data-[inview=true]/colorizer:text-white transition-colors uppercase leading-snug line-clamp-2 mb-1">
                     {item.title}
                   </h3>
 
@@ -233,7 +234,8 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
                   </span>
                 </div>
               </div>
-            </motion.div>
+              </motion.div>
+            </ScrollColorizer>
           ))}
         </AnimatePresence>
       </motion.div>
