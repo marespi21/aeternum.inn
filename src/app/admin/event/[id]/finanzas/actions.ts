@@ -13,14 +13,14 @@ export async function addFinanceRecord(formData: FormData) {
   const amount = parseFloat(amountStr)
 
   if (!eventId || !type || !category || isNaN(amount)) {
-    return { error: 'Datos inválidos' }
+    throw new Error('Datos inválidos')
   }
 
   const supabase = await createClient()
 
   // Verify auth & admin
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { error: 'No autorizado' }
+  if (!user) throw new Error('No autorizado')
 
   const { data: profile } = await supabase
     .from('profiles')
@@ -28,7 +28,7 @@ export async function addFinanceRecord(formData: FormData) {
     .eq('id', user.id)
     .single()
 
-  if (profile?.role !== 'ADMIN') return { error: 'No autorizado' }
+  if (profile?.role !== 'ADMIN') throw new Error('No autorizado')
 
   // Insert finance record
   const { error } = await supabase.from('event_finances').insert({
@@ -41,11 +41,10 @@ export async function addFinanceRecord(formData: FormData) {
 
   if (error) {
     console.error('Error insertando registro financiero:', error)
-    return { error: 'Error al guardar el registro' }
+    throw new Error('Error al guardar el registro')
   }
 
   revalidatePath(`/admin/event/${eventId}/finanzas`)
-  return { success: true }
 }
 
 export async function deleteFinanceRecord(formData: FormData) {
@@ -55,7 +54,7 @@ export async function deleteFinanceRecord(formData: FormData) {
   const supabase = await createClient()
   
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { error: 'No autorizado' }
+  if (!user) throw new Error('No autorizado')
 
   const { data: profile } = await supabase
     .from('profiles')
@@ -63,15 +62,15 @@ export async function deleteFinanceRecord(formData: FormData) {
     .eq('id', user.id)
     .single()
 
-  if (profile?.role !== 'ADMIN') return { error: 'No autorizado' }
+
+  if (profile?.role !== 'ADMIN') throw new Error('No autorizado')
 
   const { error } = await supabase.from('event_finances').delete().eq('id', id)
 
   if (error) {
-    console.error('Error eliminando registro financiero:', error)
-    return { error: 'Error al eliminar' }
+    console.error('Error borrando registro:', error)
+    throw new Error('Error al borrar')
   }
 
   revalidatePath(`/admin/event/${eventId}/finanzas`)
-  return { success: true }
 }

@@ -59,11 +59,11 @@ export async function createManualTicket(formData: FormData) {
 
   // Verify auth
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { error: 'No autorizado' }
+  if (!user) throw new Error('No autorizado')
 
   // Fetch event details for email
   const { data: event } = await supabase.from('events').select('title, date').eq('id', eventId).single()
-  if (!event) return { error: 'Evento no encontrado' }
+  if (!event) throw new Error('Evento no encontrado')
 
   // Create ticket using Admin's user_id, but tag as manual sale
   const { data: ticket, error } = await supabase.from('tickets').insert({
@@ -76,7 +76,7 @@ export async function createManualTicket(formData: FormData) {
 
   if (error || !ticket) {
     console.error('Error creating manual ticket:', error)
-    return { error: 'Error al crear el ticket manual' }
+    throw new Error('Error al crear el ticket manual')
   }
 
   // Send the QR code email

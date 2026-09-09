@@ -12,13 +12,13 @@ export async function addGlobalFinanceRecord(formData: FormData) {
   const amount = parseFloat(amountStr)
 
   if (!type || !category || isNaN(amount)) {
-    return { error: 'Datos inválidos' }
+    throw new Error('Datos inválidos')
   }
 
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { error: 'No autorizado' }
+  if (!user) throw new Error('No autorizado')
 
   const { data: profile } = await supabase
     .from('profiles')
@@ -26,7 +26,7 @@ export async function addGlobalFinanceRecord(formData: FormData) {
     .eq('id', user.id)
     .single()
 
-  if (profile?.role !== 'ADMIN') return { error: 'No autorizado' }
+  if (profile?.role !== 'ADMIN') throw new Error('No autorizado')
 
   // Insert global finance record (event_id is NULL)
   const { error } = await supabase.from('event_finances').insert({
@@ -38,11 +38,10 @@ export async function addGlobalFinanceRecord(formData: FormData) {
 
   if (error) {
     console.error('Error insertando registro financiero global:', error)
-    return { error: 'Error al guardar el registro' }
+    throw new Error('Error al guardar el registro')
   }
 
   revalidatePath('/admin/finanzas')
-  return { success: true }
 }
 
 export async function deleteGlobalFinanceRecord(formData: FormData) {
@@ -51,7 +50,8 @@ export async function deleteGlobalFinanceRecord(formData: FormData) {
   const supabase = await createClient()
   
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { error: 'No autorizado' }
+  if (!user) throw new Error('No autorizado')
+  if (!id) throw new Error('ID requerido')
 
   const { data: profile } = await supabase
     .from('profiles')
@@ -59,15 +59,14 @@ export async function deleteGlobalFinanceRecord(formData: FormData) {
     .eq('id', user.id)
     .single()
 
-  if (profile?.role !== 'ADMIN') return { error: 'No autorizado' }
+  if (profile?.role !== 'ADMIN') throw new Error('No autorizado')
 
   const { error } = await supabase.from('event_finances').delete().eq('id', id)
 
   if (error) {
     console.error('Error eliminando registro financiero:', error)
-    return { error: 'Error al eliminar' }
+    throw new Error('Error al eliminar')
   }
 
   revalidatePath('/admin/finanzas')
-  return { success: true }
 }

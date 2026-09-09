@@ -45,6 +45,7 @@ export const metadata: Metadata = {
 };
 
 import { Navbar } from "@/components/layout/Navbar";
+import { RadioBar } from "@/components/layout/RadioBar";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function RootLayout({
@@ -54,6 +55,15 @@ export default async function RootLayout({
 }>) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+
+  // Fetch the latest radio track for persistent playback
+  const { data: tracks } = await supabase
+    .from("audio_tracks")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  const currentTrack = tracks?.[0] || null;
 
   return (
     <html
@@ -66,6 +76,9 @@ export default async function RootLayout({
         <main className="flex-1 pb-24 md:pb-20">
           {children}
         </main>
+        
+        {/* Global Persistent Audio Radio Bar */}
+        <RadioBar track={currentTrack} />
       </body>
     </html>
   );
