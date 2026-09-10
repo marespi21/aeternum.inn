@@ -89,7 +89,7 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
   return (
     <section
       id="video-sets"
-      className="pt-8 pb-24 sm:pt-12 sm:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
+      className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
     >
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-12 border-b border-white/10 pb-6">
@@ -161,8 +161,12 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
                 exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.35, delay: idx * 0.05 }}
                 onClick={() => handleOpenSet(item)}
-                className="group relative cursor-pointer bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-white/35 group-data-[inview=true]/colorizer:border-white/35 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-white/5 group-data-[inview=true]/colorizer:shadow-2xl group-data-[inview=true]/colorizer:shadow-white/5 flex flex-col justify-between"
+                className="group relative flex flex-col justify-between cursor-pointer bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 group-data-[inview=true]/colorizer:border-white/20 transition-all duration-500 shadow-xl hover:-translate-y-1 hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)] group-data-[inview=true]/colorizer:-translate-y-1 group-data-[inview=true]/colorizer:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)]"
               >
+              {/* Efecto hover estilo pilares */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10" />
+              <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-zinc-400/30 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out origin-left z-20" />
+
               {/* Thumbnail Box */}
               <div className="relative aspect-video w-full overflow-hidden bg-zinc-900">
                 <Image

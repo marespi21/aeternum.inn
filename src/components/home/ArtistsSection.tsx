@@ -16,7 +16,7 @@ export async function ArtistsSection() {
   }
 
   return (
-    <section id="artistas" className="py-24 sm:py-36 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <section id="artistas" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 border-b border-white/10 pb-6">
         <div>
@@ -39,8 +39,12 @@ export async function ArtistsSection() {
           <ScrollColorizer key={artist.id}>
             <Link
               href={`/artistas/${artist.id}`}
-              className="group block relative rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 transform transition-transform duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-emerald-500/20 group-data-[inview=true]/colorizer:-translate-y-2 group-data-[inview=true]/colorizer:shadow-2xl group-data-[inview=true]/colorizer:shadow-emerald-500/20"
+              className="group block relative rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 transform transition-all duration-500 hover:-translate-y-2 hover:border-white/20 hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)] group-data-[inview=true]/colorizer:-translate-y-2 group-data-[inview=true]/colorizer:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)] group-data-[inview=true]/colorizer:border-white/20"
             >
+              {/* Efecto hover estilo pilares */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10" />
+              <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-zinc-400/30 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out origin-left z-20" />
+
               <div className="aspect-[3/4] w-full overflow-hidden relative">
                 <img
                   src={artist.image_url}

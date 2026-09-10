@@ -1,19 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
-import localFont from 'next/font/local'
 import "./globals.css";
-
-const fontOmniumAlt = Montserrat({
-  variable: "--font-omnium-alt",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-});
-
-const fontTitle = localFont({
-  src: '../../public/fonts/sloth_rounded.ttf',
-  variable: '--font-title',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   title: "AETERNUM // Medellín Underground Techno Platform",
@@ -68,8 +54,13 @@ export default async function RootLayout({
   return (
     <html
       lang="es"
-      className={`${fontTitle.variable} ${fontOmniumAlt.variable} dark h-full antialiased scroll-smooth`}
+      className="dark h-full antialiased scroll-smooth"
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+      </head>
       <body className="min-h-full flex flex-col bg-[#050505] text-[#f4f4f5] selection:bg-white selection:text-black">
         <div className="noise-overlay" aria-hidden="true" />
         <Navbar user={user} />

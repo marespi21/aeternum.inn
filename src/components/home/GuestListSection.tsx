@@ -12,7 +12,7 @@ import Link from "next/link";
 
 export function GuestListSection() {
   return (
-    <section id="comunidad" className="py-24 sm:py-36 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+    <section id="comunidad" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
       <div className="relative rounded-3xl bg-zinc-950 border border-white/15 p-6 sm:p-12 md:p-16 overflow-hidden shadow-2xl">
         {/* Glow ambient background inside card */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-white/[0.03] rounded-full blur-3xl pointer-events-none" />
@@ -61,7 +61,7 @@ export function GuestListSection() {
               href="/login?mode=signup"
               className="inline-flex px-8 py-3.5 rounded-full bg-white text-black font-mono text-[11px] font-bold uppercase tracking-widest hover:scale-105 hover:bg-zinc-200 transition-all items-center justify-center gap-2 shadow-lg hover:shadow-white/20"
             >
-              <span>Registrarme Ahora</span>
+              <span>Registrarme</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
 

@@ -49,6 +49,7 @@ export function Navbar({ user }: { user: any }) {
                   src="/images/logo.png"
                   alt="Aeternum Logo"
                   fill
+                  sizes="40px"
                   className="object-cover"
                   priority
                 />

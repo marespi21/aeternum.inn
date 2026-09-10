@@ -61,6 +61,7 @@ export function EventModal({ event, isOpen, onClose }: EventModalProps) {
             src={event.flyerUrl}
             alt={event.title}
             fill
+            sizes="(max-width: 768px) 100vw, 33vw"
             className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />

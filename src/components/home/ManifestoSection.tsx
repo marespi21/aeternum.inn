@@ -59,7 +59,7 @@ export function ManifestoSection() {
   return (
     <section
       id="manifiesto"
-      className="relative py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-zinc-950/80 border-y border-white/10 overflow-hidden"
+      className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-zinc-950/80 border-y border-white/10 overflow-hidden"
     >
       {/* Subtle ambient light */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/[0.02] rounded-full blur-[140px] pointer-events-none" />
@@ -146,25 +146,35 @@ export function ManifestoSection() {
                   className="grid grid-cols-1 md:grid-cols-2 gap-4"
                 >
                   {/* Misión */}
-                  <div className="p-6 rounded-2xl bg-black/90 border border-white/15 space-y-2.5 shadow-xl">
-                    <span className="text-xs font-title font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+                  <div className="group relative overflow-hidden p-6 rounded-2xl bg-black/90 border border-white/15 space-y-2.5 shadow-xl transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)] hover:border-white/30">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10" />
+                    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-zinc-400/30 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out origin-left z-20" />
+                    
+                    <div className="relative z-30">
+                      <span className="text-xs font-title font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 mb-2.5">
                       <Target className="w-4 h-4" />
                       MISION
                     </span>
                     <p className="text-xs sm:text-sm text-zinc-300 font-body leading-relaxed">
                       Impulsar el talento local a través de <span className="text-white font-semibold">live sets profesionales</span>, embellecer espacios patrimoniales y resignificar la cultura electrónica como arte, pasión y expresión colectiva.
                     </p>
+                    </div>
                   </div>
 
                   {/* Visión */}
-                  <div className="p-6 rounded-2xl bg-black/90 border border-white/15 space-y-2.5 shadow-xl">
-                    <span className="text-xs font-title font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                  <div className="group relative overflow-hidden p-6 rounded-2xl bg-black/90 border border-white/15 space-y-2.5 shadow-xl transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)] hover:border-white/30">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10" />
+                    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-zinc-400/30 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out origin-left z-20" />
+                    
+                    <div className="relative z-30">
+                      <span className="text-xs font-title font-bold text-white uppercase tracking-wider flex items-center gap-2 mb-2.5">
                       <Globe className="w-4 h-4" />
                       VISION
                     </span>
                     <p className="text-xs sm:text-sm text-zinc-300 font-body leading-relaxed">
                       Consolidarnos como <span className="text-white font-semibold">plataforma referente en Latinoamérica</span> para DJs emergentes, visibilizando sus proyectos y proyectando a Colombia como escenario vivo de música ante el mundo.
                     </p>
+                    </div>
                   </div>
                 </motion.div>
               )}
@@ -187,10 +197,13 @@ export function ManifestoSection() {
                   ].map((obj, idx) => (
                     <div
                       key={idx}
-                      className="p-4 rounded-xl bg-black/90 border border-white/15 flex items-start gap-3"
+                      className="group relative overflow-hidden p-4 rounded-xl bg-black/90 border border-white/15 flex items-start gap-3 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)] hover:border-white/30"
                     >
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                      <div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10" />
+                      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-zinc-400/30 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out origin-left z-20" />
+                      
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 relative z-30" />
+                      <div className="relative z-30">
                         <h4 className="text-xs font-title font-bold text-white uppercase">{obj.title}</h4>
                         <p className="text-xs text-zinc-400 font-body leading-snug">{obj.desc}</p>
                       </div>
@@ -228,11 +241,14 @@ export function ManifestoSection() {
                   ].map((u, idx) => (
                     <div
                       key={idx}
-                      className="p-4 rounded-xl bg-black/90 border border-white/15 space-y-2 text-center flex flex-col items-center justify-center"
+                      className="group relative overflow-hidden p-4 rounded-xl bg-black/90 border border-white/15 space-y-2 text-center flex flex-col items-center justify-center transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)] hover:border-white/30"
                     >
-                      <div className="p-2 rounded-lg bg-white/5 border border-white/10">{u.icon}</div>
-                      <h4 className="text-xs font-title font-bold text-white uppercase">{u.title}</h4>
-                      <p className="text-[11px] text-zinc-400 font-body leading-snug">{u.desc}</p>
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10" />
+                      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-zinc-400/30 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out origin-left z-20" />
+                      
+                      <div className="relative z-30 p-2 rounded-lg bg-white/5 border border-white/10">{u.icon}</div>
+                      <h4 className="relative z-30 text-xs font-title font-bold text-white uppercase">{u.title}</h4>
+                      <p className="relative z-30 text-[11px] text-zinc-400 font-body leading-snug">{u.desc}</p>
                     </div>
                   ))}
                 </motion.div>

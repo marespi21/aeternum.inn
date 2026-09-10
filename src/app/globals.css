@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'SlothRounded';
+  src: url('/fonts/sloth_rounded.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   /* AETERNUM Brand Pink (#EE3485) mapped to red for global replacement */
   --color-red-300: #f199c2;
@@ -7,7 +15,7 @@
   --color-red-500: #ee3485;
   --color-red-600: #d62f78;
   --color-red-700: #b32764;
-  
+
   /* AETERNUM Brand Green (#89C53F) mapped to emerald for global replacement */
   --color-emerald-300: #acd785;
   --color-emerald-400: #89c53f;
@@ -16,11 +24,10 @@
   --color-emerald-900: #1c280d;
   --color-emerald-950: #0e1406;
 
-  /* Mapeo de la tipografía personalizada para que las clases de Tailwind la reconozcan */
-  --font-title: var(--font-title), "Orbitron", sans-serif;
-  --font-mono: var(--font-omnium-alt), monospace;
-  --font-body: var(--font-omnium-alt), sans-serif;
-  --font-sans: var(--font-omnium-alt), sans-serif;
+  --font-title: 'SlothRounded', sans-serif;
+  --font-sans: 'Montserrat', sans-serif;
+  --font-body: 'Montserrat', sans-serif;
+  --font-mono: 'Montserrat', monospace;
 }
 
 @layer base {
@@ -45,30 +52,44 @@
     color-scheme: dark;
     background-color: #050505;
     color: #f4f4f5;
-    font-family: var(--font-omnium-alt), sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
 
   body {
     background-color: #050505;
     color: #f4f4f5;
     overflow-x: hidden;
-    font-family: var(--font-omnium-alt), sans-serif;
+    font-family: 'Montserrat', sans-serif;
     selection-background-color: #ffffff;
     selection-color: #000000;
   }
 
-  h1, h2, .font-title {
-    font-family: var(--font-title) !important;
-    letter-spacing: 0.05em;
+  h1,
+  h2,
+  .font-title {
+    font-family: 'SlothRounded', sans-serif !important;
+    line-height: 1.1;
   }
 
-  h3, h4, h5, h6 {
-    font-family: var(--font-omnium-alt) !important;
-    letter-spacing: 0.05em;
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Montserrat', sans-serif !important;
   }
 
-  body, p, span, a, input, select, textarea, button, .font-body, .font-mono {
-    font-family: var(--font-omnium-alt), sans-serif;
+  body,
+  p,
+  span,
+  a,
+  input,
+  select,
+  textarea,
+  button,
+  .font-body,
+  .font-sans,
+  .font-mono {
+    font-family: 'Montserrat', sans-serif;
   }
 
   ::selection {
@@ -117,49 +138,110 @@
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: #050505;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #27272a;
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
 
 /* Animated Equalizer Bars */
 @keyframes equalizer-1 {
-  0%, 100% { height: 4px; }
-  50% { height: 18px; }
-}
-@keyframes equalizer-2 {
-  0%, 100% { height: 16px; }
-  50% { height: 6px; }
-}
-@keyframes equalizer-3 {
-  0%, 100% { height: 8px; }
-  50% { height: 20px; }
-}
-@keyframes equalizer-4 {
-  0%, 100% { height: 19px; }
-  50% { height: 7px; }
-}
-@keyframes equalizer-5 {
-  0%, 100% { height: 6px; }
-  50% { height: 15px; }
+
+  0%,
+  100% {
+    height: 4px;
+  }
+
+  50% {
+    height: 18px;
+  }
 }
 
-.animate-eq-1 { animation: equalizer-1 0.75s ease-in-out infinite; }
-.animate-eq-2 { animation: equalizer-2 0.6s ease-in-out infinite 0.1s; }
-.animate-eq-3 { animation: equalizer-3 0.9s ease-in-out infinite 0.2s; }
-.animate-eq-4 { animation: equalizer-4 0.65s ease-in-out infinite 0.15s; }
-.animate-eq-5 { animation: equalizer-5 0.8s ease-in-out infinite 0.25s; }
+@keyframes equalizer-2 {
+
+  0%,
+  100% {
+    height: 16px;
+  }
+
+  50% {
+    height: 6px;
+  }
+}
+
+@keyframes equalizer-3 {
+
+  0%,
+  100% {
+    height: 8px;
+  }
+
+  50% {
+    height: 20px;
+  }
+}
+
+@keyframes equalizer-4 {
+
+  0%,
+  100% {
+    height: 19px;
+  }
+
+  50% {
+    height: 7px;
+  }
+}
+
+@keyframes equalizer-5 {
+
+  0%,
+  100% {
+    height: 6px;
+  }
+
+  50% {
+    height: 15px;
+  }
+}
+
+.animate-eq-1 {
+  animation: equalizer-1 0.75s ease-in-out infinite;
+}
+
+.animate-eq-2 {
+  animation: equalizer-2 0.6s ease-in-out infinite 0.1s;
+}
+
+.animate-eq-3 {
+  animation: equalizer-3 0.9s ease-in-out infinite 0.2s;
+}
+
+.animate-eq-4 {
+  animation: equalizer-4 0.65s ease-in-out infinite 0.15s;
+}
+
+.animate-eq-5 {
+  animation: equalizer-5 0.8s ease-in-out infinite 0.25s;
+}
 
 /* Infinite Marquee Keyframe */
 @keyframes marquee-scroll {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-marquee {
@@ -175,10 +257,11 @@
 /* Grid overlay background */
 .cyber-grid {
   background-size: 40px 40px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
+
 .accordion-gallery {
   --ag-accent: #ffffff;
   --ag-overlay: #060010;
@@ -308,10 +391,12 @@
     perspective: none;
     height: auto !important;
   }
+
   .ag-panel {
     min-height: 84px;
     transform: none !important;
   }
+
   .accordion-gallery .ag-panel__media {
     width: 100%;
     height: var(--ag-media-size);
@@ -319,6 +404,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .ag-panel,
   .ag-panel__media {
     will-change: auto;
