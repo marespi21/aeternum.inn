@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { Calendar, Trash2 } from 'lucide-react'
 import { revalidatePath } from 'next/cache'
 import { EventForm } from './EventForm'
+import { EventCard } from './EventCard'
 
 export default async function AdminEventosPage() {
   const supabase = await createClient()
@@ -66,6 +67,33 @@ export default async function AdminEventosPage() {
     revalidatePath('/')
   }
 
+  async function updateEvent(formData: FormData) {
+    'use server'
+    const id = formData.get('id') as string
+    const title = formData.get('title') as string
+    const date = formData.get('date') as string
+    const early_price = formData.get('early_price') as string
+    const anytime_price = formData.get('anytime_price') as string
+    const capacity = formData.get('capacity') as string
+    const flyerUrl = formData.get('flyerUrl') as string
+    const description = formData.get('description') as string
+
+    const supabase = await createClient()
+    const { error } = await supabase.from('events').update({
+      title,
+      date: new Date(date).toISOString(),
+      early_price: Number(early_price),
+      anytime_price: Number(anytime_price),
+      total_tickets: Number(capacity),
+      flyer_url: flyerUrl || null,
+      description: description || null
+    }).eq('id', id)
+
+    if (error) throw new Error(error.message)
+    revalidatePath('/admin/eventos')
+    revalidatePath('/')
+  }
+
   return (
     <div className="p-4 sm:p-8 text-white">
       <div className="max-w-4xl mx-auto space-y-8 relative z-10">
@@ -91,29 +119,12 @@ export default async function AdminEventosPage() {
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
               {events?.map((event) => (
-                <div key={event.id} className="bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 p-5 rounded-xl flex items-start justify-between shadow-[0_0_20px_rgba(255,255,255,0.02)]">
-                  <div className="space-y-2">
-                    <h3 className="font-bold font-mono text-lg text-emerald-400 uppercase">{event.title}</h3>
-                    <div className="flex flex-wrap gap-2 text-xs text-zinc-400 font-mono">
-                      <span className="bg-white/5 px-2 py-1 rounded">{new Date(event.date).toLocaleDateString()}</span>
-                      <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early: ${(event.early_price || 0).toLocaleString()}</span>
-                      <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Anytime: ${(event.anytime_price || 0).toLocaleString()}</span>
-                      <span className="bg-white/5 px-2 py-1 rounded">Aforo: {event.total_tickets}</span>
-                    </div>
-                    {event.description && (
-                      <p className="text-xs text-zinc-500 font-mono mt-2 line-clamp-2 pr-4">
-                        {event.description}
-                      </p>
-                    )}
-                  </div>
-                  
-                  <form action={deleteEvent} className="shrink-0">
-                    <input type="hidden" name="id" value={event.id} />
-                    <button type="submit" className="p-2.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-500 rounded-lg transition-colors" title="Eliminar Evento">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </form>
-                </div>
+                <EventCard 
+                  key={event.id} 
+                  event={event} 
+                  deleteEventAction={deleteEvent} 
+                  updateEventAction={updateEvent} 
+                />
               ))}
               
               {events?.length === 0 && (

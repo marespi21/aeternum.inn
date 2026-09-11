@@ -14,85 +14,83 @@ import {
 import { AudioEqualizer } from "@/components/ui/AudioEqualizer";
 import ReactPlayer from 'react-player';
 
-// Avoid strict TS errors with ReactPlayer props in Next.js 15+
-const Player = ReactPlayer as any;
-
 export function RadioBar({ track }: { track?: any }) {
   const currentTrack = track || null;
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0.8);
-  const [listeners, setListeners] = useState(134); // Número base aleatorio
+  const [listeners, setListeners] = useState(134);
+  const [mounted, setMounted] = useState(false);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const synthIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  // Subtle synth techno drone generator for guaranteed instant audio feedback
-  const startSynthDrone = () => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  // Determinar si es YouTube o SoundCloud
+  const isSoundCloud = currentTrack.audio_url.includes('soundcloud.com');
+  const isYouTube = currentTrack.audio_url.includes('youtube.com') || currentTrack.audio_url.includes('youtu.be');
+  
+  // Extraer ID de YouTube
+  let ytId = '';
+  if (isYouTube) {
     try {
-      if (!audioContextRef.current) {
-        const AudioContextClass =
-          window.AudioContext ||
-          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-        if (AudioContextClass) {
-          audioContextRef.current = new AudioContextClass();
-        }
-      }
-
-      if (audioContextRef.current && audioContextRef.current.state === "suspended") {
-        audioContextRef.current.resume();
-      }
-
-      // If online stream fails or for immediate feedback, synthesize subtle techno pulse
-      if (audioContextRef.current) {
-        const ctx = audioContextRef.current;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(55, ctx.currentTime); // Low A sub bass
-
-        gain.gain.setValueAtTime(0.05, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.4);
-      }
+      const urlObj = new URL(currentTrack.audio_url);
+      ytId = urlObj.searchParams.get('v') || urlObj.pathname.split('/').pop() || '';
     } catch {
-      // Ignore audio synthesis errors gracefully
+      ytId = '';
+    }
+  }
+
+  const scEmbedUrl = isSoundCloud 
+    ? `https://w.soundcloud.com/player/?url=${encodeURIComponent(currentTrack.audio_url)}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false`
+    : '';
+    
+  const ytEmbedUrl = isYouTube
+    ? `https://www.youtube.com/embed/${ytId}?enablejsapi=1&autoplay=0&controls=0&playsinline=1`
+    : '';
+
+  const postMessageToPlayer = (method: string, value?: any) => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      if (isSoundCloud) {
+        const message = JSON.stringify({ method, value });
+        iframeRef.current.contentWindow.postMessage(message, '*');
+      } else if (isYouTube) {
+        // YouTube API mappings
+        let ytCommand = '';
+        if (method === 'play') ytCommand = 'playVideo';
+        else if (method === 'pause') ytCommand = 'pauseVideo';
+        else if (method === 'setVolume') ytCommand = 'setVolume';
+        
+        const message = JSON.stringify({ event: 'command', func: ytCommand, args: value !== undefined ? [value] : [] });
+        iframeRef.current.contentWindow.postMessage(message, '*');
+      }
     }
   };
 
   const togglePlay = () => {
-    if (!isPlaying) {
-      setIsPlaying(true);
-      startSynthDrone();
-      if (synthIntervalRef.current) {
-        clearInterval(synthIntervalRef.current);
-        synthIntervalRef.current = null;
-      }
-    } else {
+    if (isPlaying) {
       setIsPlaying(false);
-      if (synthIntervalRef.current) {
-        clearInterval(synthIntervalRef.current);
-        synthIntervalRef.current = null;
-      }
+      postMessageToPlayer('pause');
+    } else {
+      setIsPlaying(true);
+      postMessageToPlayer('play');
     }
   };
 
   const toggleMute = () => {
     setIsMuted(!isMuted);
+    postMessageToPlayer(isSoundCloud ? 'setVolume' : 'setVolume', !isMuted ? 0 : volume * 100);
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseFloat(e.target.value);
     setVolume(val);
     setIsMuted(val === 0);
+    postMessageToPlayer('setVolume', val * 100);
   };
 
-  // Simulate dynamic listener fluctuations
   useEffect(() => {
     const interval = setInterval(() => {
       setListeners((prev) => prev + Math.floor(Math.random() * 5) - 2);
@@ -100,25 +98,20 @@ export function RadioBar({ track }: { track?: any }) {
     return () => clearInterval(interval);
   }, []);
 
-  if (!currentTrack) return null;
+  if (!currentTrack || !mounted) return null;
 
   return (
     <>
-      <Player
-        url={currentTrack.audio_url}
-        playing={isPlaying}
-        volume={volume}
-        muted={isMuted}
-        onEnded={() => setIsPlaying(false)}
-        width="0"
-        height="0"
-        style={{ display: 'none' }}
-        config={{
-          soundcloud: {
-            options: { auto_play: false }
-          }
-        }}
-      />
+      {(isSoundCloud || isYouTube) && (
+        <iframe
+          ref={iframeRef}
+          src={isSoundCloud ? scEmbedUrl : ytEmbedUrl}
+          width="200"
+          height="200"
+          allow="autoplay"
+          style={{ position: 'fixed', top: 0, left: 0, opacity: 0.001, pointerEvents: 'none', zIndex: -100 }}
+        />
+      )}
 
       <div className="fixed bottom-0 left-0 right-0 z-50 px-2 sm:px-4 pb-2 sm:pb-3 pointer-events-none">
         <div className="max-w-6xl mx-auto pointer-events-auto bg-[#0a0a0a]/90 hover:bg-[#0a0a0a]/95 backdrop-blur-2xl border border-white/15 rounded-2xl sm:rounded-full p-2.5 sm:py-2.5 sm:px-6 shadow-[0_10px_40px_rgba(0,0,0,0.8)] transition-all duration-300">
@@ -174,7 +167,7 @@ export function RadioBar({ track }: { track?: any }) {
                     //
                   </span>
                   <span className="text-[11px] text-zinc-400 font-mono truncate hidden md:inline">
-                    {currentTrack.title}
+                    {currentTrack.title} ({currentTrack.audio_url})
                   </span>
                 </div>
                 <div className="text-[10px] sm:text-xs text-zinc-500 font-mono flex items-center gap-2 truncate">

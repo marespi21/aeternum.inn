@@ -62,11 +62,11 @@ export default function AdminLayout({
           <div className="w-full h-px bg-white/10 my-2 hidden md:block"></div>
 
           <Link 
-            href="/admin/preview" 
+            href="/" 
             className="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition-colors text-emerald-400 hover:text-emerald-300 font-mono text-sm whitespace-nowrap mt-auto"
           >
             <ShieldAlert className="w-4 h-4 shrink-0" />
-            <span>Vista Previa</span>
+            <span>Vista Previa del Sitio</span>
           </Link>
           
           <div className="md:mt-4 hidden md:block">

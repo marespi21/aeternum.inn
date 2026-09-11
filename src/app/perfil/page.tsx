@@ -21,6 +21,11 @@ export default async function PerfilPage() {
     .single()
     
   const isAdmin = profile?.role === 'ADMIN'
+  
+  if (isAdmin) {
+    redirect('/admin')
+  }
+
   const { data: ticketsData } = await supabase
     .from('tickets')
     .select('*, events(*)')

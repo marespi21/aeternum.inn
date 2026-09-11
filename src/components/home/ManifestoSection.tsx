@@ -49,13 +49,6 @@ export function ManifestoSection() {
     },
   ];
 
-  const metrics = [
-    { value: "32+", label: "DJS IMPULSADOS" },
-    { value: "18", label: "RAVES REALIZADOS" },
-    { value: "150+", label: "HORAS GRABADAS" },
-    { value: "100%", label: "UNDERGROUND" },
-  ];
-
   return (
     <section
       id="manifiesto"
@@ -255,19 +248,6 @@ export function ManifestoSection() {
               )}
             </AnimatePresence>
           </div>
-        </div>
-
-        {/* 3. METRICS STRIP (Minimalist & Compact) */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {metrics.map((item, idx) => (
-            <div
-              key={idx}
-              className="p-3 rounded-xl bg-black border border-white/10 text-center space-y-0.5"
-            >
-              <div className="text-2xl sm:text-3xl font-black font-title text-white">{item.value}</div>
-              <div className="text-[10px] font-title text-zinc-400 uppercase tracking-wider">{item.label}</div>
-            </div>
-          ))}
         </div>
 
         {/* 4. INVITACIÓN FINAL (Compact Banner) */}

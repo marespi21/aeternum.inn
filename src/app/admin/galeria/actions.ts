@@ -48,9 +48,13 @@ export async function updateGalleryOrder(items: { id: string, sort_order: number
 
   // Supabase doesn't have a simple batch update for different values per row without upsert.
   // Since we are only updating sort_order, doing Promise.all is fine for a small gallery.
-  const promises = items.map(item => 
-    supabase.from("gallery").update({ sort_order: item.sort_order }).eq("id", item.id)
-  );
+  const promises = items.map(async (item) => {
+    const { error } = await supabase.from("gallery").update({ sort_order: item.sort_order }).eq("id", item.id);
+    if (error) {
+      console.error("Error updating sort_order for id", item.id, error);
+      throw new Error(error.message);
+    }
+  });
 
   await Promise.all(promises);
 

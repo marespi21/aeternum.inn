@@ -12,7 +12,7 @@ export async function approveTicket(formData: FormData) {
   // 1. Fetch info necessary for email
   const { data: ticket } = await supabase
     .from('tickets')
-    .select('*, profiles(email), events(title, date)')
+    .select('*, profiles(email, full_name), events(title, date)')
     .eq('id', ticketId)
     .single()
 
@@ -25,7 +25,8 @@ export async function approveTicket(formData: FormData) {
       to: ticket.profiles.email,
       ticketId: ticketId,
       eventTitle: ticket.events.title,
-      eventDate: ticket.events.date
+      eventDate: ticket.events.date,
+      guestName: ticket.profiles.full_name
     })
   }
   
@@ -84,7 +85,8 @@ export async function createManualTicket(formData: FormData) {
     to: guestEmail,
     ticketId: ticket.id,
     eventTitle: event.title,
-    eventDate: event.date
+    eventDate: event.date,
+    guestName: guestName
   })
 
   revalidatePath('/admin')

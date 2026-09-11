@@ -8,7 +8,9 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  DragEndEvent
+  DragEndEvent,
+  MouseSensor,
+  TouchSensor
 } from '@dnd-kit/core';
 import {
   arrayMove,
@@ -43,12 +45,20 @@ function SortableItem({ item, onDelete }: { item: GalleryItem, onDelete: (id: st
     transition,
     zIndex: isDragging ? 10 : 1,
     opacity: isDragging ? 0.8 : 1,
+    touchAction: 'none', // Prevents mobile scrolling issues
   };
 
   return (
-    <div ref={setNodeRef} style={style} className={`relative group rounded-xl overflow-hidden bg-black border ${isDragging ? 'border-emerald-500 shadow-xl shadow-emerald-500/20' : 'border-white/5'} aspect-square`}>
+    <div 
+      ref={setNodeRef} 
+      style={style} 
+      className={`relative group rounded-xl overflow-hidden bg-black border cursor-grab active:cursor-grabbing touch-none select-none ${isDragging ? 'border-emerald-500 shadow-xl shadow-emerald-500/20' : 'border-white/5'} aspect-square`}
+      {...attributes} 
+      {...listeners}
+      onDragStart={(e) => e.preventDefault()} // Prevents native browser image dragging
+    >
       {item.type === 'video' ? (
-        <video src={item.url} className="w-full h-full object-cover" muted loop autoPlay playsInline />
+        <video src={item.url} className="w-full h-full object-cover pointer-events-none" muted loop autoPlay playsInline />
       ) : (
         <img src={item.url} alt="Gallery item" className="w-full h-full object-cover pointer-events-none" />
       )}
@@ -57,18 +67,13 @@ function SortableItem({ item, onDelete }: { item: GalleryItem, onDelete: (id: st
         {item.type === 'video' ? <Video className="w-3 h-3 text-white" /> : <ImageIcon className="w-3 h-3 text-white" />}
       </div>
 
-      <div 
-        className="absolute top-2 right-2 p-2 bg-black/60 backdrop-blur-md rounded-lg cursor-grab hover:bg-black active:cursor-grabbing text-zinc-400 hover:text-white"
-        {...attributes} 
-        {...listeners}
-      >
-        <GripHorizontal className="w-4 h-4" />
-      </div>
+      {/* Removemos el drag handle individual para poder arrastrar toda la imagen */}
 
-      <div className="absolute inset-x-0 bottom-0 top-auto h-1/2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
+      <div className="absolute inset-x-0 bottom-0 top-auto h-1/2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4 pointer-events-auto">
         <button 
+          onPointerDown={(e) => e.stopPropagation()} // Prevents dragging when clicking delete
           onClick={(e) => { e.stopPropagation(); onDelete(item.id); }}
-          className="p-3 bg-red-500/80 hover:bg-red-500 text-white rounded-full transition-transform hover:scale-110 shadow-lg"
+          className="p-3 bg-red-500/80 hover:bg-red-500 text-white rounded-full transition-transform hover:scale-110 shadow-lg cursor-pointer"
           title="Eliminar archivo"
         >
           <Trash2 className="w-5 h-5" />
@@ -127,8 +132,9 @@ export function GalleryGrid({ initialItems }: { initialItems: GalleryItem[] }) {
         sort_order: item.sort_order
       }));
       await updateGalleryOrder(orderPayload);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error saving order:", error);
+      alert("Error al guardar en base de datos. Revisa la consola o asegúrate de tener permisos (RLS). " + error.message);
     } finally {
       setIsSaving(false);
     }
