@@ -9,7 +9,8 @@ export async function ArtistsSection() {
   const { data: artists } = await supabase
     .from("artists")
     .select("*")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(3);
 
   if (!artists || artists.length === 0) {
     return null; // No mostrar la sección si no hay artistas
@@ -34,7 +35,7 @@ export async function ArtistsSection() {
       </div>
 
       {/* Artists Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {artists.map((artist) => (
           <ScrollColorizer key={artist.id}>
             <Link
@@ -67,6 +68,17 @@ export async function ArtistsSection() {
             </Link>
           </ScrollColorizer>
         ))}
+      </div>
+
+      {/* View All Button */}
+      <div className="mt-12 sm:mt-16 flex justify-center">
+        <Link
+          href="/artistas"
+          className="inline-flex px-8 py-4 rounded-full bg-transparent border border-white/20 text-white font-mono text-xs font-bold uppercase tracking-widest hover:border-emerald-400 hover:text-emerald-400 transition-all items-center justify-center gap-2 group"
+        >
+          <span>Ver todos los artistas</span>
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </Link>
       </div>
     </section>
   );

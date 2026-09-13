@@ -32,7 +32,7 @@ export function Navbar({ user }: { user: any }) {
   const navLinks = [
     { label: "EVENTOS", href: "/#eventos" },
     { label: "VIDEO SETS", href: "/videosets" },
-    { label: "ARTISTAS", href: "/#artistas" },
+    { label: "ARTISTAS", href: "/artistas" },
     { label: "GALERIA", href: "/galeria" },
     { label: "SOBRE NOSOTROS", href: "/#manifiesto" },
     { label: "COMUNIDAD", href: "/#comunidad" },
