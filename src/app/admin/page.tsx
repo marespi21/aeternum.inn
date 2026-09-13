@@ -52,13 +52,13 @@ export default async function AdminDashboard() {
           </div>
           <div className="flex gap-4">
             <Link href="/admin/scanner" className="px-5 py-2.5 bg-purple-600 text-white font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-purple-500 transition-colors flex items-center gap-2">
-              <QrCode className="w-4 h-4" /> Escáner QR
+              <QrCode className="w-4 h-4" /> Escáner
             </Link>
             <Link href="/admin/finanzas" className="px-5 py-2.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-emerald-500/20 transition-colors">
               Finanzas Globales
             </Link>
             <Link href="/admin/eventos" className="px-5 py-2.5 bg-white text-black font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-zinc-200 transition-colors">
-              Crear Evento Nuevo
+              Nuevo Evento
             </Link>
           </div>
         </div>
@@ -144,7 +144,7 @@ export default async function AdminDashboard() {
                         href={`/admin/event/${event.id}`}
                         className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-mono text-sm font-bold uppercase transition-colors"
                       >
-                        Gestionar Pagos <ArrowUpRight className="w-4 h-4" />
+                        Gestionar Evento <ArrowUpRight className="w-4 h-4" />
                       </Link>
                     </div>
                   </div>
