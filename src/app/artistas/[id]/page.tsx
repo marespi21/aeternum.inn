@@ -3,7 +3,7 @@ import { createClient } from '@/utils/supabase/server'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, Camera, MonitorPlay, Headphones, Sparkles, Play } from 'lucide-react'
+import { ArrowLeft, Camera, MonitorPlay, Headphones, Play } from 'lucide-react'
 import { ScrollColorizer } from "@/components/ui/ScrollColorizer"
 
 // Icon components mapping
@@ -88,9 +88,9 @@ export default async function ArtistProfilePage({ params }: { params: Promise<{ 
             {/* Right: Info */}
             <div className="md:col-span-7 p-8 sm:p-12 lg:p-16 flex flex-col justify-center">
               
-              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-4">
-                <Sparkles className="w-4 h-4" />
-                AETERNUM ROSTER
+              <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                PERFIL DEL ARTISTA
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-title uppercase tracking-tighter text-white mb-8">

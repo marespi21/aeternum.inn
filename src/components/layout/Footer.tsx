@@ -155,10 +155,10 @@ export function Footer() {
           <div>
             © {new Date().getFullYear()} AETERNUM. Todos los derechos reservados.
           </div>
-          <div className="flex items-center gap-6">
-            <span className="hover:text-zinc-300 cursor-pointer">Términos & Condiciones</span>
-            <span className="hover:text-zinc-300 cursor-pointer">Política de Privacidad</span>
-            <span className="hover:text-zinc-300 cursor-pointer">Protocolo Rave Seguro</span>
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-4 sm:mt-0">
+            <a href="/legal/terminos" className="hover:text-zinc-300 transition-colors">Términos & Condiciones</a>
+            <a href="/legal/privacidad" className="hover:text-zinc-300 transition-colors">Política de Privacidad</a>
+            <a href="/legal/protocolo-seguro" className="hover:text-zinc-300 transition-colors">Protocolo Rave Seguro</a>
           </div>
         </div>
       </div>

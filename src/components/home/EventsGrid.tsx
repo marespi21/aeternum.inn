@@ -23,24 +23,38 @@ export function EventsGrid({ events }: { events: any[] }) {
     setModalOpen(true);
   };
 
-  const handleBuy = (eventId: string, e?: React.MouseEvent) => {
+  const handleBuy = (eventObj: any, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
+    
+    // Doble verificación: si el evento ya pasó, no hacer nada.
+    const isPast = new Date(eventObj.date).getTime() < new Date().getTime();
+    if (isPast) return;
+    
     // Redirige al checkout dinámicamente en la misma pestaña
-    router.push(`/eventos/${eventId}/pago`);
+    router.push(`/eventos/${eventObj.id}/pago`);
   };
 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {events.map((event, idx) => (
+        {events.map((event, idx) => {
+          const isPast = new Date(event.date).getTime() < new Date().getTime();
+          return (
           <ScrollColorizer key={event.id} className="h-full">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.15 }}
-              onClick={() => handleBuy(event.id)}
-              className="group relative flex flex-col h-full bg-zinc-950/80 border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 group-data-[inview=true]/colorizer:border-white/20 transition-all duration-500 shadow-xl hover:-translate-y-1 hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)] group-data-[inview=true]/colorizer:-translate-y-1 group-data-[inview=true]/colorizer:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)] cursor-pointer"
+              onClick={(e) => {
+                if (isPast) return;
+                handleBuy(event, e);
+              }}
+              className={`group relative flex flex-col h-full bg-zinc-950/80 border border-white/10 rounded-2xl overflow-hidden transition-all duration-500 shadow-xl ${
+                isPast 
+                  ? 'cursor-not-allowed opacity-80' 
+                  : 'hover:border-white/20 group-data-[inview=true]/colorizer:border-white/20 hover:-translate-y-1 hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)] group-data-[inview=true]/colorizer:-translate-y-1 group-data-[inview=true]/colorizer:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)] cursor-pointer'
+              }`}
             >
               {/* Efecto hover estilo pilares */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10" />
@@ -65,8 +79,8 @@ export function EventsGrid({ events }: { events: any[] }) {
               </div>
 
               {/* Status Badge */}
-              <div className="absolute top-4 right-4 bg-emerald-950/90 border border-emerald-500/40 px-3 py-1 rounded-full text-[10px] font-mono font-semibold tracking-wider text-emerald-300 backdrop-blur-md">
-                AVAILABLE
+              <div className={`absolute top-4 right-4 border px-3 py-1 rounded-full text-[10px] font-mono font-semibold tracking-wider backdrop-blur-md ${isPast ? 'bg-zinc-950/90 border-zinc-500/40 text-zinc-400' : 'bg-emerald-950/90 border-emerald-500/40 text-emerald-300'}`}>
+                {isPast ? 'NO DISPONIBLE' : 'DISPONIBLE'}
               </div>
             </div>
 
@@ -80,25 +94,35 @@ export function EventsGrid({ events }: { events: any[] }) {
                 {/* Location */}
                 <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 pt-1">
                   <MapPin className="w-4 h-4 text-zinc-500 shrink-0" />
-                  <span className="truncate">{event.location || "Secret Location"}</span>
+                  <span className="truncate">{event.location || "Ubicación por definir"}</span>
                 </div>
               </div>
 
               {/* Action Buttons */}
               <div className="pt-3 border-t border-white/10 flex items-center justify-center">
-                <button
-                  onClick={(e) => handleBuy(event.id, e)}
-                  className="flex w-full justify-center items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white text-black hover:bg-zinc-200 group-data-[inview=true]/colorizer:bg-white group-data-[inview=true]/colorizer:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all shadow hover:shadow-white/20"
-                >
-                  <Ticket className="w-3.5 h-3.5" />
-                  <span>Comprar Tickets</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
+                {isPast ? (
+                  <button
+                    disabled
+                    className="flex w-full justify-center items-center gap-1.5 px-4 py-2.5 rounded-xl bg-zinc-800 text-zinc-500 font-mono text-xs font-bold uppercase tracking-wider cursor-not-allowed"
+                  >
+                    <span>Evento Finalizado</span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={(e) => handleBuy(event, e)}
+                    className="flex w-full justify-center items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white text-black hover:bg-zinc-200 group-data-[inview=true]/colorizer:bg-white group-data-[inview=true]/colorizer:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all shadow hover:shadow-white/20"
+                  >
+                    <Ticket className="w-3.5 h-3.5" />
+                    <span>Comprar Tickets</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
               </div>
             </motion.div>
           </ScrollColorizer>
-        ))}
+          );
+        })}
       </div>
 
       {/* Modal (Opcional por ahora) */}

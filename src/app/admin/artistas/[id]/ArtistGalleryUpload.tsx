@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { UploadCloud, Loader2 } from "lucide-react";
 import { addArtistGalleryImage } from "../actions";
+import { toast } from "sonner";
 
 export function ArtistGalleryUpload({ artistId }: { artistId: string }) {
   const [isUploading, setIsUploading] = useState(false);
@@ -30,9 +31,10 @@ export function ArtistGalleryUpload({ artistId }: { artistId: string }) {
         const type = data.resource_type === 'video' ? 'video' : 'image';
         await addArtistGalleryImage(artistId, data.secure_url, type);
       }
+      toast.success("Archivo subido correctamente.");
     } catch (error) {
       console.error("Error uploading to Cloudinary:", error);
-      alert("Hubo un error subiendo el archivo. Revisa la consola.");
+      toast.error("Hubo un error subiendo el archivo. Revisa la consola.");
     } finally {
       setIsUploading(false);
       if (e.target) e.target.value = '';

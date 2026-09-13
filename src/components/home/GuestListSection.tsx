@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  Sparkles,
   CheckCircle2,
   Lock,
   ArrowRight,
@@ -21,12 +20,12 @@ export function GuestListSection() {
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Column: Value Proposition */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-zinc-300">
-              <Sparkles className="w-3.5 h-3.5 text-zinc-400" />
+            <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-zinc-400 mb-4 bg-zinc-900/50 w-fit px-3 py-1.5 rounded-full border border-white/5">
+              <span className="w-2 h-2 rounded-full bg-zinc-500 animate-pulse shrink-0" />
               <span>AETERNUM SOCIETY // ACCESO EXCLUSIVO</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black font-mono text-white tracking-tight uppercase leading-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black font-mono text-white tracking-tight uppercase leading-tight">
               UNETE A LA COMUNIDAD
             </h2>
 

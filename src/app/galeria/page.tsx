@@ -1,8 +1,10 @@
 import React from "react";
 import { createClient } from "@/utils/supabase/server";
-import { Sparkles, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+
+import { GalleryView } from "@/components/ui/GalleryView";
 
 export const metadata = {
   title: 'Galería | AETERNUM',
@@ -32,7 +34,7 @@ export default async function GalleryPage() {
             VOLVER AL INICIO
           </Link>
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
-            <Sparkles className="w-4 h-4" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
             ARCHIVO VISUAL
           </div>
           <h1 className="text-4xl sm:text-6xl font-black font-mono uppercase tracking-tight text-white">
@@ -50,34 +52,7 @@ export default async function GalleryPage() {
           <p className="text-zinc-400 font-mono">No hay archivos en la galería aún.</p>
         </div>
       ) : (
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-          {galleryItems.map((item) => (
-            <div 
-              key={item.id} 
-              className="group relative break-inside-avoid rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 shadow-xl"
-            >
-              {item.type === "video" ? (
-                <video
-                  src={item.url}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-auto object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
-                />
-              ) : (
-                <img
-                  src={item.url}
-                  alt="Aeternum Gallery"
-                  loading="lazy"
-                  className="w-full h-auto object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
-                />
-              )}
-              
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-          ))}
-        </div>
+        <GalleryView items={galleryItems} />
       )}
     </div>
   );

@@ -63,6 +63,10 @@ export function EventCard({
               <input required type="datetime-local" name="date" defaultValue={new Date(event.date).toISOString().slice(0, 16)} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono [color-scheme:dark]" />
             </div>
             <div>
+              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Ubicación</label>
+              <input type="text" name="location" defaultValue={event.location || ''} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" placeholder="Medellín, Colombia" />
+            </div>
+            <div>
               <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Precio Early</label>
               <input required type="number" name="early_price" defaultValue={event.early_price} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
             </div>
@@ -109,6 +113,7 @@ export function EventCard({
         <h3 className="font-bold font-mono text-lg text-emerald-400 uppercase">{event.title}</h3>
         <div className="flex flex-wrap gap-2 text-xs text-zinc-400 font-mono">
           <span className="bg-white/5 px-2 py-1 rounded">{new Date(event.date).toLocaleDateString()}</span>
+          <span className="bg-white/5 px-2 py-1 rounded">{event.location || 'Ubicación por definir'}</span>
           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early: ${(event.early_price || 0).toLocaleString()}</span>
           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Anytime: ${(event.anytime_price || 0).toLocaleString()}</span>
           <span className="bg-white/5 px-2 py-1 rounded">Aforo: {event.total_tickets}</span>

@@ -15,11 +15,13 @@ import {
   Sparkles,
   ExternalLink,
   Film,
+  ArrowUpRight,
+  Disc3,
 } from "lucide-react";
 
 type FilterType = "ALL" | "CAPITULOS" | "BOSQUE" | "LIVE_SETS";
 
-export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
+export function VideoSetsSection({ initialVideos, isHomePage = false }: { initialVideos: any[], isHomePage?: boolean }) {
   const [activeFilter, setActiveFilter] = useState<FilterType>("ALL");
   const [selectedSet, setSelectedSet] = useState<VideoSetItem | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -57,10 +59,14 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
     genres: ["TECHNO"] // Default genre
   }))
 
-  const filteredSets = mappedVideos.filter((item) => {
+  let filteredSets = mappedVideos.filter((item) => {
     if (activeFilter === "ALL") return true;
     return item.category === activeFilter;
   });
+
+  if (isHomePage) {
+    filteredSets = filteredSets.slice(0, 3);
+  }
 
   const handleOpenSet = (set: VideoSetItem) => {
     setSelectedSet(set);
@@ -78,12 +84,7 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
       label: "SESIONES EN EL BOSQUE",
       value: "BOSQUE",
       count: mappedVideos.filter((i) => i.category === "BOSQUE").length,
-    },
-    {
-      label: "LIVE SETS",
-      value: "LIVE_SETS",
-      count: mappedVideos.filter((i) => i.category === "LIVE_SETS").length,
-    },
+    }
   ];
 
   return (
@@ -94,9 +95,9 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-12 border-b border-white/10 pb-6">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-red-400 mb-2">
-            <YoutubeIcon className="w-4 h-4" />
-            CANAL OFICIAL // YOUTUBE @AETERNUM-INN
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            PODCAST // AETERNUM MDE
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-mono uppercase tracking-tight text-white">
             LUGARES DE PELICULA
@@ -120,31 +121,33 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
         </div>
       </div>
 
-      {/* Filter Tabs */}
-      <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 mb-8 custom-scrollbar">
-        {filterTabs.map((tab) => (
-          <button
-            key={tab.value}
-            onClick={() => setActiveFilter(tab.value)}
-            className={`px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider whitespace-nowrap transition-all flex items-center gap-2 ${
-              activeFilter === tab.value
-                ? "bg-white text-black font-bold shadow-lg shadow-white/10"
-                : "bg-zinc-900/80 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/5"
-            }`}
-          >
-            <span>{tab.label}</span>
-            <span
-              className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+      {/* Filter Tabs - Ocultos en el inicio */}
+      {!isHomePage && (
+        <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 mb-8 custom-scrollbar">
+          {filterTabs.filter(tab => tab.value === 'ALL' || tab.count > 0).map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => setActiveFilter(tab.value)}
+              className={`px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider whitespace-nowrap transition-all flex items-center gap-2 ${
                 activeFilter === tab.value
-                  ? "bg-black text-white"
-                  : "bg-zinc-800 text-zinc-400"
+                  ? "bg-white text-black font-bold shadow-lg shadow-white/10"
+                  : "bg-zinc-900/80 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/5"
               }`}
             >
-              {tab.count}
-            </span>
-          </button>
-        ))}
-      </div>
+              <span>{tab.label}</span>
+              <span
+                className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                  activeFilter === tab.value
+                    ? "bg-black text-white"
+                    : "bg-zinc-800 text-zinc-400"
+                }`}
+              >
+                {tab.count}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Video Sets Grid */}
       <motion.div
@@ -243,6 +246,24 @@ export function VideoSetsSection({ initialVideos }: { initialVideos: any[] }) {
           ))}
         </AnimatePresence>
       </motion.div>
+
+      {/* Botón Ver Más para la página de inicio */}
+      {isHomePage && mappedVideos.length > 3 && (
+        <div className="mt-12 flex justify-center">
+          <a
+            href="/videosets"
+            className="group relative inline-flex items-center justify-center px-8 py-3.5 font-mono text-sm font-bold text-white uppercase tracking-widest transition-all duration-300"
+          >
+            <div className="absolute inset-0 w-full h-full border border-white/20 group-hover:border-white/50 rounded-full transition-colors" />
+            <div className="absolute inset-0 w-full h-full bg-white/5 group-hover:bg-white/10 backdrop-blur-sm rounded-full transition-colors" />
+            <span className="relative flex items-center gap-2">
+              <Film className="w-4 h-4" />
+              Ver Catálogo Completo
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </span>
+          </a>
+        </div>
+      )}
 
       {/* Video Modal */}
       <VideoModal

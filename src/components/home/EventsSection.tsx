@@ -9,11 +9,24 @@ export async function EventsSection() {
   const { data: events, error } = await supabase
     .from("events")
     .select("*")
-    .order("date", { ascending: true })
+    .order("date", { ascending: false })
     // .gte("date", new Date().toISOString()) // Opcional: solo futuros
 
-  // Si no hay eventos reales, mostramos un estado vacío o mensaje
-  const activeEvents = events || [];
+  const allEvents = events || [];
+  const now = new Date().getTime();
+  
+  // Eventos que aún no han pasado (ordenados del más próximo al más lejano)
+  const upcomingEvents = allEvents
+    .filter(e => new Date(e.date).getTime() >= now)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+  // Eventos que ya pasaron (ordenados del más reciente al más antiguo)
+  const pastEvents = allEvents
+    .filter(e => new Date(e.date).getTime() < now)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  // Mezclamos: Primero los futuros, luego los pasados recientes. Máximo 3 para mantener el diseño.
+  const activeEvents = [...upcomingEvents, ...pastEvents].slice(0, 3);
 
   return (
     <section id="eventos" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">

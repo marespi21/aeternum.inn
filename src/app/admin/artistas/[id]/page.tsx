@@ -2,15 +2,17 @@ import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Trash2, Camera } from "lucide-react";
 import Link from "next/link";
+import { ArtistForm } from "../nuevo/ArtistForm";
 import { ArtistGalleryUpload } from "./ArtistGalleryUpload";
 import { deleteArtistGalleryImage } from "../actions";
 
-export default async function EditArtistPage({ params }: { params: { id: string } }) {
+export default async function EditArtistPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient();
+  const { id } = await params;
 
   const [{ data: artist }, { data: gallery }] = await Promise.all([
-    supabase.from("artists").select("*").eq("id", params.id).single(),
-    supabase.from("artist_gallery").select("*").eq("artist_id", params.id).order("created_at", { ascending: false }),
+    supabase.from("artists").select("*").eq("id", id).single(),
+    supabase.from("artist_gallery").select("*").eq("artist_id", id).order("created_at", { ascending: false }),
   ]);
 
   if (!artist) {
@@ -28,12 +30,15 @@ export default async function EditArtistPage({ params }: { params: { id: string 
           <span>Volver a Artistas</span>
         </Link>
         <h1 className="text-3xl font-black font-mono uppercase tracking-tight text-white mb-2">
-          {artist.name}
+          Editar Artista: {artist.name}
         </h1>
         <p className="text-zinc-400 font-sans text-sm">
-          Sube fotos o videos exclusivos del set de este DJ para su galería independiente.
+          Actualiza los datos del artista o sube contenido a su galería exclusiva.
         </p>
       </div>
+
+      {/* Formulario de Edición */}
+      <ArtistForm initialData={artist} />
 
       <div className="bg-zinc-900 border border-white/10 rounded-2xl p-6 md:p-8 space-y-8">
         <div className="flex items-center gap-3 border-b border-white/10 pb-4">

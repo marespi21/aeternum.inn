@@ -8,7 +8,7 @@ import { CloudinaryUpload } from '@/components/ui/CloudinaryUpload'
 
 export function CheckoutForm({ eventId, eventTitle, earlyPrice, anytimePrice, userEmail, userMetadata }: { eventId: string, eventTitle: string, earlyPrice: number, anytimePrice: number, userEmail: string, userMetadata: any }) {
   const [receiptUrl, setReceiptUrl] = useState<string | null>(null)
-  
+
   // New State Fields
   const [ticketType, setTicketType] = useState<'EARLY' | 'ANYTIME'>('ANYTIME')
   const [docType, setDocType] = useState(userMetadata?.document_type || "CC")
@@ -48,7 +48,7 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, anytimePrice, us
     formData.append('phoneNumber', phoneNumber)
 
     const result = await uploadReceiptAndReserve(formData)
-    
+
     if (result?.error) {
       setError(result.error)
       setLoading(false)
@@ -60,36 +60,34 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, anytimePrice, us
   return (
     <div className="grid md:grid-cols-2 gap-8">
       {/* Instrucciones Bancarias */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-6"
       >
         <h2 className="text-xl font-semibold border-b border-zinc-800 pb-4">Selecciona tu Entrada</h2>
-        
+
         <div className="grid grid-cols-2 gap-4">
           <button
             type="button"
             onClick={() => setTicketType('EARLY')}
-            className={`p-4 rounded-xl border text-left transition-all ${
-              ticketType === 'EARLY' 
-                ? 'bg-emerald-500/10 border-emerald-500 text-white' 
-                : 'bg-black/50 border-white/10 text-zinc-400 hover:border-white/30'
-            }`}
+            className={`p-4 rounded-xl border text-left transition-all ${ticketType === 'EARLY'
+              ? 'bg-emerald-500/10 border-emerald-500 text-white'
+              : 'bg-black/50 border-white/10 text-zinc-400 hover:border-white/30'
+              }`}
           >
             <div className="font-bold font-mono text-lg mb-1">EARLY</div>
             <div className="text-xs mb-2 text-zinc-400">Antes de la 1:00 AM</div>
             <div className="font-bold text-emerald-400">${(earlyPrice || 0).toLocaleString()}</div>
           </button>
-          
+
           <button
             type="button"
             onClick={() => setTicketType('ANYTIME')}
-            className={`p-4 rounded-xl border text-left transition-all ${
-              ticketType === 'ANYTIME' 
-                ? 'bg-emerald-500/10 border-emerald-500 text-white' 
-                : 'bg-black/50 border-white/10 text-zinc-400 hover:border-white/30'
-            }`}
+            className={`p-4 rounded-xl border text-left transition-all ${ticketType === 'ANYTIME'
+              ? 'bg-emerald-500/10 border-emerald-500 text-white'
+              : 'bg-black/50 border-white/10 text-zinc-400 hover:border-white/30'
+              }`}
           >
             <div className="font-bold font-mono text-lg mb-1">ANYTIME</div>
             <div className="text-xs mb-2 text-zinc-400">Cualquier Hora</div>
@@ -98,7 +96,7 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, anytimePrice, us
         </div>
 
         <h2 className="text-xl font-semibold border-b border-zinc-800 pb-4 mt-8">Datos de Transferencia</h2>
-        
+
         <div className="space-y-4">
           <div className="bg-purple-900/20 p-4 rounded-xl border border-purple-500/30">
             <p className="text-sm text-purple-300 mb-1">Total a Pagar</p>
@@ -108,18 +106,18 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, anytimePrice, us
           </div>
 
           <div className="bg-black/50 p-4 rounded-xl border border-zinc-800/50">
-            <p className="text-sm text-zinc-500 mb-1">Banco / Aplicación</p>
-            <p className="font-semibold text-lg">Nequi o Bancolombia</p>
+            <p className="text-sm text-zinc-500 mb-1">Banco</p>
+            <p className="font-semibold text-lg">Bancolombia</p>
           </div>
-          
+
           <div className="bg-black/50 p-4 rounded-xl border border-zinc-800/50">
-            <p className="text-sm text-zinc-500 mb-1">Número de Cuenta / Celular</p>
-            <p className="font-mono font-semibold text-xl">300 123 4567</p>
+            <p className="text-sm text-zinc-500 mb-1">Número de Cuenta</p>
+            <p className="font-mono font-semibold text-xl">91213119961</p>
           </div>
-          
+
           <div className="bg-black/50 p-4 rounded-xl border border-zinc-800/50">
             <p className="text-sm text-zinc-500 mb-1">Titular</p>
-            <p className="font-semibold">AETERNUM EVENTOS S.A.S</p>
+            <p className="font-semibold">Adolfo Osorio Botero </p>
           </div>
         </div>
 
@@ -130,7 +128,7 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, anytimePrice, us
       </motion.div>
 
       {/* Formulario de Subida y Datos */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6"
@@ -146,7 +144,7 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, anytimePrice, us
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-4 mb-6">
-            
+
             <div className="space-y-1.5">
               <label className="text-xs font-mono uppercase tracking-wider text-zinc-300">
                 Correo Electrónico *
@@ -251,12 +249,12 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, anytimePrice, us
 
           </div>
 
-          <CloudinaryUpload 
-            onUploadSuccess={(url) => setReceiptUrl(url)} 
-            label="Haz clic para subir comprobante *" 
+          <CloudinaryUpload
+            onUploadSuccess={(url) => setReceiptUrl(url)}
+            label="Haz clic para subir comprobante *"
           />
 
-          <button 
+          <button
             type="submit"
             disabled={loading || !receiptUrl}
             className="w-full bg-white text-black font-semibold rounded-xl py-4 flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"

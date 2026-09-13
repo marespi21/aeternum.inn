@@ -52,7 +52,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-zinc-500" />
-              Medellín (Secret Location)
+              {event.location || 'Ubicación por definir'}
             </div>
           </div>
         </div>

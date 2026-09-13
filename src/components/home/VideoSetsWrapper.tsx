@@ -2,7 +2,7 @@ import React from "react";
 import { createClient } from "@/utils/supabase/server";
 import { VideoSetsSection } from "./VideoSetsSection";
 
-export async function VideoSetsWrapper() {
+export async function VideoSetsWrapper({ isHomePage = true }: { isHomePage?: boolean }) {
   const supabase = await createClient();
 
   const { data: videos } = await supabase
@@ -13,5 +13,5 @@ export async function VideoSetsWrapper() {
   // Si no hay videos, usar array vacío
   const safeVideos = videos || [];
 
-  return <VideoSetsSection initialVideos={safeVideos} />;
+  return <VideoSetsSection initialVideos={safeVideos} isHomePage={isHomePage} />;
 }

@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Compass,
   Target,
+  Headphones,
+  Zap,
   Globe,
-  Sparkles,
   Flame,
   Film,
   Users,
@@ -45,7 +46,7 @@ export function ManifestoSection() {
       key: "unicos",
       label: "¿QUE NOS HACE UNICOS?",
       num: "04",
-      icon: <Sparkles className="w-3.5 h-3.5" />,
+      icon: <Zap className="w-3.5 h-3.5" />,
     },
   ];
 
@@ -250,24 +251,6 @@ export function ManifestoSection() {
           </div>
         </div>
 
-        {/* 4. INVITACIÓN FINAL (Compact Banner) */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-zinc-950 border border-white/15 text-center space-y-3">
-          <h3 className="text-lg sm:text-xl font-bold font-title text-white uppercase">
-            “Esto apenas comienza...”
-          </h3>
-          <p className="text-xs sm:text-sm text-zinc-400 font-body max-w-md mx-auto leading-relaxed">
-            Unete a la comunidad Aeternum y vive la música electrónica como nunca antes.
-          </p>
-          <div className="pt-2 flex items-center justify-center gap-3">
-            <Link
-              href="/login?mode=signup"
-              className="px-5 py-2.5 rounded-xl bg-white text-black font-title text-xs font-bold uppercase tracking-wider hover:bg-zinc-200 transition-all flex items-center gap-1.5"
-            >
-              <span>Registrarme</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-        </div>
 
       </div>
     </section>

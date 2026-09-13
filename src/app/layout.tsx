@@ -36,6 +36,7 @@ export const metadata: Metadata = {
 import { Navbar } from "@/components/layout/Navbar";
 import { RadioBar } from "@/components/layout/RadioBar";
 import { createClient } from "@/utils/supabase/server";
+import { Toaster } from "sonner";
 
 export default async function RootLayout({
   children,
@@ -73,6 +74,16 @@ export default async function RootLayout({
         
         {/* Global Persistent Audio Radio Bar */}
         <RadioBar track={currentTrack} />
+        
+        {/* Global Notifications */}
+        <Toaster position="top-center" theme="dark" richColors toastOptions={{
+          style: {
+            background: '#0a0a0a',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            color: '#fff',
+            fontFamily: 'Montserrat, sans-serif'
+          }
+        }} />
       </body>
     </html>
   );

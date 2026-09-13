@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Sparkles, Video, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Camera, Video, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface GalleryItem {
@@ -71,7 +71,7 @@ export function GalleryView({ items }: { items: GalleryItem[] }) {
               {/* Overlay on Hover */}
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <div className="p-4 bg-black/60 rounded-full backdrop-blur-sm border border-white/20 shadow-lg">
-                  {item.type === 'video' ? <Video className="w-6 h-6 text-white" /> : <Sparkles className="w-6 h-6 text-white" />}
+                  {item.type === 'video' ? <Video className="w-6 h-6 text-white" /> : <Camera className="w-6 h-6 text-white" />}
                 </div>
               </div>
             </div>

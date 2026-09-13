@@ -22,6 +22,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { Trash2, Image as ImageIcon, Video, GripHorizontal } from "lucide-react";
 import { updateGalleryOrder, deleteGalleryItem } from "./actions";
+import { toast } from "sonner";
 
 interface GalleryItem {
   id: string;
@@ -134,7 +135,7 @@ export function GalleryGrid({ initialItems }: { initialItems: GalleryItem[] }) {
       await updateGalleryOrder(orderPayload);
     } catch (error: any) {
       console.error("Error saving order:", error);
-      alert("Error al guardar en base de datos. Revisa la consola o asegúrate de tener permisos (RLS). " + error.message);
+      toast.error("Error al guardar en base de datos. Revisa la consola o asegúrate de tener permisos (RLS). " + error.message);
     } finally {
       setIsSaving(false);
     }

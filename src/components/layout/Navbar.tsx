@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Radio, Menu, X, ArrowUpRight, Sparkles } from "lucide-react";
+import { Radio, Menu, X, ArrowUpRight, User } from "lucide-react";
 
 export function Navbar({ user }: { user: any }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,11 +18,22 @@ export function Navbar({ user }: { user: any }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { label: "EVENTOS", href: "/#eventos" },
-    { label: "VIDEO SETS", href: "/#video-sets" },
+    { label: "VIDEO SETS", href: "/videosets" },
     { label: "ARTISTAS", href: "/#artistas" },
-    { label: "GALERIA", href: "/#experiencia" },
+    { label: "GALERIA", href: "/galeria" },
     { label: "SOBRE NOSOTROS", href: "/#manifiesto" },
     { label: "COMUNIDAD", href: "/#comunidad" },
   ];
@@ -154,7 +165,7 @@ export function Navbar({ user }: { user: any }) {
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-white text-black font-mono text-sm font-bold uppercase tracking-widest"
               >
-                <Sparkles className="w-4 h-4" />
+                <User className="w-4 h-4" />
                 {user ? "Ir a mi perfil" : "Ingresar a mi cuenta"}
               </Link>
               

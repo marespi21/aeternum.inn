@@ -4,13 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { UploadCloud, Save, ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { addArtist } from "../actions";
+import { toast } from "sonner";
+import { addArtist, updateArtist } from "../actions";
 
-export function ArtistForm() {
+export function ArtistForm({ initialData }: { initialData?: any }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(initialData?.image_url || "");
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -36,7 +37,7 @@ export function ArtistForm() {
       }
     } catch (error) {
       console.error("Error uploading to Cloudinary:", error);
-      alert("Hubo un error subiendo la imagen. Revisa la consola.");
+      toast.error("Hubo un error subiendo la imagen. Revisa la consola.");
     } finally {
       setIsUploading(false);
     }
@@ -45,7 +46,7 @@ export function ArtistForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!imageUrl) {
-      alert("Debes subir una imagen principal para el artista.");
+      toast.error("Debes subir una imagen principal para el artista.");
       return;
     }
 
@@ -54,11 +55,18 @@ export function ArtistForm() {
     formData.append("image_url", imageUrl);
     
     try {
-      await addArtist(formData);
-      router.push("/admin/artistas");
+      if (initialData?.id) {
+        await updateArtist(initialData.id, formData);
+        toast.success("Artista actualizado correctamente.");
+        router.refresh();
+      } else {
+        await addArtist(formData);
+        toast.success("Artista creado correctamente.");
+        router.push("/admin/artistas");
+      }
     } catch (error: any) {
       console.error(error);
-      alert("Error al guardar artista: " + error.message);
+      toast.error("Error al guardar artista: " + error.message);
       setIsSubmitting(false);
     }
   };
@@ -74,6 +82,7 @@ export function ArtistForm() {
             type="text" 
             name="name" 
             required
+            defaultValue={initialData?.name}
             className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors font-mono"
             placeholder="Ej. OGUZ"
           />
@@ -85,6 +94,7 @@ export function ArtistForm() {
           <textarea 
             name="bio" 
             rows={4}
+            defaultValue={initialData?.bio}
             className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors font-sans text-sm"
             placeholder="Escribe algo sobre el artista..."
           />
@@ -97,6 +107,7 @@ export function ArtistForm() {
             <input 
               type="url" 
               name="youtube_url" 
+              defaultValue={initialData?.youtube_url}
               className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors font-mono text-sm"
               placeholder="https://youtube.com/..."
             />
@@ -106,6 +117,7 @@ export function ArtistForm() {
             <input 
               type="url" 
               name="soundcloud_url" 
+              defaultValue={initialData?.soundcloud_url}
               className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors font-mono text-sm"
               placeholder="https://soundcloud.com/..."
             />
@@ -115,6 +127,7 @@ export function ArtistForm() {
             <input 
               type="url" 
               name="instagram_url" 
+              defaultValue={initialData?.instagram_url}
               className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors font-mono text-sm"
               placeholder="https://instagram.com/..."
             />
@@ -173,7 +186,7 @@ export function ArtistForm() {
           ) : (
             <Save className="w-4 h-4" />
           )}
-          <span>Guardar Artista</span>
+          <span>{initialData ? 'Guardar Cambios' : 'Guardar Artista'}</span>
         </button>
       </div>
     </form>

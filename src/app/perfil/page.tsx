@@ -104,7 +104,7 @@ export default async function PerfilPage() {
                   
                     <div className="space-y-3 text-sm text-zinc-400 font-mono">
                       <p>• {new Date(ticket.events?.date).toLocaleDateString()}</p>
-                      <p>• Medellín (Secret Location)</p>
+                      <p>• {ticket.events?.location || 'Ubicación por definir'}</p>
                       <p>
                         • Tipo: <span className="text-emerald-400 font-bold">{ticket.ticket_type === 'EARLY' ? 'EARLY (Antes de la 1AM)' : 'ANYTIME'}</span>
                       </p>

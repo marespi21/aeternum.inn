@@ -85,7 +85,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
             <div className="space-y-4 font-mono text-sm">
               <div className="flex justify-between items-center text-zinc-400">
                 <span>Locación:</span>
-                <span className="text-white font-bold">Secret Location</span>
+                <span className="text-white font-bold">{ticket.events?.location || 'Ubicación por definir'}</span>
               </div>
               <div className="flex justify-between items-center text-zinc-400">
                 <span>Titular:</span>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { ScrollColorizer } from "@/components/ui/ScrollColorizer";
@@ -21,8 +21,8 @@ export async function ArtistsSection() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 border-b border-white/10 pb-6">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
-            <Sparkles className="w-4 h-4" />
-            EL TALENTO // ROSTER OFICIAL
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            ROSTER OFICIAL
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-mono uppercase tracking-tight text-white">
             NUESTROS ARTISTAS

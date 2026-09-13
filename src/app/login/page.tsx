@@ -22,6 +22,7 @@ function LoginContent() {
   })
   const [isDirty, setIsDirty] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false)
 
   // Prevenir salida accidental si hay datos sin guardar
   useEffect(() => {
@@ -166,6 +167,8 @@ function LoginContent() {
                   required
                   value={formData.password}
                   onChange={handleChange}
+                  onFocus={() => setIsPasswordFocused(true)}
+                  onBlur={() => setIsPasswordFocused(false)}
                   placeholder="••••••••"
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 pl-10 pr-12 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
                 />
@@ -184,7 +187,7 @@ function LoginContent() {
 
               {/* Password Requirements Checklist */}
               <AnimatePresence>
-                {!isLogin && formData.password.length > 0 && (
+                {!isLogin && (isPasswordFocused || (formData.password.length > 0 && !isPasswordValid)) && (
                   <motion.div 
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}

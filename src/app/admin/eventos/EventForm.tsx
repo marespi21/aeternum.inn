@@ -53,6 +53,11 @@ export function EventForm({ createEventAction }: { createEventAction: (formData:
               <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Fecha</label>
               <input required type="datetime-local" name="date" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono [color-scheme:dark]" />
             </div>
+
+            <div>
+              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Ubicación</label>
+              <input type="text" name="location" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" placeholder="Medellín, Colombia" />
+            </div>
           </div>
 
           <div className="space-y-4">

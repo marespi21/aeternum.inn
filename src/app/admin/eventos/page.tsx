@@ -38,10 +38,12 @@ export default async function AdminEventosPage() {
     const capacity = formData.get('capacity') as string
     const flyerUrl = formData.get('flyerUrl') as string
     const description = formData.get('description') as string
+    const location = formData.get('location') as string
 
     const { error } = await supabase.from('events').insert({
       title,
       date: new Date(date).toISOString(),
+      location: location || null,
       early_price: Number(early_price),
       anytime_price: Number(anytime_price),
       total_tickets: Number(capacity),
@@ -77,11 +79,13 @@ export default async function AdminEventosPage() {
     const capacity = formData.get('capacity') as string
     const flyerUrl = formData.get('flyerUrl') as string
     const description = formData.get('description') as string
+    const location = formData.get('location') as string
 
     const supabase = await createClient()
     const { error } = await supabase.from('events').update({
       title,
       date: new Date(date).toISOString(),
+      location: location || null,
       early_price: Number(early_price),
       anytime_price: Number(anytime_price),
       total_tickets: Number(capacity),

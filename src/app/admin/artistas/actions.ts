@@ -34,6 +34,38 @@ export async function addArtist(formData: FormData) {
   revalidatePath("/admin/artistas");
 }
 
+export async function updateArtist(id: string, formData: FormData) {
+  const supabase = await createClient();
+
+  const name = formData.get("name") as string;
+  const bio = formData.get("bio") as string;
+  const image_url = formData.get("image_url") as string;
+  const youtube_url = formData.get("youtube_url") as string;
+  const soundcloud_url = formData.get("soundcloud_url") as string;
+  const instagram_url = formData.get("instagram_url") as string;
+
+  if (!name || !image_url) {
+    throw new Error("Nombre e imagen son requeridos");
+  }
+
+  const { error } = await supabase.from("artists").update({
+    name,
+    bio,
+    image_url,
+    youtube_url,
+    soundcloud_url,
+    instagram_url,
+  }).eq("id", id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/");
+  revalidatePath("/admin/artistas");
+  revalidatePath(`/admin/artistas/${id}`);
+}
+
 export async function deleteArtist(id: string) {
   const supabase = await createClient();
 

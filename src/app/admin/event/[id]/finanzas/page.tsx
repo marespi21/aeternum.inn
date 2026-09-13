@@ -76,7 +76,7 @@ export default async function AdminEventFinancesPage({ params }: { params: Promi
               <ArrowLeft className="w-4 h-4" /> Volver a Pagos
             </Link>
             <h1 className="text-3xl font-bold font-mono tracking-tighter text-emerald-400 uppercase">
-              P&G: {event.title}
+              Reporte Financiero: {event.title}
             </h1>
             <p className="text-zinc-400 mt-1 font-mono text-sm">Resumen de Pérdidas y Ganancias del Evento</p>
           </div>

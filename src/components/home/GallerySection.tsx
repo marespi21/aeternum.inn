@@ -1,5 +1,5 @@
 import React from "react";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import AccordionGallery from "@/components/ui/AccordionGallery";
@@ -36,8 +36,8 @@ export async function GallerySection() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 border-b border-white/10 pb-6">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
-            <Sparkles className="w-4 h-4" />
-            NUESTRA ESENCIA // ARCHIVO VISUAL
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            NUESTRA ESENCIA
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-mono uppercase tracking-tight text-white">
             LA EXPERIENCIA
@@ -59,7 +59,7 @@ export async function GallerySection() {
           overlayColor="#050505"
           textColor="#ffffff"
           grayscale
-          showLabels
+          showLabels={false}
           duration={0.5}
           ease="power3.out"
           parallax={0.5}

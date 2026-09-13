@@ -4,6 +4,7 @@ import { ShieldAlert, Check, X, QrCode, Ticket, ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { approveTicket, rejectTicket, createManualTicket } from '@/app/admin/actions'
+import { ExportExcelButton } from '@/components/admin/ExportExcelButton'
 
 export default async function AdminEventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient()
@@ -72,7 +73,7 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
           </div>
           <div className="flex items-center gap-4">
             <Link href={`/admin/event/${id}/finanzas`} className="px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-colors">
-              P&G y Finanzas
+              Reporte Financiero
             </Link>
             <div className="bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-center">
               <p className="text-xs text-zinc-500 font-mono uppercase">Pendientes</p>
@@ -195,9 +196,17 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
 
         {/* Historial de Pagos de este Evento */}
         <div>
-          <h2 className="text-2xl font-bold font-mono uppercase text-white mb-6 flex items-center gap-2">
-            Historial del Evento
-          </h2>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <h2 className="text-2xl font-bold font-mono uppercase text-white flex items-center gap-2">
+              Historial del Evento
+            </h2>
+            <ExportExcelButton 
+              tickets={tickets || []} 
+              eventTitle={event.title} 
+              earlyPrice={event.early_price}
+              anytimePrice={event.anytime_price}
+            />
+          </div>
           <div className="bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.02)]">
             <div className="overflow-x-auto">
               <table className="w-full text-left">
