@@ -120,7 +120,8 @@ export default function ScannerPage() {
         {/* Contenedor del Lector de QR */}
         <div 
           id="reader" 
-          className={`w-full bg-zinc-900 rounded-2xl overflow-hidden ${status === 'SCANNING' ? 'border-2 border-zinc-800' : ''}`}
+          className={`w-full bg-black rounded-2xl mx-auto overflow-hidden ${status === 'SCANNING' ? 'border-2 border-zinc-800' : 'h-0 border-none'}`}
+          style={{ minHeight: status === 'SCANNING' ? '300px' : '0' }}
         ></div>
 
         {/* Estados */}
