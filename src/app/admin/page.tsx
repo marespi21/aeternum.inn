@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
-import { Calendar, DollarSign, Ticket, Users, ArrowUpRight } from 'lucide-react'
+import { Calendar, DollarSign, Ticket, Users, ArrowUpRight, QrCode } from 'lucide-react'
 import Link from 'next/link'
 
 export default async function AdminDashboard() {
@@ -51,6 +51,9 @@ export default async function AdminDashboard() {
             <p className="text-zinc-400 mt-1 font-mono text-sm">Resumen financiero y gestión por evento</p>
           </div>
           <div className="flex gap-4">
+            <Link href="/admin/scanner" className="px-5 py-2.5 bg-purple-600 text-white font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-purple-500 transition-colors flex items-center gap-2">
+              <QrCode className="w-4 h-4" /> Escáner QR
+            </Link>
             <Link href="/admin/finanzas" className="px-5 py-2.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-emerald-500/20 transition-colors">
               Finanzas Globales
             </Link>

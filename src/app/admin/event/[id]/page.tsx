@@ -72,6 +72,9 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
             <p className="text-zinc-400 mt-1 font-mono text-sm capitalize">{formattedDate} · Early: ${event.early_price?.toLocaleString()} / Anytime: ${event.anytime_price?.toLocaleString()}</p>
           </div>
           <div className="flex items-center gap-4">
+            <Link href="/admin/scanner" className="px-5 py-2.5 bg-purple-600 text-white font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-purple-500 transition-colors flex items-center gap-2">
+              <QrCode className="w-4 h-4" /> Escáner
+            </Link>
             <Link href={`/admin/event/${id}/finanzas`} className="px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-colors">
               Reporte Financiero
             </Link>
