@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 import { TicketApprovalEmail } from '@/emails/TicketApprovalEmail';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key');
 
 export async function sendTicketApprovalEmail({ 
   to, 
