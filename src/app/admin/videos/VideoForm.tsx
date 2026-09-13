@@ -81,9 +81,7 @@ export function VideoForm({ createVideoAction }: { createVideoAction: (formData:
               </div>
             </div>
             
-            </div>
           </div>
-
         </div>
 
         {/* Botón de Publicar */}
