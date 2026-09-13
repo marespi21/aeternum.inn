@@ -73,7 +73,7 @@ export default async function ArtistasPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent opacity-90 group-hover:opacity-80 group-data-[inview=true]/colorizer:opacity-80 transition-opacity" />
                     
                     <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                      <h3 className="text-2xl sm:text-3xl font-black font-mono uppercase tracking-tight text-white mb-1 group-hover:text-emerald-400 group-data-[inview=true]/colorizer:text-emerald-400 transition-colors">
+                      <h3 className="text-2xl sm:text-3xl font-black font-title uppercase tracking-wide text-white mb-1 group-hover:text-emerald-400 group-data-[inview=true]/colorizer:text-emerald-400 transition-colors">
                         {artist.name}
                       </h3>
                       
