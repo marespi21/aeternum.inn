@@ -81,18 +81,21 @@ export function VideoForm({ createVideoAction }: { createVideoAction: (formData:
               </div>
             </div>
             
-            <div className="pt-2 flex flex-col justify-end h-full">
-              {submitError && (
-                <div className="mb-3 text-red-400 text-xs font-mono bg-red-500/10 p-3 rounded-lg border border-red-500/20">
-                  ⚠️ Error: {submitError}
-                </div>
-              )}
-              <button type="submit" disabled={loading} className="w-full h-12 mt-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 font-bold font-mono uppercase rounded-xl transition-all flex items-center justify-center gap-2">
-                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Publicar Video Oficial'}
-              </button>
             </div>
           </div>
 
+        </div>
+
+        {/* Botón de Publicar */}
+        <div className="pt-6 border-t border-white/10 flex flex-col">
+          {submitError && (
+            <div className="mb-4 text-red-400 text-xs font-mono bg-red-500/10 p-3 rounded-lg border border-red-500/20 text-center">
+              ⚠️ Error: {submitError}
+            </div>
+          )}
+          <button type="submit" disabled={loading} className="w-full h-14 bg-red-500 hover:bg-red-400 text-black font-black font-mono uppercase rounded-xl transition-all flex items-center justify-center gap-2">
+            {loading ? <Loader2 className="w-5 h-5 animate-spin text-black" /> : 'Publicar Video'}
+          </button>
         </div>
       </form>
     </div>
