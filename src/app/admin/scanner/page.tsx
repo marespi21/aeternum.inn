@@ -16,8 +16,14 @@ export default function ScannerPage() {
   const supabase = createClient()
 
   useEffect(() => {
-    // Configurar escáner al montar
-    scannerRef.current = new Html5Qrcode("reader")
+    // Configurar escáner al montar con try-catch para evitar crasheos si el celular bloquea la API
+    try {
+      scannerRef.current = new Html5Qrcode("reader")
+    } catch (error) {
+      console.error("No se pudo inicializar el escáner:", error)
+      setStatus('ERROR')
+      setMessage('Tu navegador no soporta el escáner o requiere conexión segura (HTTPS).')
+    }
 
     return () => {
       // Limpiar al desmontar
