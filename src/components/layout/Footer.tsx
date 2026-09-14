@@ -42,7 +42,7 @@ export function Footer() {
     {
       name: "WhatsApp",
       handle: "Línea Directa",
-      url: "https://wa.me/573001234567",
+      url: "https://wa.me/573007626350",
       icon: <MessageCircle className="w-5 h-5" />,
     },
   ];
