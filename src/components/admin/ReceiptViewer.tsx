@@ -115,7 +115,7 @@ export function ReceiptViewer({ url, isManual, manualInfo }: ReceiptViewerProps)
               style={{
                 width: "100%",
                 height: "100%",
-                transform: \`scale(\${scale})\`,
+                transform: `scale(${scale})`,
                 cursor: scale > 1 ? "grab" : "default",
               }}
             >
