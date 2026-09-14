@@ -37,6 +37,12 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
     <div className="min-h-screen bg-black text-white py-12 px-4 pt-24">
       <div className="max-w-4xl mx-auto space-y-8">
         
+        {event.flyer_url && (
+          <div className="w-full max-w-md mx-auto mb-8 relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_30px_rgba(0,255,128,0.1)]">
+            <img src={event.flyer_url} alt={`Flyer de ${event.title}`} className="w-full h-auto object-cover" />
+          </div>
+        )}
+
         <div className="text-center space-y-4 mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-mono font-bold border border-emerald-500/20 mb-2">
             PAGO SEGURO
@@ -45,7 +51,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
             {event.title}
           </h1>
           
-          <div className="flex items-center justify-center gap-6 text-sm text-zinc-400 font-mono mt-4">
+          <div className="flex items-center justify-center gap-6 text-sm text-zinc-400 font-mono mt-4 mb-8">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-zinc-500" />
               {new Date(event.date).toLocaleDateString()}
@@ -55,6 +61,15 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
               {event.location || 'Ubicación por definir'}
             </div>
           </div>
+
+          {event.description && (
+            <div className="max-w-2xl mx-auto mt-8 p-6 bg-white/5 border border-white/10 rounded-xl text-left">
+              <h3 className="text-emerald-400 font-mono uppercase tracking-wider text-sm font-bold mb-3">Sobre el Evento</h3>
+              <p className="text-zinc-300 whitespace-pre-wrap text-sm leading-relaxed">
+                {event.description}
+              </p>
+            </div>
+          )}
         </div>
 
         <CheckoutForm 

@@ -43,16 +43,20 @@ export async function uploadReceiptAndReserve(formData: FormData) {
     }
   })
 
-  // 4. Crear el Ticket en estado PENDING
+  const quantity = parseInt(formData.get('quantity') as string) || 1
+
+  // 4. Crear los Tickets en estado PENDING
+  const ticketsToInsert = Array.from({ length: quantity }).map(() => ({
+    user_id: user.id,
+    event_id: eventId,
+    receipt_url: receiptUrl,
+    ticket_type: ticketType,
+    status: 'PENDING'
+  }))
+
   const { error: dbError } = await supabase
     .from('tickets')
-    .insert({
-      user_id: user.id,
-      event_id: eventId,
-      receipt_url: receiptUrl,
-      ticket_type: ticketType,
-      status: 'PENDING'
-    })
+    .insert(ticketsToInsert)
 
   if (dbError) {
     console.error(dbError)

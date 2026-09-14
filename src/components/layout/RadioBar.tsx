@@ -26,69 +26,20 @@ export function RadioBar({ track }: { track?: any }) {
     setMounted(true);
   }, []);
 
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  // Determinar si es YouTube o SoundCloud
-  const isSoundCloud = currentTrack.audio_url.includes('soundcloud.com');
-  const isYouTube = currentTrack.audio_url.includes('youtube.com') || currentTrack.audio_url.includes('youtu.be');
-  
-  // Extraer ID de YouTube
-  let ytId = '';
-  if (isYouTube) {
-    try {
-      const urlObj = new URL(currentTrack.audio_url);
-      ytId = urlObj.searchParams.get('v') || urlObj.pathname.split('/').pop() || '';
-    } catch {
-      ytId = '';
-    }
-  }
-
-  const scEmbedUrl = isSoundCloud 
-    ? `https://w.soundcloud.com/player/?url=${encodeURIComponent(currentTrack.audio_url)}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false`
-    : '';
-    
-  const ytEmbedUrl = isYouTube
-    ? `https://www.youtube.com/embed/${ytId}?enablejsapi=1&autoplay=0&controls=0&playsinline=1`
-    : '';
-
-  const postMessageToPlayer = (method: string, value?: any) => {
-    if (iframeRef.current && iframeRef.current.contentWindow) {
-      if (isSoundCloud) {
-        const message = JSON.stringify({ method, value });
-        iframeRef.current.contentWindow.postMessage(message, '*');
-      } else if (isYouTube) {
-        // YouTube API mappings
-        let ytCommand = '';
-        if (method === 'play') ytCommand = 'playVideo';
-        else if (method === 'pause') ytCommand = 'pauseVideo';
-        else if (method === 'setVolume') ytCommand = 'setVolume';
-        
-        const message = JSON.stringify({ event: 'command', func: ytCommand, args: value !== undefined ? [value] : [] });
-        iframeRef.current.contentWindow.postMessage(message, '*');
-      }
-    }
-  };
-
   const togglePlay = () => {
-    if (isPlaying) {
-      setIsPlaying(false);
-      postMessageToPlayer('pause');
-    } else {
-      setIsPlaying(true);
-      postMessageToPlayer('play');
-    }
+    setIsPlaying(!isPlaying);
   };
+
+
 
   const toggleMute = () => {
     setIsMuted(!isMuted);
-    postMessageToPlayer(isSoundCloud ? 'setVolume' : 'setVolume', !isMuted ? 0 : volume * 100);
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseFloat(e.target.value);
     setVolume(val);
     setIsMuted(val === 0);
-    postMessageToPlayer('setVolume', val * 100);
   };
 
   useEffect(() => {
@@ -102,16 +53,23 @@ export function RadioBar({ track }: { track?: any }) {
 
   return (
     <>
-      {(isSoundCloud || isYouTube) && (
-        <iframe
-          ref={iframeRef}
-          src={isSoundCloud ? scEmbedUrl : ytEmbedUrl}
-          width="200"
-          height="200"
-          allow="autoplay"
-          style={{ position: 'fixed', top: 0, left: 0, opacity: 0.001, pointerEvents: 'none', zIndex: -100 }}
+      <div className="hidden">
+        <ReactPlayer 
+          url={currentTrack.audio_url}
+          playing={isPlaying}
+          volume={volume}
+          muted={isMuted}
+          width="0"
+          height="0"
+          config={{
+            youtube: {
+              playerVars: { autoplay: 0, controls: 0, playsinline: 1 }
+            }
+          }}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
         />
-      )}
+      </div>
 
       <div className="fixed bottom-0 left-0 right-0 z-50 px-2 sm:px-4 pb-2 sm:pb-3 pointer-events-none">
         <div className="max-w-6xl mx-auto pointer-events-auto bg-[#0a0a0a]/90 hover:bg-[#0a0a0a]/95 backdrop-blur-2xl border border-white/15 rounded-2xl sm:rounded-full p-2.5 sm:py-2.5 sm:px-6 shadow-[0_10px_40px_rgba(0,0,0,0.8)] transition-all duration-300">

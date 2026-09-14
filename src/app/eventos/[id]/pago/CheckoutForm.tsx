@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react'
+import { ArrowRight, CheckCircle2, AlertCircle, Info } from 'lucide-react'
 import { uploadReceiptAndReserve } from './actions'
 import { CloudinaryUpload } from '@/components/ui/CloudinaryUpload'
 
@@ -17,6 +17,7 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, earlyTime, anyti
   const [lastName, setLastName] = useState(userMetadata?.last_name || "")
   const [phoneCode, setPhoneCode] = useState(userMetadata?.phone_code || "+57")
   const [phoneNumber, setPhoneNumber] = useState(userMetadata?.phone_number || "")
+  const [quantity, setQuantity] = useState(1)
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -46,6 +47,7 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, earlyTime, anyti
     formData.append('lastName', lastName)
     formData.append('phoneCode', phoneCode)
     formData.append('phoneNumber', phoneNumber)
+    formData.append('quantity', quantity.toString())
 
     const result = await uploadReceiptAndReserve(formData)
 
@@ -98,10 +100,31 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, earlyTime, anyti
         <h2 className="text-xl font-semibold border-b border-zinc-800 pb-4 mt-8">Datos de Transferencia</h2>
 
         <div className="space-y-4">
+          <div className="bg-black/50 p-4 rounded-xl border border-zinc-800/50 flex items-center justify-between">
+            <p className="text-sm text-zinc-500">Cantidad de Boletas</p>
+            <div className="flex items-center gap-4">
+              <button
+                type="button"
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-white hover:bg-zinc-700 transition-colors"
+              >
+                -
+              </button>
+              <span className="font-mono text-lg font-bold w-4 text-center">{quantity}</span>
+              <button
+                type="button"
+                onClick={() => setQuantity(quantity + 1)}
+                className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-white hover:bg-zinc-700 transition-colors"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
           <div className="bg-purple-900/20 p-4 rounded-xl border border-purple-500/30">
             <p className="text-sm text-purple-300 mb-1">Total a Pagar</p>
             <p className="font-bold text-2xl text-purple-400">
-              ${(currentPrice || 0).toLocaleString('es-CO')} COP
+              ${(currentPrice * quantity || 0).toLocaleString('es-CO')} COP
             </p>
           </div>
 
@@ -247,6 +270,13 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, earlyTime, anyti
               </div>
             </div>
 
+          </div>
+
+          <div className="bg-emerald-900/10 border border-emerald-500/20 p-4 rounded-xl flex items-start gap-3 text-emerald-400 text-sm">
+            <Info className="w-5 h-5 shrink-0 mt-0.5" />
+            <p className="leading-relaxed text-zinc-300">
+              Recuerda realizar la transferencia por el total exacto y <strong className="text-emerald-400 font-bold">adjuntar tu comprobante de pago</strong> aquí abajo para validar tu reserva.
+            </p>
           </div>
 
           <CloudinaryUpload
