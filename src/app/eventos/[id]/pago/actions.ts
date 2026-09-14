@@ -6,9 +6,35 @@ import { redirect } from 'next/navigation'
 export async function uploadReceiptAndReserve(formData: FormData) {
   const supabase = await createClient()
 
-  // 1. Verificar usuario
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/login')
+  // 1. Verificar usuario o crear invitado
+  let { data: { user } } = await supabase.auth.getUser()
+  const email = formData.get('email') as string
+
+  if (!user) {
+    if (!email) {
+      return { error: 'El correo electrónico es obligatorio' }
+    }
+    
+    // Intentar crear cuenta fantasma
+    const password = Math.random().toString(36).slice(-10) + Math.random().toString(36).slice(-10) + '!A1'
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+    })
+
+    if (signUpError) {
+      if (signUpError.code === 'user_already_exists') {
+        return { error: 'Este correo ya tiene una cuenta en AETERNUM. Por favor, inicia sesión primero para comprar tu boleta.' }
+      }
+      return { error: 'Error al procesar el usuario invitado: ' + signUpError.message }
+    }
+    
+    user = signUpData.user
+  }
+
+  if (!user) {
+    return { error: 'No se pudo verificar ni crear el usuario' }
+  }
 
   const eventId = formData.get('eventId') as string
   const receiptUrl = formData.get('receiptUrl') as string

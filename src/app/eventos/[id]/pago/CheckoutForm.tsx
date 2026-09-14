@@ -10,6 +10,7 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, earlyTime, anyti
   const [receiptUrl, setReceiptUrl] = useState<string | null>(null)
 
   // New State Fields
+  const [email, setEmail] = useState(userEmail || '')
   const [ticketType, setTicketType] = useState<'EARLY' | 'ANYTIME'>('ANYTIME')
   const [docType, setDocType] = useState(userMetadata?.document_type || "CC")
   const [docNumber, setDocNumber] = useState(userMetadata?.document_number || "")
@@ -39,6 +40,7 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, earlyTime, anyti
 
     const formData = new FormData()
     formData.append('eventId', eventId)
+    formData.append('email', email)
     formData.append('receiptUrl', receiptUrl)
     formData.append('ticketType', ticketType)
     formData.append('docType', docType)
@@ -174,9 +176,13 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, earlyTime, anyti
               </label>
               <input
                 type="email"
-                disabled
-                value={userEmail}
-                className="w-full px-4 py-3 bg-zinc-950/50 border border-zinc-800/50 rounded-xl text-sm text-zinc-500 cursor-not-allowed"
+                required
+                disabled={!!userEmail}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={`w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-sm text-white focus:outline-none focus:border-white/40 transition-colors ${
+                  userEmail ? 'cursor-not-allowed opacity-50' : ''
+                }`}
               />
             </div>
 

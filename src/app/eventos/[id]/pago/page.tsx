@@ -8,12 +8,8 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
   const supabase = await createClient()
   const { id } = await params
 
-  // 1. Verificar sesión
+  // 1. Verificar sesión (Opcional)
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
-    // Si no está logueado, redirigimos a login con un parámetro para que regrese
-    redirect(`/login?next=/eventos/${id}/pago`)
-  }
 
   // 2. Traer info del evento
   const { data: event, error } = await supabase
@@ -78,8 +74,8 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
           earlyPrice={event.early_price}
           earlyTime={event.early_time || ''}
           anytimePrice={event.anytime_price}
-          userEmail={user.email || ''}
-          userMetadata={user.user_metadata || {}}
+          userEmail={user?.email || ''}
+          userMetadata={user?.user_metadata || {}}
         />
         
       </div>

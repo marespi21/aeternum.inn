@@ -7,6 +7,7 @@ import { approveTicketGroup, rejectTicketGroup, createManualTicket, deleteTicket
 import { ExportExcelButton } from '@/components/admin/ExportExcelButton'
 import { DeleteTicketButton } from '@/components/admin/DeleteTicketButton'
 import { MarkUsedButton } from '@/components/admin/MarkUsedButton'
+import { ReceiptViewer } from '@/components/admin/ReceiptViewer'
 
 export default async function AdminEventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient()
@@ -160,18 +161,11 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                 <div key={firstTicket.id} className="bg-[#0a0a0a]/90 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden flex flex-col shadow-[0_0_30px_rgba(255,255,255,0.02)]">
                   
                   <div className="relative h-64 bg-black w-full border-b border-white/10">
-                    {firstTicket.receipt_url && !firstTicket.receipt_url.startsWith('manual_sale:') ? (
-                      <Image 
-                        src={firstTicket.receipt_url} 
-                        alt="Comprobante de pago" 
-                        fill 
-                        className="object-contain"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-zinc-600 font-mono text-sm">
-                        {firstTicket.receipt_url?.startsWith('manual_sale:') ? 'Venta Manual' : 'Sin imagen'}
-                      </div>
-                    )}
+                    <ReceiptViewer 
+                      url={firstTicket.receipt_url && !firstTicket.receipt_url.startsWith('manual_sale:') ? firstTicket.receipt_url : undefined}
+                      isManual={firstTicket.receipt_url?.startsWith('manual_sale:')}
+                      manualInfo={firstTicket.receipt_url?.startsWith('manual_sale:') ? 'Venta Manual' : undefined}
+                    />
                   </div>
 
                   <div className="p-5 flex-1 flex flex-col justify-between">
