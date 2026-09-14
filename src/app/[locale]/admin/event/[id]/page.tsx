@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { ShieldAlert, Check, X, QrCode, Ticket, ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { approveTicketGroup, rejectTicketGroup, createManualTicket, deleteTicket, markTicketAsUsed } from '@/app/admin/actions'
+import { approveTicketGroup, rejectTicketGroup, createManualTicket, deleteTicket, markTicketAsUsed } from '@/app/[locale]/admin/actions'
 import { ExportExcelButton } from '@/components/admin/ExportExcelButton'
 import { DeleteTicketButton } from '@/components/admin/DeleteTicketButton'
 import { MarkUsedButton } from '@/components/admin/MarkUsedButton'
@@ -126,6 +126,7 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
               <select name="ticketType" className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 font-mono appearance-none">
                 <option value="EARLY" className="text-black">Early (${event.early_price?.toLocaleString()})</option>
                 <option value="ANYTIME" className="text-black">Anytime (${event.anytime_price?.toLocaleString()})</option>
+                <option value="CORTESIA" className="text-black">Cortesía ($0)</option>
               </select>
             </div>
             <div>
@@ -133,6 +134,7 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
               <select name="paymentMethod" className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 font-mono appearance-none">
                 <option value="efectivo" className="text-black">Efectivo</option>
                 <option value="transferencia" className="text-black">Transferencia</option>
+                <option value="cortesia" className="text-black">Cortesía (Gratis)</option>
               </select>
             </div>
             <button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono uppercase py-3 rounded-xl transition-colors">
@@ -245,7 +247,9 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                     const manualPhone = isManual ? ticket.receipt_url.split(':')[4] : null;
                     const phone = isManual ? manualPhone : ticket.profiles?.phone;
                     
-                    const ticketPrice = ticket.ticket_type === 'EARLY' ? event.early_price : event.anytime_price;
+                    const ticketPrice = (paymentMethod === 'cortesia' || ticket.ticket_type === 'CORTESIA') 
+                      ? 0 
+                      : (ticket.ticket_type === 'EARLY' ? event.early_price : event.anytime_price);
 
                     return (
                       <tr key={ticket.id} className="hover:bg-white/[0.02] transition-colors">

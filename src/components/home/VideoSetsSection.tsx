@@ -18,10 +18,12 @@ import {
   ArrowUpRight,
   Disc3,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type FilterType = "ALL" | "CAPITULOS" | "BOSQUE" | "LIVE_SETS";
 
 export function VideoSetsSection({ initialVideos, isHomePage = false }: { initialVideos: any[], isHomePage?: boolean }) {
+  const t = useTranslations("VideoSets");
   const [activeFilter, setActiveFilter] = useState<FilterType>("ALL");
   const [selectedSet, setSelectedSet] = useState<VideoSetItem | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -74,14 +76,14 @@ export function VideoSetsSection({ initialVideos, isHomePage = false }: { initia
   };
 
   const filterTabs: { label: string; value: FilterType; count: number }[] = [
-    { label: "TODOS LOS SETS", value: "ALL", count: mappedVideos.length },
+    { label: t("tab_all"), value: "ALL", count: mappedVideos.length },
     {
-      label: "CAPITULOS",
+      label: t("tab_chapters"),
       value: "CAPITULOS",
       count: mappedVideos.filter((i) => i.category === "CAPITULOS").length,
     },
     {
-      label: "SESIONES EN EL BOSQUE",
+      label: t("tab_forest"),
       value: "BOSQUE",
       count: mappedVideos.filter((i) => i.category === "BOSQUE").length,
     }
@@ -97,16 +99,16 @@ export function VideoSetsSection({ initialVideos, isHomePage = false }: { initia
         <div>
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            PODCAST // AETERNUM MDE
+            {t("header_badge")}
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-mono uppercase tracking-tight text-white">
-            LUGARES DE PELICULA
+            {t("header_title")}
           </h2>
         </div>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <p className="max-w-md text-xs sm:text-sm font-sans text-zinc-400 leading-relaxed">
-            Explora las grabaciones audiovisuales oficiales en 4K. Sets cinematográficos capturados en los escenarios más imponentes de Antioquia.
+            {t("header_desc")}
           </p>
           <a
             href="https://www.youtube.com/@aeternum-inn?sub_confirmation=1"
@@ -115,7 +117,7 @@ export function VideoSetsSection({ initialVideos, isHomePage = false }: { initia
             className="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-red-600/15 hover:bg-red-600/25 border border-red-500/30 text-xs font-mono font-bold text-red-400 hover:text-red-300 transition-colors"
           >
             <YoutubeIcon className="w-4 h-4" />
-            <span>Suscribirse al Canal</span>
+            <span>{t("subscribe_btn")}</span>
             <ExternalLink className="w-3 h-3" />
           </a>
         </div>
@@ -191,7 +193,7 @@ export function VideoSetsSection({ initialVideos, isHomePage = false }: { initia
                 {/* Chapter or Badge */}
                 {item.chapterNumber && (
                   <div className="absolute top-3 left-3 bg-black/85 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/20 text-[10px] font-mono font-bold text-white tracking-widest">
-                    CAPITULO 0{item.chapterNumber}
+                    {t("chapter")} 0{item.chapterNumber}
                   </div>
                 )}
 
@@ -236,7 +238,7 @@ export function VideoSetsSection({ initialVideos, isHomePage = false }: { initia
                     #{item.genres[0]}
                   </span>
                   <span className="text-white flex items-center gap-1 font-semibold group-hover:translate-x-0.5 transition-transform">
-                    <span>Ver Set</span>
+                    <span>{t("view_set")}</span>
                     <Play className="w-3 h-3 fill-current" />
                   </span>
                 </div>
@@ -258,7 +260,7 @@ export function VideoSetsSection({ initialVideos, isHomePage = false }: { initia
             <div className="absolute inset-0 w-full h-full bg-white/5 group-hover:bg-white/10 backdrop-blur-sm rounded-full transition-colors" />
             <span className="relative flex items-center gap-2">
               <Film className="w-4 h-4" />
-              Ver Catálogo Completo
+              {t("view_catalog")}
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </span>
           </a>

@@ -1,10 +1,12 @@
 import React from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Music, Play, Instagram } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { ScrollColorizer } from "@/components/ui/ScrollColorizer";
+import { getTranslations } from "next-intl/server";
 
 export async function ArtistsSection() {
+  const t = await getTranslations("Artists");
   const supabase = await createClient();
   const { data: artists } = await supabase
     .from("artists")
@@ -23,14 +25,14 @@ export async function ArtistsSection() {
         <div>
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            ROSTER OFICIAL
+            {t("header_badge")}
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-mono uppercase tracking-tight text-white">
-            NUESTROS ARTISTAS
+            {t("header_title")}
           </h2>
         </div>
         <p className="max-w-md text-xs sm:text-sm font-sans text-zinc-400 leading-relaxed">
-          Los arquitectos del sonido de Aeternum. Perfiles, sets exclusivos y memorias de nuestros invitados de honor.
+          {t("header_desc")}
         </p>
       </div>
 
@@ -60,8 +62,8 @@ export async function ArtistsSection() {
                   </h3>
                   
                   <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 group-data-[inview=true]/colorizer:opacity-100 group-data-[inview=true]/colorizer:translate-y-0 transition-all duration-500">
-                    <span>Ver Perfil</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <span>{t("view_profile")}</span>
+                    <ArrowUpRight className="w-4 h-4" />
                   </div>
                 </div>
               </div>
@@ -76,8 +78,8 @@ export async function ArtistsSection() {
           href="/artistas"
           className="inline-flex px-8 py-4 rounded-full bg-transparent border border-white/20 text-white font-mono text-xs font-bold uppercase tracking-widest hover:border-emerald-400 hover:text-emerald-400 transition-all items-center justify-center gap-2 group"
         >
-          <span>Ver todos los artistas</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          <span>{t("view_all")}</span>
+          <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
         </Link>
       </div>
     </section>

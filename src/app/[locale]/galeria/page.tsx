@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { GalleryView } from "@/components/ui/GalleryView";
+import { getTranslations } from "next-intl/server";
 
 export const metadata = {
   title: 'Galería | AETERNUM',
@@ -12,6 +13,7 @@ export const metadata = {
 };
 
 export default async function GalleryPage() {
+  const t = await getTranslations("GaleriaPage");
   const supabase = await createClient();
   const { data: items } = await supabase
     .from("gallery")
@@ -31,25 +33,25 @@ export default async function GalleryPage() {
             className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-white transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
-            VOLVER AL INICIO
+            {t("back_to_home")}
           </Link>
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            ARCHIVO VISUAL
+            {t("header_badge")}
           </div>
           <h1 className="text-4xl sm:text-6xl font-black font-mono uppercase tracking-tight text-white">
-            GALERIA
+            {t("header_title")}
           </h1>
         </div>
         <p className="max-w-md text-sm font-sans text-zinc-400 leading-relaxed">
-          Recuerdos de nuestras ediciones pasadas. La cultura electrónica viva en cada rincón. ({galleryItems.length} registros)
+          {t("header_desc")} ({galleryItems.length} {t("records")})
         </p>
       </div>
 
       {/* Grid */}
       {galleryItems.length === 0 ? (
         <div className="text-center py-32 border border-white/10 rounded-2xl bg-zinc-900/50">
-          <p className="text-zinc-400 font-mono">No hay archivos en la galería aún.</p>
+          <p className="text-zinc-400 font-mono">{t("no_files")}</p>
         </div>
       ) : (
         <GalleryView items={galleryItems} />

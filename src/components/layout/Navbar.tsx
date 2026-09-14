@@ -2,11 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { useTranslations, useLocale } from "next-intl";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { motion, AnimatePresence } from "framer-motion";
 import { Radio, Menu, X, ArrowUpRight, User } from "lucide-react";
 
 export function Navbar({ user }: { user: any }) {
+  const t = useTranslations("Navbar");
+  const locale = useLocale();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -30,12 +34,12 @@ export function Navbar({ user }: { user: any }) {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { label: "EVENTOS", href: "/#eventos" },
-    { label: "VIDEO SETS", href: "/videosets" },
-    { label: "ARTISTAS", href: "/artistas" },
-    { label: "GALERIA", href: "/galeria" },
-    { label: "SOBRE NOSOTROS", href: "/#manifiesto" },
-    { label: "COMUNIDAD", href: "/#comunidad" },
+    { label: t("eventos"), href: `/${locale}/#eventos`, isHash: true },
+    { label: t("video_sets"), href: "/videosets", isHash: false },
+    { label: t("artistas"), href: "/artistas", isHash: false },
+    { label: t("galeria"), href: "/galeria", isHash: false },
+    { label: t("sobre_nosotros"), href: `/${locale}/#manifiesto`, isHash: true },
+    { label: t("comunidad"), href: `/${locale}/#comunidad`, isHash: true },
   ];
 
   return (
@@ -50,7 +54,7 @@ export function Navbar({ user }: { user: any }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Brand Logo & On Air Badge */}
           <div className="flex items-center gap-4 sm:gap-6">
-            <a
+            <Link
               href="/"
               className="group flex items-center gap-3 transition-all"
             >
@@ -74,32 +78,45 @@ export function Navbar({ user }: { user: any }) {
                   MDE
                 </span>
               </div>
-            </a>
+            </Link>
 
 
           </div>
 
           {/* Desktop Nav Links */}
           <nav className="hidden md:flex items-center gap-8 text-xs font-mono tracking-widest uppercase text-zinc-400">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="relative hover:text-white transition-colors duration-200 py-1 group"
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-white group-hover:w-full transition-all duration-300" />
-              </a>
-            ))}
+            {navLinks.map((link) => 
+              link.isHash ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="relative hover:text-white transition-colors duration-200 py-1 group"
+                >
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-white group-hover:w-full transition-all duration-300" />
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href as any}
+                  className="relative hover:text-white transition-colors duration-200 py-1 group"
+                >
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-white group-hover:w-full transition-all duration-300" />
+                </Link>
+              )
+            )}
           </nav>
 
           {/* Action Button & Mobile Toggle */}
           <div className="flex items-center gap-3">
+            <LanguageSwitcher />
+            
             <Link
               href={user ? "/perfil" : "/login"}
               className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-zinc-200 transition-all shadow-md hover:shadow-white/10"
             >
-              <span>{user ? "Mi Perfil" : "Ingresar"}</span>
+              <span>{user ? t("mi_perfil") : t("ingresar")}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
 
@@ -146,16 +163,27 @@ export function Navbar({ user }: { user: any }) {
 
               {/* Navigation Links */}
               <div className="space-y-4 pt-2">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block text-2xl font-mono uppercase font-bold text-zinc-300 hover:text-white tracking-widest border-b border-zinc-900 pb-3"
-                  >
-                    {link.label}
-                  </a>
-                ))}
+                {navLinks.map((link) => 
+                  link.isHash ? (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-2xl font-mono uppercase font-bold text-zinc-300 hover:text-white tracking-widest border-b border-zinc-900 pb-3"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={link.href}
+                      href={link.href as any}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-2xl font-mono uppercase font-bold text-zinc-300 hover:text-white tracking-widest border-b border-zinc-900 pb-3"
+                    >
+                      {link.label}
+                    </Link>
+                  )
+                )}
               </div>
             </div>
 
@@ -166,13 +194,13 @@ export function Navbar({ user }: { user: any }) {
                 className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-white text-black font-mono text-sm font-bold uppercase tracking-widest"
               >
                 <User className="w-4 h-4" />
-                {user ? "Ir a mi perfil" : "Ingresar a mi cuenta"}
+                {user ? t("ir_a_mi_perfil") : t("ingresar_a_mi_cuenta")}
               </Link>
               
               {user && (
                 <form action="/auth/signout" method="post" className="w-full">
                   <button type="submit" className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 font-mono text-sm font-bold uppercase tracking-widest">
-                    Cerrar Sesión
+                    {t("cerrar_sesion")}
                   </button>
                 </form>
               )}

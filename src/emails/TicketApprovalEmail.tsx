@@ -118,7 +118,7 @@ export const TicketApprovalEmail = ({
               {/* TICKETS LOOP */}
               <Section className="bg-[#050505] px-6 py-4 force-bg-dark">
                 <Text className="text-white text-lg font-bold text-center m-0 mb-6 border-b border-gray-800 pb-4 force-text-white">
-                  Tus {ticketIds.length} Acceso{ticketIds.length > 1 ? 's' : ''} VIP
+                  Tus {ticketIds.length} Acceso{ticketIds.length > 1 ? 's' : ''}
                 </Text>
 
                 {ticketIds.map((id, index) => (

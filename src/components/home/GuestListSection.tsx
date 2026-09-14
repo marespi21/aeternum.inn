@@ -8,8 +8,10 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export function GuestListSection() {
+  const t = useTranslations("GuestList");
   return (
     <section id="comunidad" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
       <div className="relative rounded-3xl bg-zinc-950 border border-white/15 p-6 sm:p-12 md:p-16 overflow-hidden shadow-2xl">
@@ -22,29 +24,29 @@ export function GuestListSection() {
           <div className="lg:col-span-7 space-y-6">
             <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-zinc-400 mb-4 bg-zinc-900/50 w-fit px-3 py-1.5 rounded-full border border-white/5">
               <span className="w-2 h-2 rounded-full bg-zinc-500 animate-pulse shrink-0" />
-              <span>AETERNUM SOCIETY // ACCESO EXCLUSIVO</span>
+              <span>{t("header_badge")}</span>
             </div>
 
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-black font-mono text-white tracking-tight uppercase leading-tight">
-              UNETE A LA COMUNIDAD
+              {t("header_title")}
             </h2>
 
             <p className="text-sm sm:text-base text-zinc-300 font-sans leading-relaxed">
-              Regístrate para recibir acceso prioritario a la preventa de boletos, y el contenido más reciente.
+              {t("header_desc")}
             </p>
 
             <ul className="space-y-3 pt-2 text-xs sm:text-sm font-mono text-zinc-400">
               <li className="flex items-center gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Live sets inéditos</span>
+                <span>{t("feature1")}</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Beneficios exclusivos en nuestros eventos</span>
+                <span>{t("feature2")}</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Acceso a grabaciones de live sets</span>
+                <span>{t("feature3")}</span>
               </li>
             </ul>
           </div>
@@ -52,21 +54,21 @@ export function GuestListSection() {
           {/* Right Column: CTA Button */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center space-y-6 bg-black/60 border border-white/10 p-8 sm:p-10 rounded-2xl backdrop-blur-md">
             <div className="text-center space-y-2 mb-4">
-              <h3 className="text-xl font-bold font-mono text-white uppercase">Membresía Gratuita</h3>
-              <p className="text-xs text-zinc-400 font-mono">Únete en menos de 1 minuto</p>
+              <h3 className="text-xl font-bold font-mono text-white uppercase">{t("free_membership")}</h3>
+              <p className="text-xs text-zinc-400 font-mono">{t("join_quick")}</p>
             </div>
 
             <Link
               href="/login?mode=signup"
               className="inline-flex px-8 py-3.5 rounded-full bg-white text-black font-mono text-[11px] font-bold uppercase tracking-widest hover:scale-105 hover:bg-zinc-200 transition-all items-center justify-center gap-2 shadow-lg hover:shadow-white/20"
             >
-              <span>Registrarme</span>
+              <span>{t("register")}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
 
             <div className="flex items-center justify-center gap-2 text-[11px] font-mono text-zinc-500 text-center mt-4">
               <Lock className="w-3.5 h-3.5" />
-              <span>Tus datos son 100% privados y confidenciales.</span>
+              <span>{t("privacy")}</span>
             </div>
           </div>
         </div>

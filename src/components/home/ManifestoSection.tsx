@@ -17,34 +17,36 @@ import {
 } from "lucide-react";
 import { YoutubeIcon } from "@/components/icons/CustomIcons";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 type TabKey = "quienes-somos" | "mision-vision" | "objetivos" | "unicos";
 
 export function ManifestoSection() {
+  const t = useTranslations("Manifesto");
   const [activeTab, setActiveTab] = useState<TabKey>("quienes-somos");
 
   const tabs: { key: TabKey; label: string; num: string; icon: React.ReactNode }[] = [
     {
       key: "quienes-somos",
-      label: "¿QUIENES SOMOS?",
+      label: t("tab1"),
       num: "01",
       icon: <Compass className="w-3.5 h-3.5" />,
     },
     {
       key: "mision-vision",
-      label: "MISION & VISION",
+      label: t("tab2"),
       num: "02",
       icon: <Target className="w-3.5 h-3.5" />,
     },
     {
       key: "objetivos",
-      label: "OBJETIVOS",
+      label: t("tab3"),
       num: "03",
       icon: <ShieldCheck className="w-3.5 h-3.5" />,
     },
     {
       key: "unicos",
-      label: "¿QUE NOS HACE UNICOS?",
+      label: t("tab4"),
       num: "04",
       icon: <Zap className="w-3.5 h-3.5" />,
     },
@@ -64,15 +66,15 @@ export function ManifestoSection() {
         <div className="space-y-4 text-center max-w-2xl mx-auto flex flex-col items-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] sm:text-xs font-mono text-zinc-400 tracking-widest">
             <Flame className="w-3 h-3 text-white" />
-            <span>SOBRE NOSOTROS // MANIFIESTO</span>
+            <span>{t("header_badge")}</span>
           </div>
 
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-black font-title tracking-wide text-white uppercase leading-tight">
-            nuestra razon de ser
+            {t("header_title")}
           </h2>
 
           <blockquote className="text-base sm:text-xl font-body text-zinc-300 font-normal leading-relaxed">
-            “Colombia se ha transformado en un <span className="text-white font-semibold">epicentro creativo</span>. Queremos <span className="text-white font-semibold underline decoration-white/40 underline-offset-4">resignificar los espacios</span> de la ciudad y llevar a nuestros artistas locales a otro nivel.”
+            {t("quote")}
           </blockquote>
         </div>
 
@@ -112,19 +114,19 @@ export function ManifestoSection() {
                   <div className="flex items-center justify-between border-b border-zinc-900 pb-3">
                     <span className="text-xs font-title font-bold text-white uppercase tracking-wider flex items-center gap-2">
                       <Compass className="w-4 h-4 text-emerald-400" />
-                      El Colectivo
+                      {t("t1_title")}
                     </span>
-                    <span className="text-[10px] font-mono text-zinc-500">MEDELLIN UNDERGROUND</span>
+                    <span className="text-[10px] font-mono text-zinc-500">{t("t1_sub")}</span>
                   </div>
 
-                  <p className="text-sm sm:text-base text-zinc-300 font-body leading-relaxed">
-                    Somos un colectivo que fusiona <strong className="text-white">música electrónica, arte y lugares inéditos</strong>. Creamos experiencias inmersivas que transforman espacios icónicos en escenarios únicos, conectando DJs locales con nuevas audiencias y oportunidades globales.
+                  <p className="text-sm sm:text-base text-zinc-400 font-sans leading-relaxed">
+                    {t("t1_desc")}
                   </p>
 
                   <div className="grid grid-cols-3 gap-2 pt-2 text-center text-[11px] font-mono text-zinc-400">
-                    <div className="p-2 rounded-lg bg-zinc-900/60 border border-white/5">ARTE VISUAL</div>
-                    <div className="p-2 rounded-lg bg-zinc-900/60 border border-white/5">SONIDO 24-BIT</div>
-                    <div className="p-2 rounded-lg bg-zinc-900/60 border border-white/5">LOCACIONES SECRETAS</div>
+                    <div className="p-2 rounded-lg bg-zinc-900/60 border border-white/5">{t("t1_tag1")}</div>
+                    <div className="p-2 rounded-lg bg-zinc-900/60 border border-white/5">{t("t1_tag2")}</div>
+                    <div className="p-2 rounded-lg bg-zinc-900/60 border border-white/5">{t("t1_tag3")}</div>
                   </div>
                 </motion.div>
               )}
@@ -147,10 +149,12 @@ export function ManifestoSection() {
                     <div className="relative z-30">
                       <span className="text-xs font-title font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 mb-2.5">
                       <Target className="w-4 h-4" />
-                      MISION
+                      {t("mission_title")}
                     </span>
                     <p className="text-xs sm:text-sm text-zinc-300 font-body leading-relaxed">
-                      Impulsar el talento local a través de <span className="text-white font-semibold">live sets profesionales</span>, embellecer espacios patrimoniales y resignificar la cultura electrónica como arte, pasión y expresión colectiva.
+                      {t.rich("mission_desc", {
+                        span: (chunks) => <span className="text-white font-semibold">{chunks}</span>
+                      })}
                     </p>
                     </div>
                   </div>
@@ -163,10 +167,12 @@ export function ManifestoSection() {
                     <div className="relative z-30">
                       <span className="text-xs font-title font-bold text-white uppercase tracking-wider flex items-center gap-2 mb-2.5">
                       <Globe className="w-4 h-4" />
-                      VISION
+                      {t("vision_title")}
                     </span>
                     <p className="text-xs sm:text-sm text-zinc-300 font-body leading-relaxed">
-                      Consolidarnos como <span className="text-white font-semibold">plataforma referente en Latinoamérica</span> para DJs emergentes, visibilizando sus proyectos y proyectando a Colombia como escenario vivo de música ante el mundo.
+                      {t.rich("vision_desc", {
+                        span: (chunks) => <span className="text-white font-semibold">{chunks}</span>
+                      })}
                     </p>
                     </div>
                   </div>
@@ -184,10 +190,10 @@ export function ManifestoSection() {
                   className="grid grid-cols-1 sm:grid-cols-2 gap-3"
                 >
                   {[
-                    { title: "Embellecer Espacios", desc: "Transformar locaciones patrimoniales e industriales." },
-                    { title: "Romper Estigmas", desc: "Reivindicar la electrónica como arte y unión comunitaria." },
-                    { title: "Turismo Cultural", desc: "Posicionar a Medellín en el circuito internacional." },
-                    { title: "Impulso a DJs Locales", desc: "Producción audiovisual 4K para proyectar nuevo talento." },
+                    { title: t("obj_title1"), desc: t("obj_desc1") },
+                    { title: t("obj_title2"), desc: t("obj_desc2") },
+                    { title: t("obj_title3"), desc: t("obj_desc3") },
+                    { title: t("obj_title4"), desc: t("obj_desc4") },
                   ].map((obj, idx) => (
                     <div
                       key={idx}
@@ -219,18 +225,18 @@ export function ManifestoSection() {
                   {[
                     {
                       icon: <Film className="w-4 h-4 text-white" />,
-                      title: "Calidad 4K",
-                      desc: "Grabaciones audiovisuales cinematográficas con master 24-bit.",
+                      title: t("unique_title1"),
+                      desc: t("unique_desc1"),
                     },
                     {
                       icon: <Globe className="w-4 h-4 text-emerald-400" />,
-                      title: "PROYECCION GLOBAL",
-                      desc: "Conexión directa con audiencias y festivales de LATAM y el mundo.",
+                      title: t("unique_title2"),
+                      desc: t("unique_desc2"),
                     },
                     {
                       icon: <Users className="w-4 h-4 text-zinc-300" />,
-                      title: "Cultura Real",
-                      desc: "Experiencias inmersivas 100% auténticas, sin filtros comerciales.",
+                      title: t("unique_title3"),
+                      desc: t("unique_desc3"),
                     },
                   ].map((u, idx) => (
                     <div

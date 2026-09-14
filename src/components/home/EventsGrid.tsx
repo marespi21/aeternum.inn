@@ -12,8 +12,10 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export function EventsGrid({ events }: { events: any[] }) {
+  const t = useTranslations("Events");
   const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
@@ -80,7 +82,7 @@ export function EventsGrid({ events }: { events: any[] }) {
 
               {/* Status Badge */}
               <div className={`absolute top-4 right-4 border px-3 py-1 rounded-full text-[10px] font-mono font-semibold tracking-wider backdrop-blur-md ${isPast ? 'bg-zinc-950/90 border-zinc-500/40 text-zinc-400' : 'bg-emerald-950/90 border-emerald-500/40 text-emerald-300'}`}>
-                {isPast ? 'NO DISPONIBLE' : 'DISPONIBLE'}
+                {isPast ? t("status_unavailable") : t("status_available")}
               </div>
             </div>
 
@@ -94,7 +96,7 @@ export function EventsGrid({ events }: { events: any[] }) {
                 {/* Location */}
                 <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 pt-1">
                   <MapPin className="w-4 h-4 text-zinc-500 shrink-0" />
-                  <span className="truncate">{event.location || "Ubicación por definir"}</span>
+                  <span className="truncate">{event.location || t("location_tbd")}</span>
                 </div>
               </div>
 
@@ -105,7 +107,7 @@ export function EventsGrid({ events }: { events: any[] }) {
                     disabled
                     className="flex w-full justify-center items-center gap-1.5 px-4 py-2.5 rounded-xl bg-zinc-800 text-zinc-500 font-mono text-xs font-bold uppercase tracking-wider cursor-not-allowed"
                   >
-                    <span>Evento Finalizado</span>
+                    <span>{t("btn_finished")}</span>
                   </button>
                 ) : (
                   <button
@@ -113,7 +115,7 @@ export function EventsGrid({ events }: { events: any[] }) {
                     className="flex w-full justify-center items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white text-black hover:bg-zinc-200 group-data-[inview=true]/colorizer:bg-white group-data-[inview=true]/colorizer:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all shadow hover:shadow-white/20"
                   >
                     <Ticket className="w-3.5 h-3.5" />
-                    <span>Comprar Tickets</span>
+                    <span>{t("btn_buy")}</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </button>
                 )}

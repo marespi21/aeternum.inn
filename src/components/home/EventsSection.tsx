@@ -1,9 +1,11 @@
 import React from "react";
 import { createClient } from "@/utils/supabase/server";
 import { EventsGrid } from "./EventsGrid";
+import { getTranslations } from "next-intl/server";
 
 export async function EventsSection() {
   const supabase = await createClient();
+  const t = await getTranslations("Events");
 
   // Obtener eventos futuros de la base de datos
   const { data: events, error } = await supabase
@@ -35,20 +37,20 @@ export async function EventsSection() {
         <div>
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            TEMPORADA 2026 // LINEUP OFICIAL
+            {t("header_badge")}
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-mono uppercase tracking-tight text-white">
-            PROXIMOS EVENTOS
+            {t("header_title")}
           </h2>
         </div>
         <p className="max-w-md text-xs sm:text-sm font-sans text-zinc-400 leading-relaxed">
-          Raves inmersivos en locaciones exclusivas. Aforos limitados para preservar la experiencia y la cultura underground.
+          {t("header_desc")}
         </p>
       </div>
 
       {activeEvents.length === 0 ? (
         <div className="text-center py-20 border border-white/10 rounded-2xl bg-zinc-900/50">
-          <p className="text-zinc-400 font-mono">No hay eventos programados en este momento.</p>
+          <p className="text-zinc-400 font-mono">{t("no_events")}</p>
         </div>
       ) : (
         <EventsGrid events={activeEvents} />

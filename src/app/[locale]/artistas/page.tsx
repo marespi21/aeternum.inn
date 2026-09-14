@@ -4,6 +4,7 @@ import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { ScrollColorizer } from "@/components/ui/ScrollColorizer";
 import { Navbar } from "@/components/layout/Navbar";
+import { getTranslations } from "next-intl/server";
 
 export const metadata = {
   title: 'Artistas | Aeternum',
@@ -11,6 +12,7 @@ export const metadata = {
 };
 
 export default async function ArtistasPage() {
+  const t = await getTranslations("ArtistasPage");
   const supabase = await createClient();
   const { data: artists } = await supabase
     .from("artists")
@@ -29,7 +31,7 @@ export default async function ArtistasPage() {
           href="/#artistas" 
           className="inline-flex items-center gap-2 text-zinc-400 hover:text-white font-mono text-sm uppercase mb-8 transition-colors"
         >
-          <ArrowLeft className="w-4 h-4" /> Volver al inicio
+          <ArrowLeft className="w-4 h-4" /> {t("back_to_home")}
         </Link>
 
         {/* Section Header */}
@@ -37,20 +39,20 @@ export default async function ArtistasPage() {
           <div>
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              ROSTER COMPLETO
+              {t("header_badge")}
             </div>
             <h1 className="text-3xl sm:text-5xl font-black font-mono uppercase tracking-tight text-white">
-              TODOS LOS ARTISTAS
+              {t("header_title")}
             </h1>
           </div>
           <p className="max-w-md text-xs sm:text-sm font-sans text-zinc-400 leading-relaxed">
-            Los arquitectos del sonido de Aeternum. Perfiles, sets exclusivos y memorias de nuestros invitados de honor.
+            {t("header_desc")}
           </p>
         </div>
 
         {!artists || artists.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-zinc-500 font-mono">No hay artistas disponibles en este momento.</p>
+            <p className="text-zinc-500 font-mono">{t("no_artists")}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -78,7 +80,7 @@ export default async function ArtistasPage() {
                       </h3>
                       
                       <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 group-data-[inview=true]/colorizer:opacity-100 group-data-[inview=true]/colorizer:translate-y-0 transition-all duration-500">
-                        <span>Ver Perfil</span>
+                        <span>{t("view_profile")}</span>
                         <ArrowRight className="w-3 h-3" />
                       </div>
                     </div>

@@ -3,8 +3,10 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import AccordionGallery from "@/components/ui/AccordionGallery";
+import { getTranslations } from "next-intl/server";
 
 export async function GallerySection() {
+  const t = await getTranslations("Gallery");
   const supabase = await createClient();
   const { data: items } = await supabase
     .from("gallery")
@@ -37,14 +39,14 @@ export async function GallerySection() {
         <div>
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            NUESTRA ESENCIA
+            {t("header_badge")}
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-mono uppercase tracking-tight text-white">
-            LA EXPERIENCIA
+            {t("header_title")}
           </h2>
         </div>
         <p className="max-w-md text-xs sm:text-sm font-sans text-zinc-400 leading-relaxed">
-          Recuerdos de nuestras ediciones pasadas. La cultura underground viva en cada rincón.
+          {t("header_desc")}
         </p>
       </div>
 
@@ -78,7 +80,7 @@ export async function GallerySection() {
           href="/galeria"
           className="inline-flex px-8 py-4 rounded-full bg-transparent border border-white/20 text-white font-mono text-xs font-bold uppercase tracking-widest hover:border-emerald-400 hover:text-emerald-400 transition-all items-center justify-center gap-2 group"
         >
-          <span>Ver toda la galería</span>
+          <span>{t("view_all")}</span>
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </Link>
       </div>

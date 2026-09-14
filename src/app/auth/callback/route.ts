@@ -7,7 +7,12 @@ export async function GET(request: Request) {
   
   // URL to redirect to after sign in process completes
   // "next" is usually a path like "/actualizar-password"
-  const next = searchParams.get('next') ?? '/'
+  let next = searchParams.get('next') ?? '/es'
+  
+  // Asegurar que tenga el prefijo de idioma para evitar doble redirección que puede perder la sesión
+  if (!next.startsWith('/es/') && !next.startsWith('/en/') && next !== '/es' && next !== '/en') {
+    next = `/es${next.startsWith('/') ? next : `/${next}`}`
+  }
 
   if (code) {
     const supabase = await createClient()

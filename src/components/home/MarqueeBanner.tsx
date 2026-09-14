@@ -2,13 +2,15 @@
 
 import React from "react";
 import { Disc, Radio, Zap } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function MarqueeBanner() {
+  const t = useTranslations("Marquee");
   const marqueeItems = [
-    "POTENCIAMOS DJS NACIONALES",
-    "RAVES EN LUGARES INEDITOS",
-    "MOMENTOS ETERNOS",
-    "LIVE SETS",
+    t("item1"),
+    t("item2"),
+    t("item3"),
+    t("item4"),
 
   ];
 

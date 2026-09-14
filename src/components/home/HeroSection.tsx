@@ -5,23 +5,25 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Sparkles, Disc, Flame } from "lucide-react";
 import { MarqueeBanner } from "./MarqueeBanner";
+import { useTranslations } from "next-intl";
 
 export function HeroSection() {
+  const t = useTranslations("Hero");
   const pillars = [
     {
       pilar: "01",
-      title: "POTENCIAMOS DJS NACIONALES",
-      desc: "Plataforma de desarrollo y proyección del talento local.",
+      title: t("pilar1_title"),
+      desc: t("pilar1_desc"),
     },
     {
       pilar: "02",
-      title: "RAVES EN LUGARES DE PELICULA",
-      desc: "Locaciones secretas, plantas industriales y miradores.",
+      title: t("pilar2_title"),
+      desc: t("pilar2_desc"),
     },
     {
       pilar: "03",
-      title: "MOMENTOS PARA LA ETERNIDAD",
-      desc: "Grabaciones en 4K, audio 24-bit y experiencias 360°.",
+      title: t("pilar3_title"),
+      desc: t("pilar3_desc"),
     },
   ];
 
@@ -81,13 +83,13 @@ export function HeroSection() {
             {/* Category Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.02] border border-white/[0.05] shadow-[0_0_15px_rgba(255,255,255,0.03)] text-[10px] sm:text-xs font-mono text-zinc-300 tracking-widest backdrop-blur-md transition-all hover:bg-white/[0.05] hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]">
               <Flame className="w-3.5 h-3.5 text-zinc-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
-              <span className="text-white/80 font-medium">UNDERGROUND TECHNO & AUDIOVISUAL PLATFORM</span>
+              <span className="text-white/80 font-medium">{t("badge")}</span>
             </div>
 
             {/* Subtitle */}
             <div className="space-y-3 max-w-2xl px-2">
               <p className="text-sm sm:text-base md:text-lg text-zinc-400 font-body tracking-wide font-normal leading-relaxed">
-                Colectivo y plataforma de música electrónica en Colombia. Transformamos espacios icónicos en templos sónicos para la eternidad.
+                {t("subtitle")}
               </p>
             </div>
 
@@ -110,7 +112,7 @@ export function HeroSection() {
 
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="text-[10px] sm:text-[11px] font-mono text-zinc-500 uppercase tracking-widest flex items-center justify-between mb-4">
-                      <span className="group-hover:text-zinc-400 transition-colors duration-300">PILAR {pillar.pilar}</span>
+                      <span className="group-hover:text-zinc-400 transition-colors duration-300">{t("pilar_prefix")} {pillar.pilar}</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-zinc-700 group-hover:bg-zinc-200 group-hover:shadow-[0_0_10px_rgba(255,255,255,0.8)] transition-all duration-500" />
                     </div>
                     <h3 className="text-base sm:text-lg font-bold font-title text-zinc-200 group-hover:text-white tracking-wider uppercase mb-2 transition-colors duration-300 drop-shadow-md group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, CheckCircle2, AlertCircle, Info } from 'lucide-react'
+import { ArrowRight, CheckCircle2, AlertCircle, Info, Loader2 } from 'lucide-react'
 import { uploadReceiptAndReserve } from './actions'
 import { CloudinaryUpload } from '@/components/ui/CloudinaryUpload'
 
@@ -295,7 +295,8 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, earlyTime, anyti
             disabled={loading || !receiptUrl}
             className="w-full bg-white text-black font-semibold rounded-xl py-4 flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Subiendo y Reservando...' : 'Confirmar Reserva'}
+            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
+            {loading ? 'Procesando...' : 'Confirmar Reserva'}
             {!loading && <ArrowRight className="w-5 h-5" />}
           </button>
         </form>

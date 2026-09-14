@@ -2,6 +2,7 @@
 
 import React from "react";
 import { MessageCircle, ArrowUp } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   InstagramIcon,
   SoundcloudIcon,
@@ -10,6 +11,7 @@ import {
 } from "@/components/icons/CustomIcons";
 
 export function Footer() {
+  const t = useTranslations("Footer");
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -85,18 +87,18 @@ export function Footer() {
               </span>
             </a>
             <p className="text-xs sm:text-sm text-zinc-400 font-sans leading-relaxed max-w-sm">
-              Plataforma y colectivo de música electrónica de Medellín, Colombia. Fomentamos la cultura de rave underground, la grabación cinematográfica y la proyección de artistas locales.
+              {t("mission")}
             </p>
             <div className="text-xs font-mono text-zinc-500 flex items-center gap-2 pt-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span>TRANSMITIENDO DESDE MEDELLÍN PARA EL MUNDO</span>
+              <span>{t("broadcasting")}</span>
             </div>
           </div>
 
           {/* Social Hub Links */}
           <div className="md:col-span-4 space-y-4">
             <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-white">
-              COMUNIDAD & REDES
+              {t("community")}
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {socials.map((social) => (
@@ -127,13 +129,12 @@ export function Footer() {
           <div className="md:col-span-3 space-y-4 flex flex-col justify-between">
             <div>
               <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-white mb-3">
-                LOCACIÓN PRINCIPAL
+                {t("location_title")}
               </h4>
-              <p className="text-xs font-mono text-zinc-400 leading-relaxed">
-                Valle de Aburrá, Antioquia
-                <br />
-                Medellín — Colombia
-              </p>
+              <p 
+                className="text-xs font-mono text-zinc-400 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: t("location_desc") }}
+              />
             </div>
 
             <div>
@@ -142,7 +143,7 @@ export function Footer() {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-900 border border-white/10 hover:border-white/30 text-xs font-mono text-zinc-300 hover:text-white transition-all"
               >
                 <ArrowUp className="w-3.5 h-3.5" />
-                <span>Volver Arriba</span>
+                <span>{t("back_to_top")}</span>
               </button>
             </div>
           </div>
@@ -151,12 +152,12 @@ export function Footer() {
         {/* Bottom Legal / Copyright Bar */}
         <div className="pt-8 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-zinc-500 gap-4">
           <div>
-            © {new Date().getFullYear()} AETERNUM. Todos los derechos reservados.
+            {t("rights", { year: new Date().getFullYear() })}
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-4 sm:mt-0">
-            <a href="/legal/terminos" className="hover:text-zinc-300 transition-colors">Términos & Condiciones</a>
-            <a href="/legal/privacidad" className="hover:text-zinc-300 transition-colors">Política de Privacidad</a>
-            <a href="/legal/protocolo-seguro" className="hover:text-zinc-300 transition-colors">Protocolo Rave Seguro</a>
+            <a href="/legal/terminos" className="hover:text-zinc-300 transition-colors">{t("terms")}</a>
+            <a href="/legal/privacidad" className="hover:text-zinc-300 transition-colors">{t("privacy")}</a>
+            <a href="/legal/protocolo-seguro" className="hover:text-zinc-300 transition-colors">{t("safety")}</a>
           </div>
         </div>
       </div>
