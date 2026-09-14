@@ -26,7 +26,7 @@ export async function sendTicketApprovalEmail({
     // Si no tienes un dominio verificado, Resend solo permite enviar desde onboarding@resend.dev
     // y SÓLO al correo con el que te registraste (aeternum.inn@gmail.com).
     const data = await resend.emails.send({
-      from: 'AETERNUM Society <tickets@aeternum-inn.com>',
+      from: 'AETERNUM INN <tickets@aeternum-inn.com>',
       to: [to],
       subject: `¡Estás dentro! Tus boletas para Aeternum Inn ⚡`,
       react: TicketApprovalEmail({

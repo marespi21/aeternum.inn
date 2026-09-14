@@ -98,3 +98,18 @@ export async function createManualTicket(formData: FormData) {
   revalidatePath('/admin')
   revalidatePath(`/admin/event/${eventId}`)
 }
+
+export async function deleteTicket(formData: FormData) {
+  const ticketId = formData.get('ticketId') as string
+  const eventId = formData.get('eventId') as string
+  const supabase = await createClient()
+
+  if (!ticketId) return;
+
+  await supabase.from('tickets').delete().eq('id', ticketId)
+
+  revalidatePath('/admin')
+  if (eventId) {
+    revalidatePath(`/admin/event/${eventId}`)
+  }
+}

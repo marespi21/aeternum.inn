@@ -55,13 +55,13 @@ export function Navbar({ user }: { user: any }) {
               className="group flex items-center gap-3 transition-all"
             >
               {/* Official Icon Emblem */}
-              <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-xl overflow-hidden bg-black border border-white/20 p-0.5 group-hover:border-white/50 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-all">
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 overflow-hidden group-hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-all rounded-sm">
                 <Image
                   src="/images/logo.png"
                   alt="Aeternum Logo"
                   fill
                   sizes="40px"
-                  className="object-cover"
+                  className="object-contain"
                   priority
                 />
               </div>
@@ -127,13 +127,13 @@ export function Navbar({ user }: { user: any }) {
             <div className="space-y-6">
               {/* Mobile Brand Emblem */}
               <div className="flex items-center gap-3 border-b border-zinc-900 pb-4">
-                <div className="relative w-10 h-10 rounded-xl overflow-hidden border border-white/20">
+                <div className="relative w-12 h-12 overflow-hidden rounded-sm">
                   <Image
                     src="/images/logo.png"
                     alt="Aeternum Logo"
                     fill
-                    sizes="40px"
-                    className="object-cover"
+                    sizes="48px"
+                    className="object-contain"
                   />
                 </div>
                 <div>

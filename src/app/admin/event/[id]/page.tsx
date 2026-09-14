@@ -3,8 +3,9 @@ import { redirect } from 'next/navigation'
 import { ShieldAlert, Check, X, QrCode, Ticket, ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { approveTicketGroup, rejectTicketGroup, createManualTicket } from '@/app/admin/actions'
+import { approveTicketGroup, rejectTicketGroup, createManualTicket, deleteTicket } from '@/app/admin/actions'
 import { ExportExcelButton } from '@/components/admin/ExportExcelButton'
+import { DeleteTicketButton } from '@/components/admin/DeleteTicketButton'
 
 export default async function AdminEventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient()
@@ -277,14 +278,17 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                           {new Date(ticket.created_at).toLocaleDateString('es-CO', { year: 'numeric', month: 'short', day: 'numeric' })}
                         </td>
                         <td className="p-4">
-                          <span className={`px-2 py-1 rounded-full text-xs font-bold border ${
-                            ticket.status === 'APPROVED' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                            ticket.status === 'REJECTED' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                            ticket.status === 'USED' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
-                            'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
-                          }`}>
-                            {ticket.status}
-                          </span>
+                          <div className="flex items-center">
+                            <span className={`px-2 py-1 rounded-full text-xs font-bold border ${
+                              ticket.status === 'APPROVED' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                              ticket.status === 'REJECTED' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
+                              ticket.status === 'USED' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
+                              'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
+                            }`}>
+                              {ticket.status}
+                            </span>
+                            <DeleteTicketButton ticketId={ticket.id} eventId={id} deleteAction={deleteTicket} />
+                          </div>
                         </td>
                       </tr>
                     )
