@@ -3,9 +3,10 @@ import { redirect } from 'next/navigation'
 import { ShieldAlert, Check, X, QrCode, Ticket, ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { approveTicketGroup, rejectTicketGroup, createManualTicket, deleteTicket } from '@/app/admin/actions'
+import { approveTicketGroup, rejectTicketGroup, createManualTicket, deleteTicket, markTicketAsUsed } from '@/app/admin/actions'
 import { ExportExcelButton } from '@/components/admin/ExportExcelButton'
 import { DeleteTicketButton } from '@/components/admin/DeleteTicketButton'
+import { MarkUsedButton } from '@/components/admin/MarkUsedButton'
 
 export default async function AdminEventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient()
@@ -292,6 +293,7 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                             }`}>
                               {ticket.status}
                             </span>
+                            <MarkUsedButton ticketId={ticket.id} eventId={id} markAction={markTicketAsUsed} status={ticket.status} />
                             <DeleteTicketButton ticketId={ticket.id} eventId={id} deleteAction={deleteTicket} />
                           </div>
                         </td>
