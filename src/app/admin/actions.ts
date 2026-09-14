@@ -106,6 +106,13 @@ export async function deleteTicket(formData: FormData) {
 
   if (!ticketId) return;
 
+  // Verify auth and admin role
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN') throw new Error('Solo los administradores pueden borrar boletas')
+
   await supabase.from('tickets').delete().eq('id', ticketId)
 
   revalidatePath('/admin')
