@@ -266,6 +266,11 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                                 {phone || 'Sin teléfono'}
                               </span>
                             )}
+                            <div className="mt-1.5">
+                              <span className="text-[10px] font-mono px-2 py-0.5 rounded border bg-zinc-900 border-zinc-700 text-zinc-400">
+                                #{ticket.id.slice(0, 8).toUpperCase()}
+                              </span>
+                            </div>
                           </div>
                         </td>
                         <td className="p-4">

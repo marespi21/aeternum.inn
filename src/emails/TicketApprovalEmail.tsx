@@ -151,8 +151,11 @@ export const TicketApprovalEmail = ({
                       <Text className="text-brand text-[10px] font-bold tracking-widest uppercase m-0 mb-1 force-text-brand">
                         Código de Ingreso
                       </Text>
-                      <Text className="text-white text-lg font-mono font-bold m-0 p-2 rounded force-text-white">
-                        {id}
+                      <Text className="text-white text-2xl font-mono font-bold m-0 p-1 rounded force-text-white tracking-[2px]">
+                        #{id.slice(0, 8).toUpperCase()}
+                      </Text>
+                      <Text className="text-[#333333] text-[9px] font-mono m-0 mt-2 force-text-black">
+                        REF: {id}
                       </Text>
                     </Section>
                   </Section>
