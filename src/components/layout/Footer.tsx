@@ -36,7 +36,7 @@ export function Footer() {
     {
       name: "TikTok",
       handle: "@aeternum.mde",
-      url: "https://tiktok.com",
+      url: "https://www.tiktok.com/@aeternum.inn",
       icon: <TiktokIcon className="w-5 h-5" />,
     },
     {
@@ -131,8 +131,6 @@ export function Footer() {
               </h4>
               <p className="text-xs font-mono text-zinc-400 leading-relaxed">
                 Valle de Aburrá, Antioquia
-                <br />
-                Coordenadas: 6.2442° N, 75.5812° W
                 <br />
                 Medellín — Colombia
               </p>
