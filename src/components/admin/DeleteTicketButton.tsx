@@ -1,7 +1,7 @@
 'use client'
 
-import { Trash2, AlertTriangle } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { Trash2, AlertTriangle, Loader2 } from 'lucide-react'
+import { useState, useEffect, useTransition } from 'react'
 import { createPortal } from 'react-dom'
 
 interface DeleteTicketButtonProps {
@@ -13,13 +13,21 @@ interface DeleteTicketButtonProps {
 export function DeleteTicketButton({ ticketId, eventId, deleteAction }: DeleteTicketButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    setIsOpen(false)
+  const handleConfirm = () => {
+    const formData = new FormData()
+    formData.append('ticketId', ticketId)
+    formData.append('eventId', eventId)
+
+    startTransition(() => {
+      deleteAction(formData)
+      setIsOpen(false)
+    })
   }
 
   return (
@@ -53,20 +61,19 @@ export function DeleteTicketButton({ ticketId, eventId, deleteAction }: DeleteTi
               <button 
                 type="button" 
                 onClick={() => setIsOpen(false)}
-                className="flex-1 px-4 py-3 bg-white/5 hover:bg-white/10 text-white font-mono uppercase text-sm font-bold rounded-xl transition-colors"
+                disabled={isPending}
+                className="flex-1 px-4 py-3 bg-white/5 hover:bg-white/10 text-white font-mono uppercase text-sm font-bold rounded-xl transition-colors disabled:opacity-50"
               >
                 Cancelar
               </button>
-              <form action={deleteAction} onSubmit={handleSubmit} className="flex-1">
-                <input type="hidden" name="ticketId" value={ticketId} />
-                <input type="hidden" name="eventId" value={eventId} />
-                <button 
-                  type="submit" 
-                  className="w-full px-4 py-3 bg-red-500 hover:bg-red-400 text-black font-mono uppercase text-sm font-bold rounded-xl transition-colors shadow-[0_0_20px_rgba(239,68,68,0.3)]"
-                >
-                  Sí, Borrar
-                </button>
-              </form>
+              <button 
+                type="button"
+                onClick={handleConfirm}
+                disabled={isPending}
+                className="flex-1 px-4 py-3 bg-red-500 hover:bg-red-400 text-black font-mono uppercase text-sm font-bold rounded-xl transition-colors shadow-[0_0_20px_rgba(239,68,68,0.3)] disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Sí, Borrar'}
+              </button>
             </div>
           </div>
         </div>,
