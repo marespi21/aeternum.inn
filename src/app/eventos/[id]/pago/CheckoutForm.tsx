@@ -6,7 +6,7 @@ import { ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react'
 import { uploadReceiptAndReserve } from './actions'
 import { CloudinaryUpload } from '@/components/ui/CloudinaryUpload'
 
-export function CheckoutForm({ eventId, eventTitle, earlyPrice, anytimePrice, userEmail, userMetadata }: { eventId: string, eventTitle: string, earlyPrice: number, anytimePrice: number, userEmail: string, userMetadata: any }) {
+export function CheckoutForm({ eventId, eventTitle, earlyPrice, earlyTime, anytimePrice, userEmail, userMetadata }: { eventId: string, eventTitle: string, earlyPrice: number, earlyTime: string, anytimePrice: number, userEmail: string, userMetadata: any }) {
   const [receiptUrl, setReceiptUrl] = useState<string | null>(null)
 
   // New State Fields
@@ -77,7 +77,7 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, anytimePrice, us
               }`}
           >
             <div className="font-bold font-mono text-lg mb-1">EARLY</div>
-            <div className="text-xs mb-2 text-zinc-400">Antes de la 1:00 AM</div>
+            {earlyTime && <div className="text-xs mb-2 text-zinc-400">{earlyTime}</div>}
             <div className="font-bold text-emerald-400">${(earlyPrice || 0).toLocaleString()}</div>
           </button>
 

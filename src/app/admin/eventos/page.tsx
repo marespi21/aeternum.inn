@@ -34,6 +34,7 @@ export default async function AdminEventosPage() {
     const title = formData.get('title') as string
     const date = formData.get('date') as string
     const early_price = formData.get('early_price') as string
+    const early_time = formData.get('early_time') as string
     const anytime_price = formData.get('anytime_price') as string
     const capacity = formData.get('capacity') as string
     const flyerUrl = formData.get('flyerUrl') as string
@@ -45,6 +46,7 @@ export default async function AdminEventosPage() {
       date: new Date(date).toISOString(),
       location: location || null,
       early_price: Number(early_price),
+      early_time: early_time || null,
       anytime_price: Number(anytime_price),
       total_tickets: Number(capacity),
       flyer_url: flyerUrl || null,
@@ -75,6 +77,7 @@ export default async function AdminEventosPage() {
     const title = formData.get('title') as string
     const date = formData.get('date') as string
     const early_price = formData.get('early_price') as string
+    const early_time = formData.get('early_time') as string
     const anytime_price = formData.get('anytime_price') as string
     const capacity = formData.get('capacity') as string
     const flyerUrl = formData.get('flyerUrl') as string
@@ -87,6 +90,7 @@ export default async function AdminEventosPage() {
       date: new Date(date).toISOString(),
       location: location || null,
       early_price: Number(early_price),
+      early_time: early_time || null,
       anytime_price: Number(anytime_price),
       total_tickets: Number(capacity),
       flyer_url: flyerUrl || null,

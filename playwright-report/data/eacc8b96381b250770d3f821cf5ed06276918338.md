@@ -14,14 +14,14 @@
 ```
 Error: expect(locator).toBeVisible() failed
 
-Locator: locator('text=Recuperar Acceso')
+Locator: locator('text=Revisa tu correo')
 Expected: visible
 Timeout: 5000ms
 Error: element(s) not found
 
 Call log:
-  - Expect "toBeVisible" locator('text=Recuperar Acceso') with timeout 5000ms
-  - waiting for locator('text=Recuperar Acceso')
+  - Expect "toBeVisible" locator('text=Revisa tu correo') with timeout 5000ms
+  - waiting for locator('text=Revisa tu correo')
 
 ```
 
@@ -35,11 +35,11 @@ Call log:
     - link "EVENTOS":
       - /url: /#eventos
     - link "VIDEO SETS":
-      - /url: /#video-sets
+      - /url: /videosets
     - link "ARTISTAS":
       - /url: /#artistas
     - link "GALERIA":
-      - /url: /#experiencia
+      - /url: /galeria
     - link "SOBRE NOSOTROS":
       - /url: /#manifiesto
     - link "COMUNIDAD":
@@ -51,10 +51,10 @@ Call log:
     - /url: /login
   - heading "Recuperar Contraseña" [level=1]
   - paragraph: Ingresa tu correo y te enviaremos un enlace para crear una nueva contraseña.
+  - paragraph: Si el correo está registrado, recibirás un enlace de recuperación pronto. Revisa tu bandeja de spam.
   - text: Correo Electrónico
   - textbox "tu@correo.com"
   - button "Enviar Enlace"
-- alert
 - iframe
 - button "Reproducir Radio"
 - text: ON AIR
@@ -64,6 +64,8 @@ Call log:
 - slider: "0.8"
 - link "Lineup":
   - /url: "#eventos"
+- region "Notifications alt+T"
+- alert
 ```
 
 # Test source
@@ -84,8 +86,7 @@ Call log:
   13 |     await expect(page).toHaveURL(/.*\/recuperar/);
   14 |     
   15 |     // Verificar que los elementos UI están presentes
-> 16 |     await expect(page.locator('text=Recuperar Acceso')).toBeVisible();
-     |                                                         ^ Error: expect(locator).toBeVisible() failed
+  16 |     await expect(page.locator('text=Recuperar Contraseña').first()).toBeVisible();
   17 |     await expect(page.locator('input[type="email"]')).toBeVisible();
   18 |     
   19 |     // Simular el envío de un correo (no podemos probar la recepción del correo en E2E básico sin servicios externos, 
@@ -95,23 +96,23 @@ Call log:
   23 |     
   24 |     // Esperamos a que la página reaccione (el action redireccionará con un message)
   25 |     // El mensaje de éxito suele contener "Revisa tu correo"
-  26 |     await expect(page.locator('text=Revisa tu correo')).toBeVisible();
+> 26 |     await expect(page.locator('text=Revisa tu correo')).toBeVisible();
+     |                                                         ^ Error: expect(locator).toBeVisible() failed
   27 |   });
   28 | 
   29 |   test('la vista de actualizar contraseña muestra los campos correctos', async ({ page }) => {
   30 |     // Simulamos que el usuario hizo clic en el enlace y llegó a actualizar-password
   31 |     await page.goto('/actualizar-password');
   32 |     
-  33 |     // Verificamos elementos UI
-  34 |     await expect(page.locator('text=Nueva Contraseña')).first().toBeVisible();
-  35 |     
-  36 |     const passwordInput = page.locator('input[type="password"]');
-  37 |     await expect(passwordInput).toBeVisible();
-  38 |     
-  39 |     // El texto estático de requisitos de la nueva contraseña
-  40 |     await expect(page.locator('text=Debe tener al menos 8 caracteres, una mayúscula y un número.')).toBeVisible();
-  41 |   });
-  42 | 
-  43 | });
-  44 | 
+  33 |     await expect(page.locator('text=Nueva Contraseña').first()).toBeVisible();
+  34 |     
+  35 |     const passwordInput = page.locator('input[type="password"]');
+  36 |     await expect(passwordInput).toBeVisible();
+  37 |     
+  38 |     // El texto estático de requisitos de la nueva contraseña
+  39 |     await expect(page.locator('text=Debe tener al menos 8 caracteres, una mayúscula y un número.')).toBeVisible();
+  40 |   });
+  41 | 
+  42 | });
+  43 | 
 ```

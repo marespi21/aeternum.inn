@@ -61,6 +61,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
           eventId={event.id} 
           eventTitle={event.title}
           earlyPrice={event.early_price}
+          earlyTime={event.early_time || ''}
           anytimePrice={event.anytime_price}
           userEmail={user.email || ''}
           userMetadata={user.user_metadata || {}}

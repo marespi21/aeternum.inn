@@ -67,6 +67,11 @@ export function EventForm({ createEventAction }: { createEventAction: (formData:
             </div>
 
             <div>
+              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Límite Hora Early (Opcional)</label>
+              <input type="text" name="early_time" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" placeholder="Ej. Antes de la 1:00 AM" />
+            </div>
+
+            <div>
               <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Precio Anytime (COP)</label>
               <input required type="number" name="anytime_price" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" placeholder="60000" />
             </div>

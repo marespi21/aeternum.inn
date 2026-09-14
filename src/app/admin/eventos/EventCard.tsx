@@ -71,6 +71,10 @@ export function EventCard({
               <input required type="number" name="early_price" defaultValue={event.early_price} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
             </div>
             <div>
+              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Límite Hora Early</label>
+              <input type="text" name="early_time" defaultValue={event.early_time || ''} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
+            </div>
+            <div>
               <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Precio Anytime</label>
               <input required type="number" name="anytime_price" defaultValue={event.anytime_price} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
             </div>
@@ -115,6 +119,9 @@ export function EventCard({
           <span className="bg-white/5 px-2 py-1 rounded">{new Date(event.date).toLocaleDateString()}</span>
           <span className="bg-white/5 px-2 py-1 rounded">{event.location || 'Ubicación por definir'}</span>
           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early: ${(event.early_price || 0).toLocaleString()}</span>
+          {event.early_time && (
+            <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Hora Early: {event.early_time}</span>
+          )}
           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Anytime: ${(event.anytime_price || 0).toLocaleString()}</span>
           <span className="bg-white/5 px-2 py-1 rounded">Aforo: {event.total_tickets}</span>
         </div>

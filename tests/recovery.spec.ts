@@ -22,8 +22,8 @@ test.describe('Flujo de Recuperación de Contraseña', () => {
     await page.click('button[type="submit"]');
     
     // Esperamos a que la página reaccione (el action redireccionará con un message)
-    // El mensaje de éxito suele contener "Revisa tu correo"
-    await expect(page.locator('text=Revisa tu correo')).toBeVisible();
+    // El mensaje de éxito contiene "recibirás un enlace"
+    await expect(page.locator('text=recibirás un enlace')).toBeVisible();
   });
 
   test('la vista de actualizar contraseña muestra los campos correctos', async ({ page }) => {
