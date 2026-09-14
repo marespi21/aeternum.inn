@@ -36,24 +36,42 @@ export function ExportExcelButton({ tickets, eventTitle, earlyPrice, anytimePric
       }
     })
 
-    // 2. Crear el libro y la hoja
-    const worksheet = xlsx.utils.json_to_sheet(data)
-    const workbook = xlsx.utils.book_new()
-    xlsx.utils.book_append_sheet(workbook, worksheet, 'Boletas')
+    // 2. Crear resumen por comprador (agrupando por correo)
+    const summaryMap = new Map()
+    data.forEach(row => {
+      const email = row['Correo']
+      if (!summaryMap.has(email)) {
+        summaryMap.set(email, {
+          'Nombre': row['Nombre'],
+          'Correo': email,
+          'Teléfono': row['Teléfono'],
+          'Cantidad de Boletas': 0,
+          'Total Pagado': 0,
+        })
+      }
+      const summary = summaryMap.get(email)
+      summary['Cantidad de Boletas'] += 1
+      summary['Total Pagado'] += row['Precio Pagado']
+    })
+    const summaryData = Array.from(summaryMap.values())
 
-    // 3. Ajustar el ancho de las columnas
-    const columnWidths = [
-      { wch: 40 }, // ID / Ticket
-      { wch: 30 }, // Nombre
-      { wch: 30 }, // Correo
-      { wch: 15 }, // Teléfono
-      { wch: 15 }, // Tipo de Boleta
-      { wch: 15 }, // Precio Pagado
-      { wch: 15 }, // Estado
-      { wch: 15 }, // Método de Pago
-      { wch: 20 }, // Fecha de Compra
+    // 3. Crear el libro y las hojas
+    const workbook = xlsx.utils.book_new()
+    
+    // Hoja 1: Todas las boletas individuales
+    const worksheet1 = xlsx.utils.json_to_sheet(data)
+    worksheet1['!cols'] = [
+      { wch: 40 }, { wch: 30 }, { wch: 30 }, { wch: 15 }, 
+      { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 20 }
     ]
-    worksheet['!cols'] = columnWidths
+    xlsx.utils.book_append_sheet(workbook, worksheet1, 'Boletas Individuales')
+
+    // Hoja 2: Resumen por comprador
+    const worksheet2 = xlsx.utils.json_to_sheet(summaryData)
+    worksheet2['!cols'] = [
+      { wch: 30 }, { wch: 30 }, { wch: 15 }, { wch: 20 }, { wch: 20 }
+    ]
+    xlsx.utils.book_append_sheet(workbook, worksheet2, 'Resumen Compradores')
 
     // 4. Descargar el archivo
     const safeTitle = eventTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase()

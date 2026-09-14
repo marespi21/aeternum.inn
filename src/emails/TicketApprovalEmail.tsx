@@ -13,24 +13,24 @@ import {
 import * as React from 'react';
 
 interface TicketApprovalEmailProps {
-  ticketId: string;
+  ticketIds: string[];
   eventTitle: string;
   eventDate: string;
-  qrUrl: string;
+  qrUrls: string[];
   guestName?: string;
 }
 
 export const TicketApprovalEmail = ({
-  ticketId,
+  ticketIds,
   eventTitle,
   eventDate,
-  qrUrl,
+  qrUrls,
   guestName,
 }: TicketApprovalEmailProps) => {
   return (
     <Html>
       <Head />
-      <Preview>¡Estás dentro! Tu acceso oficial a Aeternum Inn ⚡</Preview>
+      <Preview>¡Estás dentro! Tus accesos para Aeternum Inn ⚡</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
@@ -52,11 +52,18 @@ export const TicketApprovalEmail = ({
             <Heading style={eventTitleStyle}>{eventTitle}</Heading>
             <Text style={dateStyle}>{eventDate}</Text>
 
-            <Section style={qrContainer}>
-              <Img src={qrUrl} width="200" height="200" alt="Ticket QR Code" style={qrCode} />
-            </Section>
+            <Text style={{...text, color: '#10b981', fontWeight: 'bold', fontSize: '16px', margin: '40px 0 20px 0'}}>
+              Tus {ticketIds.length} acceso{ticketIds.length > 1 ? 's' : ''}:
+            </Text>
 
-            <Text style={ticketIdStyle}>TICKET ID: {ticketId}</Text>
+            {ticketIds.map((id, index) => (
+              <div key={id} style={{ marginBottom: '40px' }}>
+                <Section style={qrContainer}>
+                  <Img src={qrUrls[index]} width="200" height="200" alt={`Ticket QR Code ${index + 1}`} style={qrCode} />
+                </Section>
+                <Text style={ticketIdStyle}>TICKET ID: {id}</Text>
+              </div>
+            ))}
           </Section>
 
           <Section style={bulletsContainer}>

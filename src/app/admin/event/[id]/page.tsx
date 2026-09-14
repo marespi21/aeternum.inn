@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { ShieldAlert, Check, X, QrCode, Ticket, ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { approveTicket, rejectTicket, createManualTicket } from '@/app/admin/actions'
+import { approveTicketGroup, rejectTicketGroup, createManualTicket } from '@/app/admin/actions'
 import { ExportExcelButton } from '@/components/admin/ExportExcelButton'
 
 export default async function AdminEventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
@@ -55,6 +55,17 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
   // Separate tickets
   const pendingTickets = tickets?.filter(t => t.status === 'PENDING') || []
   const historicalTickets = tickets?.filter(t => t.status !== 'PENDING') || []
+
+  // Group pending tickets by receipt_url
+  const pendingGroupsMap = new Map<string, any[]>()
+  pendingTickets.forEach(ticket => {
+    const key = ticket.receipt_url || ticket.id
+    if (!pendingGroupsMap.has(key)) {
+      pendingGroupsMap.set(key, [])
+    }
+    pendingGroupsMap.get(key)!.push(ticket)
+  })
+  const pendingGroups = Array.from(pendingGroupsMap.values())
 
   return (
     <div className="p-4 sm:p-8 relative z-10">
@@ -134,56 +145,63 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
             Pagos Por Aprobar
           </h2>
 
-          {pendingTickets.length === 0 ? (
+          {pendingGroups.length === 0 ? (
             <div className="text-center p-12 border border-white/10 border-dashed rounded-2xl bg-white/[0.02]">
               <p className="text-zinc-500 font-mono">No hay pagos pendientes para este evento.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {pendingTickets.map((ticket: any) => (
-                <div key={ticket.id} className="bg-[#0a0a0a]/90 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden flex flex-col shadow-[0_0_30px_rgba(255,255,255,0.02)]">
+              {pendingGroups.map((group: any[]) => {
+                const firstTicket = group[0]
+                const ticketIds = group.map(t => t.id).join(',')
+                return (
+                <div key={firstTicket.id} className="bg-[#0a0a0a]/90 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden flex flex-col shadow-[0_0_30px_rgba(255,255,255,0.02)]">
                   
-                  {/* Imagen del comprobante */}
                   <div className="relative h-64 bg-black w-full border-b border-white/10">
-                    {ticket.receipt_url && !ticket.receipt_url.startsWith('manual_sale:') ? (
+                    {firstTicket.receipt_url && !firstTicket.receipt_url.startsWith('manual_sale:') ? (
                       <Image 
-                        src={ticket.receipt_url} 
+                        src={firstTicket.receipt_url} 
                         alt="Comprobante de pago" 
                         fill 
                         className="object-contain"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-zinc-600 font-mono text-sm">
-                        {ticket.receipt_url?.startsWith('manual_sale:') ? 'Venta Manual' : 'Sin imagen'}
+                        {firstTicket.receipt_url?.startsWith('manual_sale:') ? 'Venta Manual' : 'Sin imagen'}
                       </div>
                     )}
                   </div>
 
                   <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
-                      <p className="text-xs text-zinc-500 mb-1 font-mono uppercase">Usuario</p>
+                      <div className="flex items-center justify-between mb-1">
+                        <p className="text-xs text-zinc-500 font-mono uppercase">Usuario</p>
+                        <span className="bg-emerald-500 text-black px-2 py-0.5 rounded text-xs font-bold font-mono">
+                          {group.length} Boleta{group.length > 1 ? 's' : ''}
+                        </span>
+                      </div>
                       <p className="font-semibold mb-3 truncate font-mono text-white">
-                        {ticket.receipt_url?.startsWith('manual_sale:') 
-                          ? ticket.receipt_url.split(':')[1] 
-                          : ticket.profiles?.full_name || ticket.profiles?.email}
+                        {firstTicket.receipt_url?.startsWith('manual_sale:') 
+                          ? firstTicket.receipt_url.split(':')[1] 
+                          : firstTicket.profiles?.full_name || firstTicket.profiles?.email}
                       </p>
                       <div className="flex gap-2">
                         <span className="px-2 py-1 bg-white/10 rounded text-xs font-mono font-bold text-white">
-                          {ticket.ticket_type || 'ANYTIME'}
+                          {firstTicket.ticket_type || 'ANYTIME'}
                         </span>
                       </div>
                     </div>
 
                     <div className="flex gap-3 mt-6">
-                      <form action={rejectTicket} className="flex-1">
-                        <input type="hidden" name="ticketId" value={ticket.id} />
+                      <form action={rejectTicketGroup} className="flex-1">
+                        <input type="hidden" name="ticketIds" value={ticketIds} />
                         <input type="hidden" name="eventId" value={id} />
                         <button className="w-full bg-red-500/10 border border-red-500/20 text-red-500 font-mono uppercase text-sm py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-red-500/20 transition-colors font-bold">
                           <X className="w-4 h-4" /> Rechazar
                         </button>
                       </form>
-                      <form action={approveTicket} className="flex-1">
-                        <input type="hidden" name="ticketId" value={ticket.id} />
+                      <form action={approveTicketGroup} className="flex-1">
+                        <input type="hidden" name="ticketIds" value={ticketIds} />
                         <input type="hidden" name="eventId" value={id} />
                         <button className="w-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 font-mono uppercase text-sm py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-emerald-500/20 transition-colors font-bold">
                           <Check className="w-4 h-4" /> Aprobar
@@ -192,7 +210,8 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                     </div>
                   </div>
                 </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>

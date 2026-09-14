@@ -5,21 +5,22 @@ const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key');
 
 export async function sendTicketApprovalEmail({ 
   to, 
-  ticketId, 
+  ticketIds, 
   eventTitle, 
   eventDate,
   guestName
 }: { 
   to: string, 
-  ticketId: string, 
+  ticketIds: string[], 
   eventTitle: string, 
   eventDate: string,
   guestName?: string 
 }) {
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${ticketId}&color=000000&bgcolor=ffffff`;
   const formattedDate = new Date(eventDate).toLocaleDateString('es-CO', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
+
+  const qrUrls = ticketIds.map(id => `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${id}&color=000000&bgcolor=ffffff`);
 
   try {
     // Si no tienes un dominio verificado, Resend solo permite enviar desde onboarding@resend.dev
@@ -27,12 +28,12 @@ export async function sendTicketApprovalEmail({
     const data = await resend.emails.send({
       from: 'AETERNUM Society <tickets@aeternum-inn.com>',
       to: [to],
-      subject: '¡Estás dentro! Tu acceso oficial a Aeternum Inn ⚡',
+      subject: `¡Estás dentro! Tus boletas para Aeternum Inn ⚡`,
       react: TicketApprovalEmail({
-        ticketId,
+        ticketIds,
         eventTitle,
         eventDate: formattedDate,
-        qrUrl,
+        qrUrls,
         guestName,
       }),
     });

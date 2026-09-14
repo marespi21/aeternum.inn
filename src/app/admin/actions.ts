@@ -4,26 +4,29 @@ import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { sendTicketApprovalEmail } from '@/utils/email'
 
-export async function approveTicket(formData: FormData) {
-  const ticketId = formData.get('ticketId') as string
+export async function approveTicketGroup(formData: FormData) {
+  const ticketIdsStr = formData.get('ticketIds') as string
   const eventId = formData.get('eventId') as string
   const supabase = await createClient()
+  
+  if (!ticketIdsStr) return;
+  const ticketIds = ticketIdsStr.split(',')
   
   // 1. Fetch info necessary for email
   const { data: ticket } = await supabase
     .from('tickets')
     .select('*, profiles(email, full_name), events(title, date)')
-    .eq('id', ticketId)
+    .eq('id', ticketIds[0])
     .single()
 
   if (ticket && ticket.profiles?.email) {
     // 2. Update to APPROVED
-    await supabase.from('tickets').update({ status: 'APPROVED' }).eq('id', ticketId)
+    await supabase.from('tickets').update({ status: 'APPROVED' }).in('id', ticketIds)
     
-    // 3. Send email with QR
+    // 3. Send email with QRs
     await sendTicketApprovalEmail({
       to: ticket.profiles.email,
-      ticketId: ticketId,
+      ticketIds: ticketIds,
       eventTitle: ticket.events.title,
       eventDate: ticket.events.date,
       guestName: ticket.profiles.full_name
@@ -36,12 +39,15 @@ export async function approveTicket(formData: FormData) {
   }
 }
 
-export async function rejectTicket(formData: FormData) {
-  const ticketId = formData.get('ticketId') as string
+export async function rejectTicketGroup(formData: FormData) {
+  const ticketIdsStr = formData.get('ticketIds') as string
   const eventId = formData.get('eventId') as string
   const supabase = await createClient()
   
-  await supabase.from('tickets').update({ status: 'REJECTED' }).eq('id', ticketId)
+  if (!ticketIdsStr) return;
+  const ticketIds = ticketIdsStr.split(',')
+  
+  await supabase.from('tickets').update({ status: 'REJECTED' }).in('id', ticketIds)
   
   revalidatePath('/admin')
   if (eventId) {
@@ -83,7 +89,7 @@ export async function createManualTicket(formData: FormData) {
   // Send the QR code email
   await sendTicketApprovalEmail({
     to: guestEmail,
-    ticketId: ticket.id,
+    ticketIds: [ticket.id],
     eventTitle: event.title,
     eventDate: event.date,
     guestName: guestName
