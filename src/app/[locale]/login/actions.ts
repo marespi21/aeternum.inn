@@ -54,6 +54,8 @@ export async function signup(formData: FormData) {
   const password = formData.get('password') as string
   const phone = formData.get('phone') as string
   const fullName = formData.get('fullName') as string
+  const docType = formData.get('docType') as string
+  const docNumber = formData.get('docNumber') as string
 
   const locale = await getLocale()
 
@@ -83,13 +85,15 @@ export async function signup(formData: FormData) {
     redirect(`/${locale}/login?error=true&message=${encodeURIComponent(errorMessage)}`)
   }
 
-  // Update profile with phone number and full name if user was created
+  // Update profile with all data if user was created
   if (authData?.user) {
     await supabase.from('profiles').upsert({
       id: authData.user.id,
       email: email,
       phone: phone || null,
       full_name: fullName || null,
+      document_type: docType || null,
+      document_number: docNumber || null,
       role: 'USER'
     }, { onConflict: 'id' })
   }

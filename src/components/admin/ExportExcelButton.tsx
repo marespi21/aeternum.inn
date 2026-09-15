@@ -30,11 +30,14 @@ export function ExportExcelButton({ tickets, eventTitle, earlyPrice, anytimePric
         : ticket.ticket_type === 'ANYTIME_PUERTA' ? anytimePuertaPrice
         : anytimePrice
 
+      const cedulaStr = isManual ? 'N/A' : (ticket.profiles?.document_number ? `${ticket.profiles.document_type || 'CC'} ${ticket.profiles.document_number}` : 'Sin cédula')
+
       return {
         'Código Corto': `#${ticket.id.slice(0, 8).toUpperCase()}`,
         'Nombre': name || 'Sin nombre',
         'Correo': email || 'Sin correo',
         'Teléfono': phone || 'Sin teléfono',
+        'Cédula': cedulaStr,
         'Tipo de Boleta': ticket.ticket_type || 'ANYTIME',
         'Precio Pagado': pricePaid,
         'Estado': ticket.status,
@@ -54,6 +57,7 @@ export function ExportExcelButton({ tickets, eventTitle, earlyPrice, anytimePric
         summaryMap.set(email, {
           'Nombre': row['Nombre'],
           'Correo': email,
+          'Cédula': row['Cédula'],
           'Teléfono': row['Teléfono'],
           'Cantidad de Boletas': 0,
           'Total Pagado': 0,
@@ -71,7 +75,7 @@ export function ExportExcelButton({ tickets, eventTitle, earlyPrice, anytimePric
     // Hoja 1: Todas las boletas individuales
     const worksheet1 = xlsx.utils.json_to_sheet(data)
     worksheet1['!cols'] = [
-      { wch: 15 }, { wch: 30 }, { wch: 30 }, { wch: 15 }, 
+      { wch: 15 }, { wch: 30 }, { wch: 30 }, { wch: 15 }, { wch: 15 }, 
       { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 20 }, { wch: 40 }
     ]
     xlsx.utils.book_append_sheet(workbook, worksheet1, 'Boletas Individuales')
@@ -79,7 +83,7 @@ export function ExportExcelButton({ tickets, eventTitle, earlyPrice, anytimePric
     // Hoja 2: Resumen por comprador
     const worksheet2 = xlsx.utils.json_to_sheet(summaryData)
     worksheet2['!cols'] = [
-      { wch: 30 }, { wch: 30 }, { wch: 15 }, { wch: 20 }, { wch: 20 }
+      { wch: 30 }, { wch: 30 }, { wch: 15 }, { wch: 15 }, { wch: 20 }, { wch: 20 }
     ]
     xlsx.utils.book_append_sheet(workbook, worksheet2, 'Resumen Compradores')
 

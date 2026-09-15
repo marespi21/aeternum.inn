@@ -69,6 +69,16 @@ export async function uploadReceiptAndReserve(formData: FormData) {
     }
   })
 
+  // 3. Update the profiles table with the same information so it can be queried easily
+  await supabase.from('profiles').upsert({
+    id: user.id,
+    email: email,
+    full_name: `${firstName} ${lastName}`.trim(),
+    phone: `${phoneCode} ${phoneNumber}`.trim(),
+    document_type: docType,
+    document_number: docNumber
+  }, { onConflict: 'id' })
+
   const quantity = parseInt(formData.get('quantity') as string) || 1
 
   // 4. Crear los Tickets en estado PENDING

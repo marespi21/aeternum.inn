@@ -48,7 +48,7 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
   // 3. Fetch Tickets for THIS event
   const { data: tickets } = await supabase
     .from('tickets')
-    .select('*, profiles(email, phone, full_name)')
+    .select('*, profiles(email, phone, full_name, document_type, document_number)')
     .eq('event_id', id)
     .order('created_at', { ascending: false })
 
@@ -276,6 +276,11 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                         <td className="p-4">
                           <div className="font-medium text-white flex flex-col">
                             <span>{name ? `${name} (${email})` : email}</span>
+                            {!isManual && (ticket.profiles?.document_number || ticket.profiles?.document_type) && (
+                              <span className="text-xs text-zinc-300 mt-1 font-mono">
+                                {ticket.profiles?.document_type || 'CC'}: {ticket.profiles?.document_number}
+                              </span>
+                            )}
                             {isManual ? (
                               <span className="text-xs text-emerald-500 mt-1 capitalize">
                                 {paymentMethod} {phone ? `· ${phone}` : ''}

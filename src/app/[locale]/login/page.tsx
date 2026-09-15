@@ -20,6 +20,8 @@ function LoginContent() {
     fullName: '',
     email: '',
     phone: '',
+    docType: 'CC',
+    docNumber: '',
     password: ''
   })
   const [isDirty, setIsDirty] = useState(false)
@@ -152,6 +154,41 @@ function LoginContent() {
               </motion.div>
             )}
 
+            {!isLogin && (
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="grid grid-cols-2 gap-4"
+              >
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-zinc-300">Documento</label>
+                  <select
+                    name="docType"
+                    value={formData.docType}
+                    onChange={handleChange as any}
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-white/20 transition-all appearance-none"
+                  >
+                    <option value="CC">CC</option>
+                    <option value="CE">CE</option>
+                    <option value="PASAPORTE">Pasaporte</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-zinc-300">Número</label>
+                  <input 
+                    type="text" 
+                    name="docNumber"
+                    required
+                    value={formData.docNumber}
+                    onChange={handleChange}
+                    placeholder="Ej. 10203040"
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
+                  />
+                </div>
+              </motion.div>
+            )}
+
             <div className="space-y-2">
               <div className="flex justify-between items-center">
                 <label className="text-sm font-medium text-zinc-300">Contraseña</label>
@@ -231,7 +268,7 @@ function LoginContent() {
             <button 
               onClick={() => {
                 setIsLogin(!isLogin)
-                setFormData({ fullName: '', email: '', phone: '', password: '' })
+                setFormData({ fullName: '', email: '', phone: '', docType: 'CC', docNumber: '', password: '' })
                 setIsDirty(false)
               }}
               type="button"
