@@ -24,7 +24,7 @@ export async function uploadReceiptAndReserve(formData: FormData) {
 
     if (signUpError) {
       if (signUpError.code === 'user_already_exists') {
-        return { error: 'Este correo ya tiene una cuenta en AETERNUM. Por favor, inicia sesión primero para comprar tu boleta.' }
+        return { error: 'Este correo ya tiene una cuenta. Si es tu primera vez iniciando sesión, ve a "Iniciar Sesión" y haz clic en "¿Olvidaste tu contraseña?" para crear una clave, o inicia sesión si ya la tienes.' }
       }
       return { error: 'Error al procesar el usuario invitado: ' + signUpError.message }
     }
