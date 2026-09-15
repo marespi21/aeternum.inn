@@ -13,23 +13,22 @@ export async function approveTicketGroup(formData: FormData) {
   const ticketIds = ticketIdsStr.split(',')
   
   // 1. Fetch info necessary for email
-  const { data: ticket } = await supabase
+  const { data: ticketsData } = await supabase
     .from('tickets')
-    .select('*, profiles(email, full_name), events(title, date)')
-    .eq('id', ticketIds[0])
-    .single()
+    .select('id, ticket_type, profiles(email, full_name), events(title, date)')
+    .in('id', ticketIds)
 
-  if (ticket && ticket.profiles?.email) {
+  if (ticketsData && ticketsData.length > 0 && (ticketsData[0].profiles as any)?.email) {
     // 2. Update to APPROVED
     await supabase.from('tickets').update({ status: 'APPROVED' }).in('id', ticketIds)
     
     // 3. Send email with QRs
     await sendTicketApprovalEmail({
-      to: ticket.profiles.email,
-      ticketIds: ticketIds,
-      eventTitle: ticket.events.title,
-      eventDate: ticket.events.date,
-      guestName: ticket.profiles.full_name
+      to: (ticketsData[0].profiles as any).email,
+      tickets: ticketsData.map(t => ({ id: t.id, type: t.ticket_type })),
+      eventTitle: (ticketsData[0].events as any).title,
+      eventDate: (ticketsData[0].events as any).date,
+      guestName: (ticketsData[0].profiles as any).full_name
     })
   }
   
@@ -89,7 +88,7 @@ export async function createManualTicket(formData: FormData) {
   // Send the QR code email
   await sendTicketApprovalEmail({
     to: guestEmail,
-    ticketIds: [ticket.id],
+    tickets: [{ id: ticket.id, type: ticketType }],
     eventTitle: event.title,
     eventDate: event.date,
     guestName: guestName

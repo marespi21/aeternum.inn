@@ -3,6 +3,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
+import { getLocale } from 'next-intl/server'
 
 export async function resetPassword(formData: FormData) {
   const email = formData.get('email') as string
@@ -20,10 +21,12 @@ export async function resetPassword(formData: FormData) {
     redirectTo: resetUrl,
   })
 
+  const locale = await getLocale()
+
   if (error) {
-    redirect('/recuperar?error=true&message=' + encodeURIComponent('No pudimos enviar el correo de recuperación. Verifica que esté bien escrito.'))
+    redirect(`/${locale}/recuperar?error=true&message=` + encodeURIComponent('No pudimos enviar el correo de recuperación. Verifica que esté bien escrito.'))
   }
 
   // Always show success message to prevent email enumeration attacks
-  redirect('/recuperar?error=false&message=' + encodeURIComponent('Si el correo está registrado, recibirás un enlace de recuperación pronto. Revisa tu bandeja de spam.'))
+  redirect(`/${locale}/recuperar?error=false&message=` + encodeURIComponent('Si el correo está registrado, recibirás un enlace de recuperación pronto. Revisa tu bandeja de spam.'))
 }

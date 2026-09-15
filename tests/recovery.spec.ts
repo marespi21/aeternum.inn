@@ -4,7 +4,7 @@ test.describe('Flujo de Recuperación de Contraseña', () => {
 
   test('puede navegar a recuperar contraseña y simular envío', async ({ page }) => {
     // Ir al login
-    await page.goto('/login');
+    await page.goto('/es/login');
     
     // Clic en recuperar contraseña
     await page.click('text=¿Olvidaste tu contraseña?');
@@ -28,7 +28,7 @@ test.describe('Flujo de Recuperación de Contraseña', () => {
 
   test('la vista de actualizar contraseña muestra los campos correctos', async ({ page }) => {
     // Simulamos que el usuario hizo clic en el enlace y llegó a actualizar-password
-    await page.goto('/actualizar-password');
+    await page.goto('/es/actualizar-password');
     
     await expect(page.locator('text=Nueva Contraseña').first()).toBeVisible();
     

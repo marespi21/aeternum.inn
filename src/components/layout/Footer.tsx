@@ -75,14 +75,14 @@ export function Footer() {
               href="#"
               className="flex items-center gap-3 group inline-flex"
             >
-              <div className="relative w-9 h-9 rounded-xl overflow-hidden bg-black border border-white/20 p-0.5 group-hover:border-white/50 transition-all">
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 overflow-hidden group-hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-all rounded-sm">
                 <img
                   src="/images/logo.png"
                   alt="Aeternum Logo"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
-              <span className="text-2xl font-black font-title tracking-[0.25em] text-white uppercase inline-block">
+              <span className="text-lg sm:text-xl font-black font-title tracking-[0.25em] text-white uppercase inline-block group-hover:text-zinc-200 transition-colors">
                 AETERNUM
               </span>
             </a>

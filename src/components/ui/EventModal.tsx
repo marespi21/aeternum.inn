@@ -159,8 +159,8 @@ export function EventModal({ event, isOpen, onClose }: EventModalProps) {
               >
                 <option value="1">1 Cupo</option>
                 <option value="2">2 Cupos</option>
-                <option value="4">4 Cupos (VIP)</option>
-                <option value="6">Mesa / Lounge</option>
+                <option value="4">4 Cupos</option>
+                <option value="6">6 Cupos</option>
               </select>
             </div>
 

@@ -1,0 +1,557 @@
+
+> aeternum-app@0.1.0 dev
+> next dev
+
+▲ Next.js 16.3.2 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.78.244:3000
+- Environments: .env
+✓ Ready in 270ms
+⚠ Warning: Next.js ignored package-lock.json in /Users/cami because it is outside the current Git repository (/Users/cami/AETERNUM).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+✓ Running next.config.ts took 21ms
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead.
+
+  To migrate automatically, run:
+  npx @next/codemod@canary middleware-to-proxy .
+
+  Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+Unhandled Rejection: Error: Both middleware file "./src/middleware.ts" and proxy file "./src/proxy.ts" are detected. Please use "./src/proxy.ts" only. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+    at ignore-listed frames
+
+ HEAD /es 200 in 675ms (next.js: 443ms, proxy.ts: 63ms, application-code: 169ms)
+ GET /es 200 in 490ms (next.js: 5ms, proxy.ts: 2ms, application-code: 483ms)
+ GET /es 200 in 455ms (next.js: 1.8ms, proxy.ts: 1.7ms, application-code: 451ms)
+ GET /es/login 200 in 313ms (next.js: 209ms, proxy.ts: 3ms, application-code: 101ms)
+ GET /es/login?mode=signup 200 in 314ms (next.js: 207ms, proxy.ts: 4ms, application-code: 102ms)
+ GET /es/login 200 in 318ms (next.js: 208ms, proxy.ts: 4ms, application-code: 106ms)
+ GET /es/login 200 in 318ms (next.js: 206ms, proxy.ts: 5ms, application-code: 107ms)
+ GET /es/login 200 in 318ms (next.js: 205ms, proxy.ts: 5ms, application-code: 107ms)
+ GET /es/admin 200 in 1077ms (next.js: 272ms, proxy.ts: 141ms, application-code: 665ms)
+ POST /es/login 200 in 1892ms (next.js: 3ms, proxy.ts: 3ms, application-code: 1887ms)
+  └─ ƒ login({}) in 791ms src/app/[locale]/login/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es 200 in 392ms (next.js: 3ms, proxy.ts: 1.9ms, application-code: 387ms)
+ GET /es/admin 200 in 965ms (next.js: 3ms, proxy.ts: 142ms, application-code: 820ms)
+ POST /es/login 200 in 1673ms (next.js: 9ms, proxy.ts: 9ms, application-code: 1656ms)
+  └─ ƒ login({}) in 678ms src/app/[locale]/login/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/admin 200 in 932ms (next.js: 3ms, proxy.ts: 133ms, application-code: 796ms)
+ GET /es/admin 200 in 953ms (next.js: 1.7ms, proxy.ts: 191ms, application-code: 761ms)
+ POST /es/login 200 in 1842ms (next.js: 17ms, proxy.ts: 7ms, application-code: 1817ms)
+  └─ ƒ login({}) in 835ms src/app/[locale]/login/actions.ts
+ POST /es/login 200 in 1855ms (next.js: 16ms, proxy.ts: 10ms, application-code: 1829ms)
+  └─ ƒ login({}) in 836ms src/app/[locale]/login/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/admin/artistas 307 in 219ms (proxy.ts: 179ms)
+ GET /es 200 in 296ms (next.js: 1.6ms, proxy.ts: 1.5ms, application-code: 292ms)
+ GET /es 200 in 655ms (next.js: 11ms, proxy.ts: 6ms, application-code: 638ms)
+ GET /es/admin/eventos 307 in 240ms (proxy.ts: 195ms)
+ GET /es/admin/artistas 200 in 1361ms (next.js: 952ms, proxy.ts: 206ms, application-code: 204ms)
+ GET /es/login?mode=signup 200 in 39ms (next.js: 7ms, proxy.ts: 3ms, application-code: 30ms)
+ GET /es/admin/eventos 200 in 1468ms (next.js: 738ms, proxy.ts: 226ms, application-code: 504ms)
+ GET /es 200 in 383ms (next.js: 15ms, proxy.ts: 7ms, application-code: 360ms)
+ GET /es/login 200 in 155ms (next.js: 16ms, proxy.ts: 38ms, application-code: 101ms)
+ GET /es/actualizar-password 200 in 413ms (next.js: 370ms, proxy.ts: 7ms, application-code: 36ms)
+ GET /es/recuperar 200 in 227ms (next.js: 203ms, proxy.ts: 1.1ms, application-code: 24ms)
+ GET /es/perfil 200 in 822ms (next.js: 258ms, proxy.ts: 130ms, application-code: 434ms)
+ POST /es/login?mode=signup 200 in 1521ms (next.js: 2ms, proxy.ts: 1.6ms, application-code: 1517ms)
+  └─ ƒ signup({}) in 690ms src/app/[locale]/login/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/recuperar?error=false&message=Si+el+correo+est%C3%A1+registrado%2C+recibir%C3%A1s+un+enlace+de+recuperaci%C3%B3n+pronto.+Revisa+tu+bandeja+de+spam. 200 in 20ms (next.js: 5ms, proxy.ts: 1.9ms, application-code: 13ms)
+ POST /es/recuperar 200 in 164ms (next.js: 4ms, proxy.ts: 2ms, application-code: 158ms)
+  └─ ƒ resetPassword({}) in 133ms src/app/[locale]/recuperar/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ POST /es/auth/signout 404 in 225ms (next.js: 17ms, proxy.ts: 191ms, application-code: 17ms)
+✓ Compiled in 21ms
+ GET /es 200 in 303ms (next.js: 4ms, proxy.ts: 3ms, application-code: 296ms)
+ GET /es 200 in 408ms (next.js: 1.5ms, proxy.ts: 1.2ms, application-code: 405ms)
+ GET /es/login 200 in 198ms (next.js: 14ms, proxy.ts: 7ms, application-code: 177ms)
+ GET /es/login?mode=signup 200 in 210ms (next.js: 34ms, proxy.ts: 8ms, application-code: 168ms)
+ GET /es/login 200 in 218ms (next.js: 34ms, proxy.ts: 20ms, application-code: 164ms)
+ GET /es/login 200 in 214ms (next.js: 46ms, proxy.ts: 13ms, application-code: 155ms)
+ GET /es/login 200 in 222ms (next.js: 53ms, proxy.ts: 13ms, application-code: 156ms)
+ GET /es/admin 200 in 830ms (next.js: 5ms, proxy.ts: 127ms, application-code: 698ms)
+ POST /es/login 200 in 1507ms (next.js: 5ms, proxy.ts: 5ms, application-code: 1497ms)
+  └─ ƒ login({}) in 660ms src/app/[locale]/login/actions.ts
+ GET /es 200 in 212ms (next.js: 2ms, proxy.ts: 1.5ms, application-code: 208ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/admin 200 in 841ms (next.js: 5ms, proxy.ts: 151ms, application-code: 686ms)
+ POST /es/login 200 in 1482ms (next.js: 10ms, proxy.ts: 6ms, application-code: 1467ms)
+  └─ ƒ login({}) in 619ms src/app/[locale]/login/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/admin 200 in 893ms (next.js: 4ms, proxy.ts: 139ms, application-code: 750ms)
+ POST /es/login 200 in 1527ms (next.js: 2ms, proxy.ts: 6ms, application-code: 1519ms)
+  └─ ƒ login({}) in 619ms src/app/[locale]/login/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/admin 200 in 1060ms (next.js: 3ms, proxy.ts: 149ms, application-code: 907ms)
+ POST /es/login 200 in 1620ms (next.js: 5ms, proxy.ts: 2ms, application-code: 1613ms)
+  └─ ƒ login({}) in 511ms src/app/[locale]/login/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es 200 in 338ms (next.js: 2ms, proxy.ts: 2ms, application-code: 333ms)
+ GET /es/login?mode=signup 200 in 45ms (next.js: 3ms, proxy.ts: 1.4ms, application-code: 40ms)
+ GET /es/admin/artistas 307 in 510ms (proxy.ts: 505ms)
+ GET /es 200 in 547ms (next.js: 17ms, proxy.ts: 10ms, application-code: 520ms)
+ GET /es/admin/eventos 307 in 151ms (proxy.ts: 147ms)
+ GET /es/admin/artistas 200 in 366ms (next.js: 5ms, proxy.ts: 136ms, application-code: 226ms)
+ GET /es/admin/eventos 200 in 1242ms (next.js: 10ms, proxy.ts: 151ms, application-code: 1081ms)
+ GET /es/login 200 in 685ms (next.js: 114ms, proxy.ts: 98ms, application-code: 473ms)
+ GET /es/actualizar-password 200 in 365ms (next.js: 38ms, proxy.ts: 27ms, application-code: 300ms)
+ GET /es 200 in 606ms (next.js: 77ms, proxy.ts: 7ms, application-code: 522ms)
+ GET /es/perfil 200 in 585ms (next.js: 6ms, proxy.ts: 139ms, application-code: 440ms)
+ POST /es/login?mode=signup 200 in 1400ms (next.js: 43ms, proxy.ts: 42ms, application-code: 1315ms)
+  └─ ƒ signup({}) in 721ms src/app/[locale]/login/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/recuperar 200 in 39ms (next.js: 8ms, proxy.ts: 1.5ms, application-code: 30ms)
+ POST /auth/signout 307 in 353ms (next.js: 212ms, application-code: 141ms)
+ POST /es 200 in 236ms (next.js: 3ms, proxy.ts: 1.4ms, application-code: 231ms)
+ GET /es/recuperar?error=false&message=Si+el+correo+est%C3%A1+registrado%2C+recibir%C3%A1s+un+enlace+de+recuperaci%C3%B3n+pronto.+Revisa+tu+bandeja+de+spam. 200 in 35ms (next.js: 2ms, proxy.ts: 2ms, application-code: 30ms)
+ POST /es/recuperar 200 in 185ms (next.js: 5ms, proxy.ts: 3ms, application-code: 176ms)
+  └─ ƒ resetPassword({}) in 135ms src/app/[locale]/recuperar/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/perfil 200 in 41ms (next.js: 2ms, proxy.ts: 1.8ms, application-code: 37ms)
+ GET /es/login 200 in 35ms (next.js: 4ms, proxy.ts: 3ms, application-code: 28ms)
+ GET /en 200 in 495ms (next.js: 11ms, proxy.ts: 143ms, application-code: 341ms)
+ GET /en/perfil 200 in 433ms (next.js: 3ms, proxy.ts: 131ms, application-code: 299ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /en/admin 307 in 153ms (proxy.ts: 142ms)
+ GET /en/admin 307 in 179ms (proxy.ts: 164ms)
+ GET /en/admin 200 in 1040ms (next.js: 16ms, proxy.ts: 164ms, application-code: 859ms)
+ GET /en/admin 200 in 1029ms (next.js: 3ms, proxy.ts: 137ms, application-code: 889ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 307 in 222ms (proxy.ts: 134ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 1134ms (next.js: 322ms, proxy.ts: 126ms, application-code: 686ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 289ms (next.js: 7ms, proxy.ts: 251ms, application-code: 32ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 159ms (next.js: 4ms, proxy.ts: 131ms, application-code: 25ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 237ms (next.js: 5ms, proxy.ts: 209ms, application-code: 24ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 180ms (next.js: 4ms, proxy.ts: 153ms, application-code: 23ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 183ms (next.js: 8ms, proxy.ts: 147ms, application-code: 29ms)
+✓ Compiled in 24ms
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 164ms (next.js: 4ms, proxy.ts: 137ms, application-code: 23ms)
+ GET /es 200 in 390ms (next.js: 5ms, proxy.ts: 1.0ms, application-code: 384ms)
+ GET /es 200 in 448ms (next.js: 1.7ms, proxy.ts: 1.2ms, application-code: 445ms)
+ GET /es/login?mode=signup 200 in 124ms (next.js: 8ms, proxy.ts: 4ms, application-code: 112ms)
+ GET /es/login 200 in 125ms (next.js: 6ms, proxy.ts: 4ms, application-code: 115ms)
+ GET /es/login 200 in 125ms (next.js: 7ms, proxy.ts: 4ms, application-code: 114ms)
+ GET /es/login 200 in 130ms (next.js: 28ms, proxy.ts: 5ms, application-code: 96ms)
+ GET /es/login 200 in 130ms (next.js: 27ms, proxy.ts: 5ms, application-code: 98ms)
+ GET /es 200 in 214ms (next.js: 3ms, proxy.ts: 1.6ms, application-code: 210ms)
+ GET /es/admin 200 in 749ms (next.js: 7ms, proxy.ts: 126ms, application-code: 616ms)
+ GET /es/admin 200 in 750ms (next.js: 7ms, proxy.ts: 155ms, application-code: 588ms)
+ POST /es/login 200 in 1699ms (next.js: 1.6ms, proxy.ts: 1.8ms, application-code: 1696ms)
+  └─ ƒ login({}) in 934ms src/app/[locale]/login/actions.ts
+ POST /es/login 200 in 1790ms (next.js: 4ms, proxy.ts: 4ms, application-code: 1782ms)
+  └─ ƒ login({}) in 1018ms src/app/[locale]/login/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/admin 200 in 849ms (next.js: 24ms, proxy.ts: 151ms, application-code: 674ms)
+ GET /es/admin 200 in 865ms (next.js: 34ms, proxy.ts: 151ms, application-code: 680ms)
+ POST /es/login 200 in 1867ms (next.js: 1.5ms, proxy.ts: 1.6ms, application-code: 1863ms)
+  └─ ƒ login({}) in 985ms src/app/[locale]/login/actions.ts
+ POST /es/login 200 in 1845ms (next.js: 1.8ms, proxy.ts: 3ms, application-code: 1840ms)
+  └─ ƒ login({}) in 962ms src/app/[locale]/login/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es 200 in 305ms (next.js: 8ms, proxy.ts: 3ms, application-code: 294ms)
+ GET /es/admin/artistas 307 in 174ms (proxy.ts: 164ms)
+ GET /es/admin/eventos 307 in 500ms (proxy.ts: 454ms)
+ GET /es 200 in 422ms (next.js: 7ms, proxy.ts: 11ms, application-code: 404ms)
+ GET /es/login?mode=signup 200 in 201ms (next.js: 21ms, proxy.ts: 2ms, application-code: 178ms)
+ GET /es/admin/artistas 200 in 359ms (next.js: 9ms, proxy.ts: 141ms, application-code: 208ms)
+ GET /es/login 200 in 624ms (next.js: 16ms, proxy.ts: 19ms, application-code: 589ms)
+ GET /es 200 in 630ms (next.js: 44ms, proxy.ts: 19ms, application-code: 567ms)
+ GET /es/admin/eventos 200 in 1553ms (next.js: 103ms, proxy.ts: 619ms, application-code: 832ms)
+ GET /es/actualizar-password 200 in 63ms (next.js: 13ms, proxy.ts: 11ms, application-code: 40ms)
+ GET /es/recuperar 200 in 89ms (next.js: 10ms, proxy.ts: 5ms, application-code: 73ms)
+ GET /es/perfil 200 in 521ms (next.js: 3ms, proxy.ts: 125ms, application-code: 393ms)
+ POST /es/login?mode=signup 200 in 1148ms (next.js: 76ms, proxy.ts: 82ms, application-code: 991ms)
+  └─ ƒ signup({}) in 457ms src/app/[locale]/login/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/recuperar?error=false&message=Si+el+correo+est%C3%A1+registrado%2C+recibir%C3%A1s+un+enlace+de+recuperaci%C3%B3n+pronto.+Revisa+tu+bandeja+de+spam. 200 in 17ms (next.js: 1.5ms, proxy.ts: 1.4ms, application-code: 14ms)
+ POST /es/recuperar 200 in 152ms (next.js: 3ms, proxy.ts: 1.8ms, application-code: 147ms)
+  └─ ƒ resetPassword({}) in 126ms src/app/[locale]/recuperar/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ POST /auth/signout 307 in 153ms (next.js: 3ms, application-code: 151ms)
+ POST /es 200 in 216ms (next.js: 3ms, proxy.ts: 1.9ms, application-code: 211ms)
+ GET /es/perfil 200 in 29ms (next.js: 2ms, proxy.ts: 1.4ms, application-code: 25ms)
+ GET /es/login 200 in 29ms (next.js: 4ms, proxy.ts: 2ms, application-code: 23ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 274ms (next.js: 6ms, proxy.ts: 239ms, application-code: 29ms)
+ GET /en/admin/eventos 307 in 147ms (proxy.ts: 136ms)
+ GET /en/admin/eventos 200 in 1142ms (next.js: 8ms, proxy.ts: 372ms, application-code: 762ms)
+✓ Compiled in 93ms
+[browser] ./src/app/[locale]/admin/eventos/EventForm.tsx:140:15
+Error: Expected '</', got 'jsx text'
+  138 |           </div>
+  139 |
+> 140 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 141 |       </form>
+      | ^^^^^^
+  142 |     </div>
+  143 |   )
+  144 | }
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/app/[locale]/admin/eventos/EventForm.tsx
+    ./src/app/[locale]/admin/eventos/page.tsx 
+[browser] ./src/app/[locale]/admin/eventos/EventForm.tsx:140:15
+Error: Expected '</', got 'jsx text'
+  138 |           </div>
+  139 |
+> 140 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 141 |       </form>
+      | ^^^^^^
+  142 |     </div>
+  143 |   )
+  144 | }
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/app/[locale]/admin/eventos/EventForm.tsx
+    ./src/app/[locale]/admin/eventos/page.tsx 
+[browser] ./src/app/[locale]/admin/eventos/EventForm.tsx:140:15
+Error: Expected '</', got 'jsx text'
+  138 |           </div>
+  139 |
+> 140 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 141 |       </form>
+      | ^^^^^^
+  142 |     </div>
+  143 |   )
+  144 | }
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/app/[locale]/admin/eventos/EventForm.tsx
+    ./src/app/[locale]/admin/eventos/page.tsx 
+ GET /en/admin/eventos 200 in 549ms (next.js: 13ms, proxy.ts: 508ms, application-code: 28ms)
+[browser] ./src/app/[locale]/admin/eventos/EventForm.tsx:139:15
+Error: Expected '</', got 'jsx text'
+  137 |             </div>
+  138 |           </div>
+> 139 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 140 |       </form>
+      | ^^^^^^
+  141 |     </div>
+  142 |   )
+  143 | }
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/app/[locale]/admin/eventos/EventForm.tsx
+    ./src/app/[locale]/admin/eventos/page.tsx 
+ GET /en/admin/eventos 200 in 672ms (next.js: 11ms, proxy.ts: 168ms, application-code: 493ms)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/en/admin/..." tree={[...]} params={{locale:"en"}} cacheNode={{rsc:{...}, ...}} ...>
+        <SegmentViewNode type="page" pagePath="[locale]/a...">
+          <SegmentTrieNode>
+          <AdminEventosPage>
+            <div className="p-4 sm:p-8...">
+              <div className="max-w-4xl ...">
+                <div>
+                <div className="space-y-12">
+                  <EventForm>
+                  <div>
+                    <h2>
+                    <div className="grid md:gr...">
+                      <EventCard event={{id:"2f7148...", ...}} deleteEventAction={function deleteEvent} ...>
+                        <div className="bg-[#0a0a0...">
+                          <div className="space-y-2">
+                            <h3>
+                            <div className="flex flex-...">
+                              <span className="bg-white/5 px-2 py-1 rounded">
++                               26/9/2026
+-                               9/26/2026
+                              ...
+                            ...
+                          ...
+                      ...
+        ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at span (<anonymous>)
+    at EventCard (src/app/[locale]/admin/eventos/EventCard.tsx:159:11)
+    at eval (src/app/[locale]/admin/eventos/page.tsx:138:17)
+    at Array.map (<anonymous>:1:18)
+    at AdminEventosPage (src/app/[locale]/admin/eventos/page.tsx:137:24)
+  157 |         <h3 className="font-bold font-mono text-lg text-emerald-400 uppercase">{event.title}</h3>
+  158 |         <div className="flex flex-wrap gap-2 text-xs text-zinc-400 font-mono">
+> 159 |           <span className="bg-white/5 px-2 py-1 rounded">{new Date(event.date).toLocaleDateString()}</span>
+      |           ^
+  160 |           <span className="bg-white/5 px-2 py-1 rounded">{event.location || 'Ubicación por definir'}</span>
+  161 |           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early: ${(event.early_price || 0).toLocaleString()}</span>
+  162 |           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early Puerta: ${(event.early_puerta_price || 0).toLocaleString()}</span>
+✓ Compiled in 74ms
+ GET /en/admin/eventos 200 in 349ms (next.js: 7ms, proxy.ts: 316ms, application-code: 25ms)
+✓ Compiled in 54ms
+ GET /en/admin/eventos 200 in 171ms (next.js: 8ms, proxy.ts: 135ms, application-code: 28ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 791ms (next.js: 10ms, proxy.ts: 133ms, application-code: 649ms)
+ GET /en/admin 307 in 214ms (proxy.ts: 212ms)
+ GET /en/admin 200 in 737ms (next.js: 5ms, proxy.ts: 136ms, application-code: 595ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /en/admin/eventos 307 in 151ms (proxy.ts: 145ms)
+ GET /en/admin/eventos 200 in 646ms (next.js: 7ms, proxy.ts: 127ms, application-code: 512ms)
+ GET /en/admin/eventos 200 in 992ms (next.js: 11ms, proxy.ts: 357ms, application-code: 624ms)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/en/admin/..." tree={[...]} params={{locale:"en"}} cacheNode={{rsc:{...}, ...}} ...>
+        <SegmentViewNode type="page" pagePath="[locale]/a...">
+          <SegmentTrieNode>
+          <AdminEventosPage>
+            <div className="p-4 sm:p-8...">
+              <div className="max-w-4xl ...">
+                <div>
+                <div className="space-y-12">
+                  <EventForm>
+                  <div>
+                    <h2>
+                    <div className="grid md:gr...">
+                      <EventCard event={{id:"2f7148...", ...}} deleteEventAction={function deleteEvent} ...>
+                        <div className="bg-[#0a0a0...">
+                          <div className="space-y-2">
+                            <h3>
+                            <div className="flex flex-...">
+                              <span className="bg-white/5 px-2 py-1 rounded">
++                               26/9/2026
+-                               9/26/2026
+                              ...
+                            ...
+                          ...
+                      ...
+        ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at span (<anonymous>)
+    at EventCard (src/app/[locale]/admin/eventos/EventCard.tsx:164:11)
+    at eval (src/app/[locale]/admin/eventos/page.tsx:138:17)
+    at Array.map (<anonymous>:1:18)
+    at AdminEventosPage (src/app/[locale]/admin/eventos/page.tsx:137:24)
+  162 |         <h3 className="font-bold font-mono text-lg text-emerald-400 uppercase">{event.title}</h3>
+  163 |         <div className="flex flex-wrap gap-2 text-xs text-zinc-400 font-mono">
+> 164 |           <span className="bg-white/5 px-2 py-1 rounded">{new Date(event.date).toLocaleDateString()}</span>
+      |           ^
+  165 |           <span className="bg-white/5 px-2 py-1 rounded">{event.location || 'Ubicación por definir'}</span>
+  166 |           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early: ${(event.early_price || 0).toLocaleString()}</span>
+  167 |           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early Puerta: ${(event.early_puerta_price || 0).toLocaleString()}</span>
+✓ Compiled in 26ms
+ GET /en/admin/eventos 200 in 159ms (next.js: 5ms, proxy.ts: 129ms, application-code: 25ms)
+ GET /en/admin/eventos 200 in 737ms (next.js: 9ms, proxy.ts: 143ms, application-code: 585ms)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/en/admin/..." tree={[...]} params={{locale:"en"}} cacheNode={{rsc:{...}, ...}} ...>
+        <SegmentViewNode type="page" pagePath="[locale]/a...">
+          <SegmentTrieNode>
+          <AdminEventosPage>
+            <div className="p-4 sm:p-8...">
+              <div className="max-w-4xl ...">
+                <div>
+                <div className="space-y-12">
+                  <EventForm>
+                  <div>
+                    <h2>
+                    <div className="grid md:gr...">
+                      <EventCard event={{id:"2f7148...", ...}} deleteEventAction={function deleteEvent} ...>
+                        <div className="bg-[#0a0a0...">
+                          <div className="space-y-2">
+                            <h3>
+                            <div className="flex flex-...">
+                              <span className="bg-white/5 px-2 py-1 rounded">
++                               26/9/2026
+-                               9/26/2026
+                              ...
+                            ...
+                          ...
+                      ...
+        ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at span (<anonymous>)
+    at EventCard (src/app/[locale]/admin/eventos/EventCard.tsx:164:11)
+    at eval (src/app/[locale]/admin/eventos/page.tsx:138:17)
+    at Array.map (<anonymous>:1:18)
+    at AdminEventosPage (src/app/[locale]/admin/eventos/page.tsx:137:24)
+  162 |         <h3 className="font-bold font-mono text-lg text-emerald-400 uppercase">{event.title}</h3>
+  163 |         <div className="flex flex-wrap gap-2 text-xs text-zinc-400 font-mono">
+> 164 |           <span className="bg-white/5 px-2 py-1 rounded">{new Date(event.date).toLocaleDateString()}</span>
+      |           ^
+  165 |           <span className="bg-white/5 px-2 py-1 rounded">{event.location || 'Ubicación por definir'}</span>
+  166 |           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early: ${(event.early_price || 0).toLocaleString()}</span>
+  167 |           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early Puerta: ${(event.early_puerta_price || 0).toLocaleString()}</span>
+✓ Compiled in 63ms
+ GET /en/admin/eventos 200 in 185ms (next.js: 7ms, proxy.ts: 149ms, application-code: 29ms)
+ GET /en/admin/eventos 200 in 717ms (next.js: 9ms, proxy.ts: 158ms, application-code: 550ms)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/en/admin/..." tree={[...]} params={{locale:"en"}} cacheNode={{rsc:{...}, ...}} ...>
+        <SegmentViewNode type="page" pagePath="[locale]/a...">
+          <SegmentTrieNode>
+          <AdminEventosPage>
+            <div className="p-4 sm:p-8...">
+              <div className="max-w-4xl ...">
+                <div>
+                <div className="space-y-12">
+                  <EventForm>
+                  <div>
+                    <h2>
+                    <div className="grid md:gr...">
+                      <EventCard event={{id:"2f7148...", ...}} deleteEventAction={function deleteEvent} ...>
+                        <div className="bg-[#0a0a0...">
+                          <div className="space-y-2">
+                            <h3>
+                            <div className="flex flex-...">
+                              <span className="bg-white/5 px-2 py-1 rounded">
++                               26/9/2026
+-                               9/26/2026
+                              ...
+                            ...
+                          ...
+                      ...
+        ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at span (<anonymous>)
+    at EventCard (src/app/[locale]/admin/eventos/EventCard.tsx:164:11)
+    at eval (src/app/[locale]/admin/eventos/page.tsx:138:17)
+    at Array.map (<anonymous>:1:18)
+    at AdminEventosPage (src/app/[locale]/admin/eventos/page.tsx:137:24)
+  162 |         <h3 className="font-bold font-mono text-lg text-emerald-400 uppercase">{event.title}</h3>
+  163 |         <div className="flex flex-wrap gap-2 text-xs text-zinc-400 font-mono">
+> 164 |           <span className="bg-white/5 px-2 py-1 rounded">{new Date(event.date).toLocaleDateString()}</span>
+      |           ^
+  165 |           <span className="bg-white/5 px-2 py-1 rounded">{event.location || 'Ubicación por definir'}</span>
+  166 |           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early: ${(event.early_price || 0).toLocaleString()}</span>
+  167 |           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early Puerta: ${(event.early_puerta_price || 0).toLocaleString()}</span>
+ GET /en/admin/eventos 200 in 381ms (next.js: 4ms, proxy.ts: 356ms, application-code: 21ms)
+ GET /en/admin 307 in 153ms (proxy.ts: 143ms)
+ GET /en/admin 200 in 1064ms (next.js: 12ms, proxy.ts: 140ms, application-code: 912ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /en/admin/eventos 307 in 157ms (proxy.ts: 148ms)
+ GET /en/admin/eventos 200 in 728ms (next.js: 11ms, proxy.ts: 139ms, application-code: 578ms)
+ POST /en/admin/eventos 200 in 927ms (next.js: 8ms, proxy.ts: 251ms, application-code: 667ms)
+  └─ ƒ <inline action>({}) in 178ms src/app/[locale]/admin/eventos/page.tsx
+ GET /en 200 in 721ms (next.js: 15ms, proxy.ts: 253ms, application-code: 453ms)
+ GET /en 200 in 660ms (next.js: 8ms, proxy.ts: 187ms, application-code: 465ms)
+ GET /en/eventos/2f714871-c1d6-4fec-a057-a546b58faedd/pago 307 in 188ms (proxy.ts: 160ms)
+ GET /en/eventos/2f714871-c1d6-4fec-a057-a546b58faedd/pago 200 in 834ms (next.js: 230ms, proxy.ts: 153ms, application-code: 452ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /en/perfil 200 in 515ms (next.js: 13ms, proxy.ts: 152ms, application-code: 351ms)
+ GET /en/admin 307 in 158ms (proxy.ts: 147ms)
+ GET /en/admin 307 in 209ms (proxy.ts: 200ms)
+ GET /en/admin 200 in 896ms (next.js: 12ms, proxy.ts: 202ms, application-code: 682ms)
+ GET /en/admin 200 in 800ms (next.js: 3ms, proxy.ts: 134ms, application-code: 664ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 307 in 145ms (proxy.ts: 135ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 1139ms (next.js: 9ms, proxy.ts: 135ms, application-code: 995ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 667ms (next.js: 8ms, proxy.ts: 628ms, application-code: 31ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 161ms (next.js: 5ms, proxy.ts: 131ms, application-code: 26ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 181ms (next.js: 7ms, proxy.ts: 129ms, application-code: 45ms)
+ GET /en/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 316ms (next.js: 6ms, proxy.ts: 284ms, application-code: 26ms)
+ GET /en 200 in 921ms (next.js: 16ms, proxy.ts: 625ms, application-code: 280ms)
+ GET /es 200 in 561ms (next.js: 13ms, proxy.ts: 142ms, application-code: 407ms)
+✓ Compiled in 35ms
+ GET /es 200 in 217ms (next.js: 5ms, proxy.ts: 187ms, application-code: 26ms)
+✓ Compiled in 34ms
+ GET /es 200 in 169ms (next.js: 8ms, proxy.ts: 133ms, application-code: 29ms)
+✓ Compiled in 63ms
+ GET /es 200 in 729ms (next.js: 16ms, proxy.ts: 349ms, application-code: 364ms)
+ GET /es/videosets 200 in 515ms (next.js: 217ms, proxy.ts: 147ms, application-code: 152ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/perfil 200 in 443ms (next.js: 11ms, proxy.ts: 146ms, application-code: 286ms)
+ GET /es/admin 307 in 167ms (proxy.ts: 159ms)
+ GET /es/admin 307 in 151ms (proxy.ts: 141ms)
+ GET /es/admin 200 in 803ms (next.js: 7ms, proxy.ts: 152ms, application-code: 644ms)
+ GET /es/admin 200 in 839ms (next.js: 1.7ms, proxy.ts: 172ms, application-code: 666ms)
+ GET /es/admin/videos 307 in 403ms (proxy.ts: 131ms)
+ GET /es/admin/videos 200 in 837ms (next.js: 198ms, proxy.ts: 126ms, application-code: 514ms)
+[browser] Image with src "https://img.youtube.com/vi/H9FRnuQYizE/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/-fw1He44grw/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/YexwgTBsjLM/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/2CN6Bnk-0yM/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/mNbOYqygbGM/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/CoWEZz0OEsE/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/RSqPavAmXMw/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+ POST /es/admin/videos 200 in 847ms (next.js: 9ms, proxy.ts: 179ms, application-code: 660ms)
+  └─ ƒ <inline action>({}) in 151ms src/app/[locale]/admin/videos/page.tsx
+ POST /es/admin/videos 200 in 716ms (next.js: 7ms, proxy.ts: 141ms, application-code: 568ms)
+  └─ ƒ <inline action>({}) in 134ms src/app/[locale]/admin/videos/page.tsx
+ POST /es/admin/videos 200 in 967ms (next.js: 8ms, proxy.ts: 198ms, application-code: 761ms)
+  └─ ƒ <inline action>({}) in 140ms src/app/[locale]/admin/videos/page.tsx
+ POST /es/admin/videos 200 in 819ms (next.js: 9ms, proxy.ts: 140ms, application-code: 670ms)
+  └─ ƒ <inline action>({}) in 139ms src/app/[locale]/admin/videos/page.tsx
+ POST /es/admin/videos 200 in 799ms (next.js: 8ms, proxy.ts: 161ms, application-code: 630ms)
+  └─ ƒ <inline action>({}) in 137ms src/app/[locale]/admin/videos/page.tsx
+ POST /es/admin/videos 200 in 900ms (next.js: 12ms, proxy.ts: 203ms, application-code: 686ms)
+  └─ ƒ <inline action>({}) in 135ms src/app/[locale]/admin/videos/page.tsx
+ POST /es/admin/videos 200 in 861ms (next.js: 9ms, proxy.ts: 145ms, application-code: 707ms)
+  └─ ƒ <inline action>({}) in 167ms src/app/[locale]/admin/videos/page.tsx
+ POST /es/admin/videos 200 in 795ms (next.js: 7ms, proxy.ts: 142ms, application-code: 646ms)
+  └─ ƒ <inline action>({}) in 135ms src/app/[locale]/admin/videos/page.tsx
+ POST /es/admin/videos 200 in 816ms (next.js: 8ms, proxy.ts: 147ms, application-code: 661ms)
+  └─ ƒ <inline action>({}) in 132ms src/app/[locale]/admin/videos/page.tsx
+ POST /es/admin/videos 200 in 734ms (next.js: 8ms, proxy.ts: 138ms, application-code: 587ms)
+  └─ ƒ <inline action>({}) in 135ms src/app/[locale]/admin/videos/page.tsx

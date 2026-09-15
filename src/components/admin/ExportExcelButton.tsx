@@ -8,9 +8,11 @@ interface ExportExcelButtonProps {
   eventTitle: string
   earlyPrice: number
   anytimePrice: number
+  earlyPuertaPrice?: number
+  anytimePuertaPrice?: number
 }
 
-export function ExportExcelButton({ tickets, eventTitle, earlyPrice, anytimePrice }: ExportExcelButtonProps) {
+export function ExportExcelButton({ tickets, eventTitle, earlyPrice, anytimePrice, earlyPuertaPrice = 0, anytimePuertaPrice = 0 }: ExportExcelButtonProps) {
   const handleExport = () => {
     // 1. Formatear los datos para Excel
     const data = tickets.map((ticket) => {
@@ -21,18 +23,26 @@ export function ExportExcelButton({ tickets, eventTitle, earlyPrice, anytimePric
       const manualPhone = isManual ? ticket.receipt_url.split(':')[4] : null
       const phone = isManual ? manualPhone : ticket.profiles?.phone
 
+      const isCortesia = paymentMethod === 'cortesia' || ticket.ticket_type === 'CORTESIA'
+      const pricePaid = isCortesia ? 0 
+        : ticket.ticket_type === 'EARLY' ? earlyPrice 
+        : ticket.ticket_type === 'EARLY_PUERTA' ? earlyPuertaPrice
+        : ticket.ticket_type === 'ANYTIME_PUERTA' ? anytimePuertaPrice
+        : anytimePrice
+
       return {
-        'ID / Ticket': ticket.id,
+        'Código Corto': `#${ticket.id.slice(0, 8).toUpperCase()}`,
         'Nombre': name || 'Sin nombre',
         'Correo': email || 'Sin correo',
         'Teléfono': phone || 'Sin teléfono',
         'Tipo de Boleta': ticket.ticket_type || 'ANYTIME',
-        'Precio Pagado': ticket.ticket_type === 'EARLY' ? earlyPrice : anytimePrice,
+        'Precio Pagado': pricePaid,
         'Estado': ticket.status,
         'Método de Pago': paymentMethod,
         'Fecha de Compra': new Date(ticket.created_at).toLocaleDateString('es-CO', { 
             year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' 
         }),
+        'Referencia UUID': ticket.id,
       }
     })
 
@@ -61,8 +71,8 @@ export function ExportExcelButton({ tickets, eventTitle, earlyPrice, anytimePric
     // Hoja 1: Todas las boletas individuales
     const worksheet1 = xlsx.utils.json_to_sheet(data)
     worksheet1['!cols'] = [
-      { wch: 40 }, { wch: 30 }, { wch: 30 }, { wch: 15 }, 
-      { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 20 }
+      { wch: 15 }, { wch: 30 }, { wch: 30 }, { wch: 15 }, 
+      { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 20 }, { wch: 40 }
     ]
     xlsx.utils.book_append_sheet(workbook, worksheet1, 'Boletas Individuales')
 

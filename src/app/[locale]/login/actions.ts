@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
+import { getLocale } from 'next-intl/server'
 
 export async function login(formData: FormData) {
   const supabase = await createClient()
@@ -14,8 +15,10 @@ export async function login(formData: FormData) {
 
   const { error } = await supabase.auth.signInWithPassword(data)
 
+  const locale = await getLocale()
+
   if (error) {
-    redirect('/login?error=true&message=Credenciales incorrectas')
+    redirect(`/${locale}/login?error=true&message=Credenciales incorrectas`)
   }
 
   const { data: { user } } = await supabase.auth.getUser();
@@ -28,9 +31,14 @@ export async function login(formData: FormData) {
       .eq('id', user.id)
       .single();
 
-    if (profile?.role === 'ADMIN' && !nextUrl.startsWith('/admin')) {
-      nextUrl = '/admin';
+    if (profile?.role === 'ADMIN' && !nextUrl.startsWith('/admin') && !nextUrl.startsWith(`/${locale}/admin`)) {
+      nextUrl = `/${locale}/admin`;
     }
+  }
+
+  // Ensure nextUrl has locale
+  if (!nextUrl.startsWith(`/${locale}`)) {
+    nextUrl = `/${locale}${nextUrl.startsWith('/') ? nextUrl : `/${nextUrl}`}`
   }
 
   revalidatePath('/', 'layout')
@@ -45,15 +53,17 @@ export async function signup(formData: FormData) {
   const phone = formData.get('phone') as string
   const fullName = formData.get('fullName') as string
 
+  const locale = await getLocale()
+
   // Secure Password Validation
   if (password.length < 8) {
-    redirect('/login?error=true&message=La contraseña debe tener al menos 8 caracteres')
+    redirect(`/${locale}/login?error=true&message=La contraseña debe tener al menos 8 caracteres`)
   }
   if (!/[A-Z]/.test(password)) {
-    redirect('/login?error=true&message=La contraseña debe tener al menos una letra mayúscula')
+    redirect(`/${locale}/login?error=true&message=La contraseña debe tener al menos una letra mayúscula`)
   }
   if (!/[0-9]/.test(password)) {
-    redirect('/login?error=true&message=La contraseña debe tener al menos un número')
+    redirect(`/${locale}/login?error=true&message=La contraseña debe tener al menos un número`)
   }
 
   const data = { email, password }
@@ -68,7 +78,7 @@ export async function signup(formData: FormData) {
       errorMessage = 'La contraseña no es lo suficientemente segura.'
     }
     
-    redirect(`/login?error=true&message=${encodeURIComponent(errorMessage)}`)
+    redirect(`/${locale}/login?error=true&message=${encodeURIComponent(errorMessage)}`)
   }
 
   // Update profile with phone number and full name if user was created
@@ -82,7 +92,10 @@ export async function signup(formData: FormData) {
     }, { onConflict: 'id' })
   }
 
-  const nextUrl = formData.get('nextUrl') as string || '/perfil'
+  let nextUrl = formData.get('nextUrl') as string || `/${locale}/perfil`
+  if (!nextUrl.startsWith(`/${locale}`)) {
+    nextUrl = `/${locale}${nextUrl.startsWith('/') ? nextUrl : `/${nextUrl}`}`
+  }
   revalidatePath('/', 'layout')
   redirect(nextUrl)
 }

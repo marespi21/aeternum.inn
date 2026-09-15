@@ -126,6 +126,8 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
               <select name="ticketType" className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 font-mono appearance-none">
                 <option value="EARLY" className="text-black">Early (${event.early_price?.toLocaleString()})</option>
                 <option value="ANYTIME" className="text-black">Anytime (${event.anytime_price?.toLocaleString()})</option>
+                <option value="EARLY_PUERTA" className="text-black">Early Puerta (${event.early_puerta_price?.toLocaleString() || 0})</option>
+                <option value="ANYTIME_PUERTA" className="text-black">Anytime Puerta (${event.anytime_puerta_price?.toLocaleString() || 0})</option>
                 <option value="CORTESIA" className="text-black">Cortesía ($0)</option>
               </select>
             </div>
@@ -225,6 +227,8 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
               eventTitle={event.title} 
               earlyPrice={event.early_price}
               anytimePrice={event.anytime_price}
+              earlyPuertaPrice={event.early_puerta_price}
+              anytimePuertaPrice={event.anytime_puerta_price}
             />
           </div>
           <div className="bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.02)]">
@@ -249,7 +253,10 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                     
                     const ticketPrice = (paymentMethod === 'cortesia' || ticket.ticket_type === 'CORTESIA') 
                       ? 0 
-                      : (ticket.ticket_type === 'EARLY' ? event.early_price : event.anytime_price);
+                      : (ticket.ticket_type === 'EARLY' ? event.early_price 
+                        : ticket.ticket_type === 'EARLY_PUERTA' ? event.early_puerta_price
+                        : ticket.ticket_type === 'ANYTIME_PUERTA' ? event.anytime_puerta_price
+                        : event.anytime_price);
 
                     return (
                       <tr key={ticket.id} className="hover:bg-white/[0.02] transition-colors">

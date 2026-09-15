@@ -4,6 +4,7 @@ import { MonitorPlay, Trash2, Video } from 'lucide-react'
 import { revalidatePath } from 'next/cache'
 import Image from 'next/image'
 import { VideoForm } from './VideoForm'
+import { VideoCard } from './VideoCard'
 
 export default async function AdminVideosPage() {
   const supabase = await createClient()
@@ -59,6 +60,39 @@ export default async function AdminVideosPage() {
     revalidatePath('/')
   }
 
+  async function updateVideo(formData: FormData) {
+    'use server'
+    const id = formData.get('id') as string
+    const youtube_url = formData.get('youtube_url') as string
+    const supabase = await createClient()
+    
+    // Robust YouTube ID extraction (same as create)
+    const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    let youtubeId = ''
+    const match = youtube_url.match(regExp);
+    if (match && match[2].length === 11) {
+      youtubeId = match[2];
+    } else {
+      const backupMatch = youtube_url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+      youtubeId = backupMatch ? backupMatch[1] : '';
+    }
+    const cover_url = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg` : ''
+
+    await supabase.from('videos').update({
+      title: formData.get('title'),
+      dj: formData.get('dj'),
+      duration: formData.get('duration'),
+      location: formData.get('location'),
+      category: formData.get('category'),
+      chapter_number: formData.get('chapter_number') ? Number(formData.get('chapter_number')) : null,
+      youtube_url,
+      ...(cover_url ? { cover_url } : {}) // Only update cover_url if it successfully parsed a new one
+    }).eq('id', id)
+
+    revalidatePath('/admin/videos')
+    revalidatePath('/')
+  }
+
   return (
     <div className="p-4 sm:p-8 text-white">
       <div className="max-w-6xl mx-auto space-y-8 relative z-10">
@@ -81,43 +115,12 @@ export default async function AdminVideosPage() {
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 h-fit">
               {videos?.map((video) => (
-                <div key={video.id} className="bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden group shadow-[0_0_30px_rgba(255,255,255,0.02)] flex flex-col">
-                  <div className="relative aspect-video w-full">
-                    <Image 
-                      src={video.cover_url}
-                      alt={video.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md px-2 py-1 rounded-md text-xs font-mono font-bold text-white flex items-center gap-1">
-                      <Video className="w-3 h-3 text-red-500" />
-                      {video.duration}
-                    </div>
-                  </div>
-                  
-                  <div className="p-4 flex-1 flex flex-col justify-between items-start w-full">
-                    <div className="w-full">
-                      <h3 className="font-bold font-mono text-base line-clamp-1 text-white uppercase">{video.title}</h3>
-                      <p className="text-xs text-zinc-400 font-mono mt-1">{video.dj} · {video.location}</p>
-                      <span className="inline-block mt-2 px-2 py-1 bg-white/5 border border-white/10 rounded-md text-[10px] font-mono text-zinc-300">
-                        {video.category} {video.chapter_number ? `Vol. ${video.chapter_number}` : ''}
-                      </span>
-                    </div>
-                    
-                    <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3 w-full">
-                      <a href={video.youtube_url} target="_blank" rel="noreferrer" className="text-red-400 hover:text-red-300 flex items-center gap-1 text-xs font-mono">
-                        <MonitorPlay className="w-3 h-3" /> Ver
-                      </a>
-                      <form action={deleteVideo}>
-                        <input type="hidden" name="id" value={video.id} />
-                        <button type="submit" className="text-red-600 hover:text-red-500 transition-colors p-2 bg-red-500/10 rounded-lg">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
+                <VideoCard 
+                  key={video.id} 
+                  video={video} 
+                  deleteVideoAction={deleteVideo} 
+                  updateVideoAction={updateVideo} 
+                />
               ))}
               
               {videos?.length === 0 && (

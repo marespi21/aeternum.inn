@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Flujo de Perfil de Usuario Regular', () => {
 
   test('puede crear una cuenta y acceder al perfil', async ({ page }) => {
-    await page.goto('/login?mode=signup');
+    await page.goto('/es/login?mode=signup');
     
     // Generar datos únicos
     const uniqueId = Date.now();
@@ -23,7 +23,7 @@ test.describe('Flujo de Perfil de Usuario Regular', () => {
     await page.click('button[type="submit"]');
 
     // Debe ser redirigido a /perfil
-    await page.waitForURL('**/perfil');
+    await page.waitForURL('**/es/perfil');
     
     await expect(page.locator('text=Tu Perfil')).toBeVisible();
     await expect(page.locator('text=Tus Entradas')).toBeVisible();
@@ -33,11 +33,11 @@ test.describe('Flujo de Perfil de Usuario Regular', () => {
     await page.click('text=Cerrar Sesión');
     
     // Al cerrar sesión debe ser redirigido al home
-    await page.waitForURL('**/');
+    await page.waitForURL('**/es');
     
     // Comprobar que no tiene acceso al perfil sin iniciar sesión
-    await page.goto('/perfil');
-    await page.waitForURL('**/login');
+    await page.goto('/es/perfil');
+    await page.waitForURL('**/es/login');
   });
 
 });

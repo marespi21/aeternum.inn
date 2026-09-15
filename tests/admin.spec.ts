@@ -6,7 +6,7 @@ test.use({ storageState: { cookies: [], origins: [] } });
 test.describe('Navegación del Panel Administrativo', () => {
   test.beforeEach(async ({ page }) => {
     // Iniciar sesión antes de cada prueba de admin
-    await page.goto('/login');
+    await page.goto('/es/login');
     await page.fill('input[type="email"]', 'mariacvidales@gmail.com');
     await page.fill('input[type="password"]', 'cami12345');
     await page.locator('button[type="submit"]').click();
@@ -14,7 +14,7 @@ test.describe('Navegación del Panel Administrativo', () => {
     // Esperar a que la redirección a admin suceda (o forzar ir a admin si fue a perfil)
     await page.waitForURL(/.*(\/admin|\/perfil)/, { timeout: 10000 });
     if (!page.url().includes('/admin')) {
-        await page.goto('/admin');
+        await page.goto('/es/admin');
     }
     // Asegurarse de estar en el admin
     await expect(page).toHaveURL(/.*\/admin.*/);

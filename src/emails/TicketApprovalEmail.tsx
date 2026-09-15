@@ -16,7 +16,7 @@ import {
 import * as React from 'react';
 
 interface TicketApprovalEmailProps {
-  ticketIds: string[];
+  tickets: { id: string, type: string }[];
   eventTitle: string;
   eventDate: string;
   qrUrls: string[];
@@ -24,7 +24,7 @@ interface TicketApprovalEmailProps {
 }
 
 export const TicketApprovalEmail = ({
-  ticketIds,
+  tickets,
   eventTitle,
   eventDate,
   qrUrls,
@@ -118,17 +118,21 @@ export const TicketApprovalEmail = ({
               {/* TICKETS LOOP */}
               <Section className="bg-[#050505] px-6 py-4 force-bg-dark">
                 <Text className="text-white text-lg font-bold text-center m-0 mb-6 border-b border-gray-800 pb-4 force-text-white">
-                  Tus {ticketIds.length} Acceso{ticketIds.length > 1 ? 's' : ''}
+                  Tus {tickets.length} Acceso{tickets.length > 1 ? 's' : ''}
                 </Text>
 
-                {ticketIds.map((id, index) => (
-                  <Section key={id} className="bg-black mb-8 border border-gray-800 rounded-xl overflow-hidden shadow-2xl force-bg-black">
-                    {/* TICKET HEADER */}
-                    <Section className="bg-brand py-3 text-center force-bg-brand">
-                      <Text className="text-black text-xs font-black tracking-[3px] m-0 force-text-black">
-                        TICKET {index + 1} / {ticketIds.length}
-                      </Text>
-                    </Section>
+                {tickets.map((ticket, index) => {
+                  let displayType = 'TICKET ' + ticket.type.toUpperCase().replace('_', ' ');
+                  if (ticket.type === 'CORTESIA') displayType = 'CORTESÍA';
+
+                  return (
+                    <Section key={ticket.id} className="bg-black mb-8 border border-gray-800 rounded-xl overflow-hidden shadow-2xl force-bg-black">
+                      {/* TICKET HEADER */}
+                      <Section className="bg-brand py-3 text-center force-bg-brand">
+                        <Text className="text-black text-xs font-black tracking-[3px] m-0 force-text-black uppercase">
+                          {displayType} - {index + 1} / {tickets.length}
+                        </Text>
+                      </Section>
                     
                     {/* QR SECTION */}
                     <Section className="bg-white p-8 text-center force-bg-white">
@@ -152,14 +156,14 @@ export const TicketApprovalEmail = ({
                         Código de Ingreso
                       </Text>
                       <Text className="text-white text-2xl font-mono font-bold m-0 p-1 rounded force-text-white tracking-[2px]">
-                        #{id.slice(0, 8).toUpperCase()}
+                        #{ticket.id.slice(0, 8).toUpperCase()}
                       </Text>
                       <Text className="text-[#333333] text-[9px] font-mono m-0 mt-2 force-text-black">
-                        REF: {id}
+                        REF: {ticket.id}
                       </Text>
                     </Section>
                   </Section>
-                ))}
+                )})}
               </Section>
 
               {/* RULES */}

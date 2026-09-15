@@ -38,7 +38,12 @@ export default async function AdminEventFinancesPage({ params }: { params: Promi
   // Calculate Base Income (Approved + Used)
   const approvedTickets = tickets?.filter(t => t.status === 'APPROVED' || t.status === 'USED') || []
   const ticketIncome = approvedTickets.reduce((acc, t) => {
-    return acc + (t.ticket_type === 'EARLY' ? event.early_price : event.anytime_price)
+    const price = t.ticket_type === 'CORTESIA' ? 0 
+                : t.ticket_type === 'EARLY' ? event.early_price
+                : t.ticket_type === 'EARLY_PUERTA' ? event.early_puerta_price
+                : t.ticket_type === 'ANYTIME_PUERTA' ? event.anytime_puerta_price
+                : event.anytime_price;
+    return acc + (price || 0);
   }, 0)
 
   // 4. Fetch Custom Finances

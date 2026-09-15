@@ -35,6 +35,8 @@ create table public.events (
   total_tickets integer not null,
   flyer_url text,
   description text,
+  early_puerta_price numeric default 0,
+  anytime_puerta_price numeric default 0,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 

@@ -35,7 +35,9 @@ export default async function AdminEventosPage() {
     const date = formData.get('date') as string
     const early_price = formData.get('early_price') as string
     const early_time = formData.get('early_time') as string
+    const early_puerta_price = formData.get('early_puerta_price') as string
     const anytime_price = formData.get('anytime_price') as string
+    const anytime_puerta_price = formData.get('anytime_puerta_price') as string
     const capacity = formData.get('capacity') as string
     const flyerUrl = formData.get('flyerUrl') as string
     const description = formData.get('description') as string
@@ -46,8 +48,10 @@ export default async function AdminEventosPage() {
       date: new Date(date).toISOString(),
       location: location || null,
       early_price: Number(early_price),
+      early_puerta_price: Number(early_puerta_price),
       early_time: early_time || null,
       anytime_price: Number(anytime_price),
+      anytime_puerta_price: Number(anytime_puerta_price),
       total_tickets: Number(capacity),
       flyer_url: flyerUrl || null,
       description: description || null
@@ -78,7 +82,9 @@ export default async function AdminEventosPage() {
     const date = formData.get('date') as string
     const early_price = formData.get('early_price') as string
     const early_time = formData.get('early_time') as string
+    const early_puerta_price = formData.get('early_puerta_price') as string
     const anytime_price = formData.get('anytime_price') as string
+    const anytime_puerta_price = formData.get('anytime_puerta_price') as string
     const capacity = formData.get('capacity') as string
     const flyerUrl = formData.get('flyerUrl') as string
     const description = formData.get('description') as string
@@ -90,8 +96,10 @@ export default async function AdminEventosPage() {
       date: new Date(date).toISOString(),
       location: location || null,
       early_price: Number(early_price),
+      early_puerta_price: Number(early_puerta_price),
       early_time: early_time || null,
       anytime_price: Number(anytime_price),
+      anytime_puerta_price: Number(anytime_puerta_price),
       total_tickets: Number(capacity),
       flyer_url: flyerUrl || null,
       description: description || null
@@ -125,7 +133,7 @@ export default async function AdminEventosPage() {
             <h2 className="text-2xl font-bold font-mono uppercase text-white mb-6 flex items-center gap-2">
               Eventos Creados
             </h2>
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-6">
               {events?.map((event) => (
                 <EventCard 
                   key={event.id} 
@@ -136,7 +144,7 @@ export default async function AdminEventosPage() {
               ))}
               
               {events?.length === 0 && (
-                <div className="col-span-2 text-center p-12 border border-white/10 border-dashed rounded-xl text-zinc-500 bg-white/[0.02] font-mono">
+                <div className="text-center p-12 border border-white/10 border-dashed rounded-xl text-zinc-500 bg-white/[0.02] font-mono">
                   No hay eventos creados todavía.
                 </div>
               )}

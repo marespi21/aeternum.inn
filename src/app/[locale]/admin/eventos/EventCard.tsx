@@ -51,47 +51,92 @@ export function EventCard({
           </button>
         </div>
         
-        <form onSubmit={handleUpdate} className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Título</label>
-              <input required type="text" name="title" defaultValue={event.title} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
+        <form onSubmit={handleUpdate} className="space-y-6">
+          
+          {/* General Info Section */}
+          <div className="space-y-6 bg-white/[0.02] border border-white/5 p-6 rounded-2xl">
+            <h4 className="text-emerald-400 font-bold font-mono uppercase text-sm mb-4 flex items-center gap-3">
+              <span className="w-1.5 h-4 bg-emerald-500 rounded-full" />
+              Datos Generales
+            </h4>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="text-xs text-zinc-400 uppercase font-mono block mb-2">Título</label>
+                <input required type="text" name="title" defaultValue={event.title} className="w-full bg-black/50 border border-white/10 rounded-xl p-3.5 text-base focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-5">
+                <div>
+                  <label className="text-xs text-zinc-400 uppercase font-mono block mb-2">Fecha</label>
+                  <input required type="datetime-local" name="date" defaultValue={new Date(event.date).toISOString().slice(0, 16)} className="w-full bg-black/50 border border-white/10 rounded-xl p-3.5 text-base focus:border-emerald-500 outline-none transition-colors text-white font-mono [color-scheme:dark]" />
+                </div>
+                <div>
+                  <label className="text-xs text-zinc-400 uppercase font-mono block mb-2">Capacidad</label>
+                  <input required type="number" name="capacity" defaultValue={event.total_tickets} className="w-full bg-black/50 border border-white/10 rounded-xl p-3.5 text-base focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
+                </div>
+              </div>
             </div>
-            <div>
-              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Fecha</label>
-              {/* Note: The datetime-local input expects YYYY-MM-DDThh:mm format. Let's slice the date string. */}
-              <input required type="datetime-local" name="date" defaultValue={new Date(event.date).toISOString().slice(0, 16)} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono [color-scheme:dark]" />
+            
+            <div className="grid md:grid-cols-2 gap-6 items-start">
+              <div className="space-y-6">
+                <div>
+                  <label className="text-xs text-zinc-400 uppercase font-mono block mb-2">Ubicación</label>
+                  <input type="text" name="location" defaultValue={event.location || ''} className="w-full bg-black/50 border border-white/10 rounded-xl p-3.5 text-base focus:border-emerald-500 outline-none transition-colors text-white font-mono" placeholder="Medellín, Colombia" />
+                </div>
+                <div>
+                  <label className="text-xs text-zinc-400 uppercase font-mono block mb-2">Flyer</label>
+                  <CloudinaryUpload 
+                    onUploadSuccess={(url) => setFlyerUrl(url)}
+                    label={flyerUrl ? 'Cambiar Flyer' : 'Subir flyer'}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs text-zinc-400 uppercase font-mono block mb-2">Descripción</label>
+                <textarea name="description" defaultValue={event.description || ''} className="w-full h-[126px] bg-black/50 border border-white/10 rounded-xl p-3.5 text-base focus:border-emerald-500 outline-none transition-colors text-white font-mono custom-scrollbar resize-none" />
+              </div>
             </div>
-            <div>
-              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Ubicación</label>
-              <input type="text" name="location" defaultValue={event.location || ''} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" placeholder="Medellín, Colombia" />
-            </div>
-            <div>
-              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Precio Early</label>
-              <input required type="number" name="early_price" defaultValue={event.early_price} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
-            </div>
-            <div>
-              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Límite Hora Early</label>
-              <input type="text" name="early_time" defaultValue={event.early_time || ''} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
-            </div>
-            <div>
-              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Precio Anytime</label>
-              <input required type="number" name="anytime_price" defaultValue={event.anytime_price} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
-            </div>
-            <div>
-              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Capacidad</label>
-              <input required type="number" name="capacity" defaultValue={event.total_tickets} className="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
-            </div>
-            <div>
-              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Flyer</label>
-              <CloudinaryUpload 
-                onUploadSuccess={(url) => setFlyerUrl(url)}
-                label={flyerUrl ? 'Cambiar Flyer' : 'Subir flyer'}
-              />
-            </div>
-            <div className="md:col-span-2">
-              <label className="text-xs text-zinc-400 uppercase font-mono block mb-1">Descripción</label>
-              <textarea name="description" defaultValue={event.description || ''} className="w-full h-20 bg-black/50 border border-white/10 rounded-xl p-2 text-sm focus:border-emerald-500 outline-none transition-colors text-white font-mono custom-scrollbar resize-none" />
+          </div>
+
+          {/* Pricing Info Section */}
+          <div className="space-y-6 bg-white/[0.02] border border-white/5 p-6 rounded-2xl">
+            <h4 className="text-emerald-400 font-bold font-mono uppercase text-sm mb-4 flex items-center gap-3">
+              <span className="w-1.5 h-4 bg-emerald-500 rounded-full" />
+              Precios
+            </h4>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="p-5 bg-black/30 rounded-2xl border border-white/5 space-y-5 h-full">
+                <div className="grid grid-cols-2 gap-5">
+                  <div>
+                    <label className="text-xs text-zinc-400 uppercase font-mono block mb-2">Early Base (COP)</label>
+                    <input required type="number" name="early_price" defaultValue={event.early_price} className="w-full bg-black/50 border border-white/10 rounded-xl p-3.5 text-base focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
+                  </div>
+                  <div>
+                    <label className="text-xs text-emerald-500 uppercase font-mono block mb-2">Early Puerta (COP)</label>
+                    <input required type="number" name="early_puerta_price" defaultValue={event.early_puerta_price} className="w-full bg-black/50 border border-emerald-500/30 rounded-xl p-3.5 text-base focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs text-zinc-400 uppercase font-mono block mb-2">Límite Hora Early (Opcional)</label>
+                  <input type="text" name="early_time" defaultValue={event.early_time || ''} className="w-full bg-black/50 border border-white/10 rounded-xl p-3.5 text-base focus:border-emerald-500 outline-none transition-colors text-white font-mono" placeholder="Ej: Antes 1:00 AM" />
+                </div>
+              </div>
+
+              <div className="p-5 bg-black/30 rounded-2xl border border-white/5 space-y-5 h-full">
+                <div className="grid grid-cols-2 gap-5">
+                  <div>
+                    <label className="text-xs text-zinc-400 uppercase font-mono block mb-2">Anytime Base (COP)</label>
+                    <input required type="number" name="anytime_price" defaultValue={event.anytime_price} className="w-full bg-black/50 border border-white/10 rounded-xl p-3.5 text-base focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
+                  </div>
+                  <div>
+                    <label className="text-xs text-emerald-500 uppercase font-mono block mb-2">Anytime Puerta (COP)</label>
+                    <input required type="number" name="anytime_puerta_price" defaultValue={event.anytime_puerta_price} className="w-full bg-black/50 border border-emerald-500/30 rounded-xl p-3.5 text-base focus:border-emerald-500 outline-none transition-colors text-white font-mono" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           
@@ -119,10 +164,12 @@ export function EventCard({
           <span className="bg-white/5 px-2 py-1 rounded">{new Date(event.date).toLocaleDateString()}</span>
           <span className="bg-white/5 px-2 py-1 rounded">{event.location || 'Ubicación por definir'}</span>
           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early: ${(event.early_price || 0).toLocaleString()}</span>
+          <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Early Puerta: ${(event.early_puerta_price || 0).toLocaleString()}</span>
           {event.early_time && (
             <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Hora Early: {event.early_time}</span>
           )}
           <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Anytime: ${(event.anytime_price || 0).toLocaleString()}</span>
+          <span className="bg-white/5 px-2 py-1 rounded text-emerald-400">Anytime Puerta: ${(event.anytime_puerta_price || 0).toLocaleString()}</span>
           <span className="bg-white/5 px-2 py-1 rounded">Aforo: {event.total_tickets}</span>
         </div>
         {event.description && (

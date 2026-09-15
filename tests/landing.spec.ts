@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('has title and brand text', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/es');
 
   // Verificar que el título de la página principal sea correcto
   await expect(page).toHaveTitle(/AETERNUM/);
@@ -12,7 +12,7 @@ test('has title and brand text', async ({ page }) => {
 });
 
 test('navigation to main sections works', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/es');
 
   // Test de navegación rápida a manifiesto
   await page.click('text=SOBRE NOSOTROS');
@@ -25,7 +25,7 @@ test('navigation to main sections works', async ({ page }) => {
 });
 
 test('events section renders correctly', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/es');
 
   // Verificar que hay al menos algún evento renderizado
   const eventHeader = page.locator('text=PROXIMOS EVENTOS');

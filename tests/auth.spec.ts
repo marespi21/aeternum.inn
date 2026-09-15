@@ -5,7 +5,7 @@ test.describe('Autenticación y Redirecciones', () => {
   const testPassword = 'cami12345';
 
   test('puede iniciar sesión y redirige al panel admin si es administrador', async ({ page }) => {
-    await page.goto('/login');
+    await page.goto('/es/login');
 
     // Llenar el formulario de login
     await page.fill('input[type="email"]', testEmail);
@@ -39,7 +39,7 @@ test.describe('Autenticación y Redirecciones', () => {
 
   test('los requisitos de contraseña en registro solo aparecen al enfocar', async ({ page }) => {
     // Ir al modo registro
-    await page.goto('/login?mode=signup');
+    await page.goto('/es/login?mode=signup');
     
     // Verificar que los requisitos NO están visibles inicialmente
     const reqText = page.locator('text=Mínimo 8 caracteres');
