@@ -31,7 +31,7 @@ interface GalleryItem {
   sort_order: number;
 }
 
-function SortableItem({ item, onDelete }: { item: GalleryItem, onDelete: (id: string) => void }) {
+function SortableItem({ item, onDelete, isAdmin }: { item: GalleryItem, onDelete: (id: string) => void, isAdmin: boolean }) {
   const {
     attributes,
     listeners,
@@ -46,16 +46,16 @@ function SortableItem({ item, onDelete }: { item: GalleryItem, onDelete: (id: st
     transition,
     zIndex: isDragging ? 10 : 1,
     opacity: isDragging ? 0.8 : 1,
-    touchAction: 'none', // Prevents mobile scrolling issues
+    touchAction: isAdmin ? 'none' : 'auto', // Prevents mobile scrolling issues only if draggable
   };
 
   return (
     <div 
       ref={setNodeRef} 
       style={style} 
-      className={`relative group rounded-xl overflow-hidden bg-black border cursor-grab active:cursor-grabbing touch-none select-none ${isDragging ? 'border-emerald-500 shadow-xl shadow-emerald-500/20' : 'border-white/5'} aspect-square`}
-      {...attributes} 
-      {...listeners}
+      className={`relative group rounded-xl overflow-hidden bg-black border ${isAdmin ? 'cursor-grab active:cursor-grabbing touch-none select-none' : ''} ${isDragging ? 'border-emerald-500 shadow-xl shadow-emerald-500/20' : 'border-white/5'} aspect-square`}
+      {...(isAdmin ? attributes : {})} 
+      {...(isAdmin ? listeners : {})}
       onDragStart={(e) => e.preventDefault()} // Prevents native browser image dragging
     >
       {item.type === 'video' ? (
@@ -70,21 +70,23 @@ function SortableItem({ item, onDelete }: { item: GalleryItem, onDelete: (id: st
 
       {/* Removemos el drag handle individual para poder arrastrar toda la imagen */}
 
-      <div className="absolute inset-x-0 bottom-0 top-auto h-1/2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4 pointer-events-auto">
-        <button 
-          onPointerDown={(e) => e.stopPropagation()} // Prevents dragging when clicking delete
-          onClick={(e) => { e.stopPropagation(); onDelete(item.id); }}
-          className="p-3 bg-red-500/80 hover:bg-red-500 text-white rounded-full transition-transform hover:scale-110 shadow-lg cursor-pointer"
-          title="Eliminar archivo"
-        >
-          <Trash2 className="w-5 h-5" />
-        </button>
-      </div>
+      {isAdmin && (
+        <div className="absolute inset-x-0 bottom-0 top-auto h-1/2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4 pointer-events-auto">
+          <button 
+            onPointerDown={(e) => e.stopPropagation()} // Prevents dragging when clicking delete
+            onClick={(e) => { e.stopPropagation(); onDelete(item.id); }}
+            className="p-3 bg-red-500/80 hover:bg-red-500 text-white rounded-full transition-transform hover:scale-110 shadow-lg cursor-pointer"
+            title="Eliminar archivo"
+          >
+            <Trash2 className="w-5 h-5" />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
 
-export function GalleryGrid({ initialItems }: { initialItems: GalleryItem[] }) {
+export function GalleryGrid({ initialItems, isAdmin = false }: { initialItems: GalleryItem[], isAdmin?: boolean }) {
   const [items, setItems] = useState<GalleryItem[]>(initialItems);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -177,7 +179,7 @@ export function GalleryGrid({ initialItems }: { initialItems: GalleryItem[] }) {
             strategy={rectSortingStrategy}
           >
             {items.map((item) => (
-              <SortableItem key={item.id} item={item} onDelete={handleDelete} />
+              <SortableItem key={item.id} item={item} onDelete={handleDelete} isAdmin={isAdmin} />
             ))}
           </SortableContext>
         </div>

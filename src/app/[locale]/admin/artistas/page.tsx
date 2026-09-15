@@ -5,6 +5,12 @@ import { deleteArtist } from "./actions";
 
 export default async function AdminArtistasPage() {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return null
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') return null
+  const isAdmin = profile?.role === 'ADMIN'
+
   const { data: artists } = await supabase
     .from("artists")
     .select("*")
@@ -68,18 +74,20 @@ export default async function AdminArtistasPage() {
                     <span>Editar y Galería</span>
                   </Link>
 
-                  <form action={async () => {
-                    "use server";
-                    await deleteArtist(artist.id);
-                  }}>
-                    <button
-                      type="submit"
-                      className="flex items-center justify-center w-10 h-10 bg-red-500/10 text-red-500 border border-red-500/20 rounded-lg hover:bg-red-500/20 transition-colors"
-                      title="Eliminar Artista"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </form>
+                  {isAdmin && (
+                    <form action={async () => {
+                      "use server";
+                      await deleteArtist(artist.id);
+                    }}>
+                      <button
+                        type="submit"
+                        className="flex items-center justify-center w-10 h-10 bg-red-500/10 text-red-500 border border-red-500/20 rounded-lg hover:bg-red-500/20 transition-colors"
+                        title="Eliminar Artista"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </form>
+                  )}
                 </div>
               </div>
             </div>

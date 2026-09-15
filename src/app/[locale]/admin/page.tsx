@@ -16,7 +16,9 @@ export default async function AdminDashboard() {
     .eq('id', user.id)
     .single()
 
-  if (profile?.role !== 'ADMIN') {
+  const isAdmin = profile?.role === 'ADMIN'
+
+  if (!isAdmin && profile?.role !== 'STAFF') {
     redirect('/perfil')
   }
 
@@ -54,12 +56,16 @@ export default async function AdminDashboard() {
             <Link href="/admin/scanner" className="px-5 py-2.5 bg-purple-600 text-white font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-purple-500 transition-colors flex items-center gap-2">
               <QrCode className="w-4 h-4" /> Escáner
             </Link>
-            <Link href="/admin/finanzas" className="px-5 py-2.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-emerald-500/20 transition-colors">
-              Finanzas Globales
-            </Link>
-            <Link href="/admin/eventos" className="px-5 py-2.5 bg-white text-black font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-zinc-200 transition-colors">
-              Nuevo Evento
-            </Link>
+            {isAdmin && (
+              <>
+                <Link href="/admin/finanzas" className="px-5 py-2.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-emerald-500/20 transition-colors">
+                  Finanzas Globales
+                </Link>
+                <Link href="/admin/eventos" className="px-5 py-2.5 bg-white text-black font-mono font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-zinc-200 transition-colors">
+                  Nuevo Evento
+                </Link>
+              </>
+            )}
           </div>
         </div>
 

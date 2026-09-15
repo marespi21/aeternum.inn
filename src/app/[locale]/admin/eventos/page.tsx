@@ -18,7 +18,7 @@ export default async function AdminEventosPage() {
     .eq('id', user.id)
     .single()
 
-  if (profile?.role !== 'ADMIN') redirect('/perfil')
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') redirect('/perfil')
 
   // 2. Traer todos los eventos
   const { data: events } = await supabase
@@ -31,6 +31,11 @@ export default async function AdminEventosPage() {
     'use server'
     const supabase = await createClient()
     
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('No autorizado')
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    if (profile?.role !== 'ADMIN') throw new Error('Solo ADMIN puede crear eventos')
+
     const title = formData.get('title') as string
     const date = formData.get('date') as string
     const early_price = formData.get('early_price') as string
@@ -70,6 +75,12 @@ export default async function AdminEventosPage() {
     'use server'
     const id = formData.get('id') as string
     const supabase = await createClient()
+    
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('No autorizado')
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    if (profile?.role !== 'ADMIN') throw new Error('Solo ADMIN puede borrar eventos')
+
     await supabase.from('events').delete().eq('id', id)
     revalidatePath('/admin/eventos')
     revalidatePath('/')
@@ -91,6 +102,12 @@ export default async function AdminEventosPage() {
     const location = formData.get('location') as string
 
     const supabase = await createClient()
+    
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('No autorizado')
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    if (profile?.role !== 'ADMIN') throw new Error('Solo ADMIN puede editar eventos')
+
     const { error } = await supabase.from('events').update({
       title,
       date: new Date(date).toISOString(),
@@ -126,7 +143,7 @@ export default async function AdminEventosPage() {
         <div className="space-y-12">
           
           {/* Formulario */}
-          <EventForm createEventAction={createEvent} />
+          {profile?.role === 'ADMIN' && <EventForm createEventAction={createEvent} />}
 
           {/* Lista */}
           <div>
@@ -139,7 +156,8 @@ export default async function AdminEventosPage() {
                   key={event.id} 
                   event={event} 
                   deleteEventAction={deleteEvent} 
-                  updateEventAction={updateEvent} 
+                  updateEventAction={updateEvent}
+                  isAdmin={profile?.role === 'ADMIN'}
                 />
               ))}
               

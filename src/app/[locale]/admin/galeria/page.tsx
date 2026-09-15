@@ -6,6 +6,12 @@ import { GalleryGrid } from "./GalleryGrid";
 
 export default async function AdminGalleryPage() {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return null
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') return null
+  const isAdmin = profile?.role === 'ADMIN'
+
   const { data: items } = await supabase
     .from("gallery")
     .select("*")
@@ -44,7 +50,7 @@ export default async function AdminGalleryPage() {
               <span className="text-sm font-normal text-zinc-500">{galleryItems.length} elementos</span>
             </h2>
 
-            <GalleryGrid initialItems={galleryItems} />
+            <GalleryGrid initialItems={galleryItems} isAdmin={isAdmin} />
           </div>
         </div>
       </div>

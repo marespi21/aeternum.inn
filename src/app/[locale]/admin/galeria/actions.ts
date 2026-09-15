@@ -5,6 +5,12 @@ import { revalidatePath } from "next/cache";
 
 export async function addGalleryItem(formData: FormData) {
   const supabase = await createClient();
+  
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') throw new Error('No autorizado para modificar la galería')
+
   const url = formData.get("url") as string;
   const itemType = formData.get("type") as string;
   
@@ -31,6 +37,11 @@ export async function addGalleryItem(formData: FormData) {
 export async function deleteGalleryItem(id: string) {
   const supabase = await createClient();
 
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN') throw new Error('Solo ADMIN puede borrar la galería')
+
   const { error } = await supabase.from("gallery").delete().eq("id", id);
 
   if (error) {
@@ -45,6 +56,11 @@ export async function deleteGalleryItem(id: string) {
 
 export async function updateGalleryOrder(items: { id: string, sort_order: number }[]) {
   const supabase = await createClient();
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') throw new Error('No autorizado para modificar la galería')
 
   // Supabase doesn't have a simple batch update for different values per row without upsert.
   // Since we are only updating sort_order, doing Promise.all is fine for a small gallery.

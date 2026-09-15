@@ -555,3 +555,195 @@ https://react.dev/link/hydration-mismatch
   └─ ƒ <inline action>({}) in 132ms src/app/[locale]/admin/videos/page.tsx
  POST /es/admin/videos 200 in 734ms (next.js: 8ms, proxy.ts: 138ms, application-code: 587ms)
   └─ ƒ <inline action>({}) in 135ms src/app/[locale]/admin/videos/page.tsx
+ GET /es/admin/videos 200 in 524ms (next.js: 9ms, proxy.ts: 488ms, application-code: 28ms)
+ GET /es/admin/videos 200 in 160ms (next.js: 4ms, proxy.ts: 136ms, application-code: 21ms)
+ GET /es/admin/videos 200 in 211ms (next.js: 3ms, proxy.ts: 186ms, application-code: 22ms)
+ GET /es/admin/videos 200 in 235ms (next.js: 6ms, proxy.ts: 204ms, application-code: 26ms)
+ GET /es/admin/videos 200 in 157ms (next.js: 3ms, proxy.ts: 133ms, application-code: 21ms)
+ GET /es/admin/videos 200 in 172ms (next.js: 4ms, proxy.ts: 145ms, application-code: 23ms)
+ GET /es/admin/videos 200 in 168ms (next.js: 5ms, proxy.ts: 141ms, application-code: 22ms)
+ GET /es/admin/videos 200 in 163ms (next.js: 6ms, proxy.ts: 134ms, application-code: 23ms)
+ GET /es/admin/videos 200 in 212ms (next.js: 4ms, proxy.ts: 188ms, application-code: 20ms)
+[Server HMR] Update failed, full reload needed: SyntaxError: Identifier 'instagram_url' has already been declared
+    at eval (<anonymous>)
+✓ Compiled in 26ms
+ GET /es/admin/videos 200 in 577ms (next.js: 7ms, proxy.ts: 547ms, application-code: 24ms)
+✓ Compiled in 25ms
+ GET /es/admin/videos 200 in 188ms (next.js: 12ms, proxy.ts: 138ms, application-code: 38ms)
+✓ Compiled in 25ms
+ GET /es/admin/videos 200 in 155ms (next.js: 3ms, proxy.ts: 132ms, application-code: 20ms)
+✓ Compiled in 92ms
+✓ Compiled in 35ms
+ GET /es/admin/videos 200 in 402ms (next.js: 54ms, proxy.ts: 306ms, application-code: 42ms)
+ GET /es/admin/videos 200 in 163ms (next.js: 4ms, proxy.ts: 134ms, application-code: 24ms)
+ GET /es/admin/videos 200 in 264ms (next.js: 3ms, proxy.ts: 242ms, application-code: 19ms)
+ GET /es/admin/videos 200 in 164ms (next.js: 3ms, proxy.ts: 139ms, application-code: 22ms)
+[browser] ./src/app/[locale]/admin/artistas/actions.ts:54:9
+Error: the name `instagram_url` is defined multiple times
+  52 |   const instagram_url = formData.get("instagram_url") as string;
+  53 |
+> 54 |   const instagram_url = formData.get("instagram_url") as string;
+     |         ^^^^^^^^^^^^^
+  55 |
+  56 |   const { data: { user } } = await supabase.auth.getUser()
+  57 |   if (!user) throw new Error('No autorizado')
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./src/app/[locale]/admin/artistas/actions.ts
+    ./src/app/[locale]/admin/artistas/page.tsx 
+ POST /auth/signout 307 in 500ms (next.js: 8ms, application-code: 492ms)
+ POST /es 200 in 536ms (next.js: 7ms, proxy.ts: 4ms, application-code: 525ms)
+ GET /es/login 200 in 48ms (next.js: 32ms, proxy.ts: 5ms, application-code: 11ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/perfil 200 in 669ms (next.js: 12ms, proxy.ts: 139ms, application-code: 518ms)
+ POST /es/login 200 in 1432ms (next.js: 10ms, proxy.ts: 8ms, application-code: 1415ms)
+  └─ ƒ login({}) in 731ms src/app/[locale]/login/actions.ts
+ GET /es/perfil 200 in 736ms (next.js: 9ms, proxy.ts: 167ms, application-code: 561ms)
+ GET /es 200 in 530ms (next.js: 11ms, proxy.ts: 145ms, application-code: 374ms)
+ GET /es/perfil 200 in 776ms (next.js: 9ms, proxy.ts: 237ms, application-code: 530ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+⨯ ReferenceError: isAdmin is not defined
+    at PerfilPage (src/app/[locale]/perfil/page.tsx:25:3)
+  23 |   const isStaff = profile?.role === 'STAFF'
+  24 |   
+> 25 |   if (isAdmin || isStaff) {
+     |   ^
+  26 |     redirect('/admin')
+  27 |   }
+  28 | {
+  digest: '2766488121'
+}
+ GET /es/perfil 200 in 175ms (next.js: 12ms, proxy.ts: 136ms, application-code: 28ms)
+ GET /es/perfil 200 in 481ms (next.js: 6ms, proxy.ts: 138ms, application-code: 337ms)
+ GET /es/admin 200 in 760ms (next.js: 17ms, proxy.ts: 139ms, application-code: 604ms)
+ GET /es/admin 200 in 221ms (next.js: 4ms, proxy.ts: 190ms, application-code: 27ms)
+ GET /es/admin 200 in 164ms (next.js: 3ms, proxy.ts: 135ms, application-code: 26ms)
+ GET /es/perfil 200 in 588ms (next.js: 12ms, proxy.ts: 248ms, application-code: 328ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/admin 307 in 165ms (proxy.ts: 157ms)
+ GET /es/admin 307 in 151ms (proxy.ts: 142ms)
+ GET /es/admin 200 in 845ms (next.js: 11ms, proxy.ts: 144ms, application-code: 690ms)
+ GET /es/admin 200 in 808ms (next.js: 4ms, proxy.ts: 128ms, application-code: 675ms)
+ POST /auth/signout 307 in 233ms (next.js: 3ms, application-code: 229ms)
+ POST /es 200 in 233ms (next.js: 7ms, proxy.ts: 4ms, application-code: 222ms)
+ GET /es/login 200 in 39ms (next.js: 15ms, proxy.ts: 7ms, application-code: 16ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/admin 200 in 767ms (next.js: 7ms, proxy.ts: 144ms, application-code: 616ms)
+ POST /es/login 200 in 1410ms (next.js: 7ms, proxy.ts: 5ms, application-code: 1398ms)
+  └─ ƒ login({}) in 619ms src/app/[locale]/login/actions.ts
+ GET /es/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 307 in 283ms (proxy.ts: 197ms)
+ GET /es/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 860ms (next.js: 5ms, proxy.ts: 129ms, application-code: 726ms)
+ POST /es/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 1870ms (next.js: 10ms, proxy.ts: 141ms, application-code: 1719ms)
+  └─ ƒ createManualTicket({}) in 1105ms src/app/[locale]/admin/actions.ts
+ GET /es/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 214ms (next.js: 4ms, proxy.ts: 186ms, application-code: 24ms)
+ GET /es/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 360ms (next.js: 5ms, proxy.ts: 327ms, application-code: 28ms)
+ GET /es/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 1184ms (next.js: 9ms, proxy.ts: 461ms, application-code: 714ms)
+ GET /es/admin 307 in 244ms (proxy.ts: 221ms)
+ GET /es/admin 200 in 867ms (next.js: 11ms, proxy.ts: 143ms, application-code: 713ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 307 in 138ms (proxy.ts: 132ms)
+ GET /es/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 931ms (next.js: 9ms, proxy.ts: 134ms, application-code: 788ms)
+ GET /es/admin 307 in 196ms (proxy.ts: 185ms)
+ GET /es/admin 200 in 1180ms (next.js: 11ms, proxy.ts: 146ms, application-code: 1023ms)
+ GET /es/admin/eventos 307 in 174ms (proxy.ts: 141ms)
+ GET /es/admin/eventos 200 in 1017ms (next.js: 10ms, proxy.ts: 137ms, application-code: 870ms)
+ GET /es/admin/videos 307 in 148ms (proxy.ts: 139ms)
+ GET /es/admin/videos 200 in 758ms (next.js: 12ms, proxy.ts: 225ms, application-code: 521ms)
+[browser] Image with src "https://img.youtube.com/vi/H9FRnuQYizE/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/YexwgTBsjLM/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/-fw1He44grw/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/mNbOYqygbGM/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/RSqPavAmXMw/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/CoWEZz0OEsE/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/2CN6Bnk-0yM/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/1ZxKflbxU7w/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/ZjgzyNbaZKw/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] Image with src "https://img.youtube.com/vi/_s3eeQWOcNg/maxresdefault.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+ GET /es/admin/radio 307 in 393ms (proxy.ts: 137ms)
+ GET /es/admin/radio 200 in 974ms (next.js: 290ms, proxy.ts: 127ms, application-code: 557ms)
+ GET /es/admin/galeria 307 in 467ms (proxy.ts: 211ms)
+ GET /es/admin/galeria 200 in 794ms (next.js: 190ms, proxy.ts: 135ms, application-code: 468ms)
+ GET /es/admin/artistas 307 in 473ms (proxy.ts: 417ms)
+ GET /es/admin/artistas 200 in 678ms (next.js: 4ms, proxy.ts: 138ms, application-code: 536ms)
+ GET /es 200 in 378ms (next.js: 12ms, proxy.ts: 145ms, application-code: 221ms)
+ GET /es/perfil 200 in 626ms (next.js: 13ms, proxy.ts: 304ms, application-code: 309ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/admin 307 in 150ms (proxy.ts: 138ms)
+ GET /es/admin 307 in 202ms (proxy.ts: 193ms)
+ GET /es/admin 200 in 871ms (next.js: 12ms, proxy.ts: 193ms, application-code: 666ms)
+ GET /es/admin 200 in 870ms (next.js: 1.8ms, proxy.ts: 136ms, application-code: 732ms)
+ GET /es/perfil 200 in 435ms (next.js: 9ms, proxy.ts: 153ms, application-code: 273ms)
+ GET /es/admin 307 in 224ms (proxy.ts: 218ms)
+ GET /es/admin 307 in 143ms (proxy.ts: 135ms)
+ GET /es/admin 200 in 798ms (next.js: 7ms, proxy.ts: 169ms, application-code: 622ms)
+ GET /es/admin 200 in 749ms (next.js: 2ms, proxy.ts: 196ms, application-code: 551ms)
+ POST /auth/signout 307 in 187ms (next.js: 7ms, application-code: 180ms)
+ POST /es 200 in 294ms (next.js: 7ms, proxy.ts: 4ms, application-code: 283ms)
+ GET /es/login 200 in 36ms (next.js: 18ms, proxy.ts: 5ms, application-code: 13ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/recuperar 200 in 40ms (next.js: 5ms, proxy.ts: 3ms, application-code: 31ms)
+ GET /es/recuperar?error=false&message=Si+el+correo+est%C3%A1+registrado%2C+recibir%C3%A1s+un+enlace+de+recuperaci%C3%B3n+pronto.+Revisa+tu+bandeja+de+spam. 200 in 34ms (next.js: 8ms, proxy.ts: 4ms, application-code: 22ms)
+ POST /es/recuperar 200 in 3.5s (next.js: 13ms, proxy.ts: 5ms, application-code: 3.4s)
+  └─ ƒ resetPassword({}) in 3397ms src/app/[locale]/recuperar/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/login 200 in 32ms (next.js: 11ms, proxy.ts: 4ms, application-code: 16ms)
+ GET /es/login 200 in 14ms (next.js: 3ms, proxy.ts: 1.1ms, application-code: 10ms)
+ GET /es/admin 200 in 813ms (next.js: 10ms, proxy.ts: 146ms, application-code: 657ms)
+ POST /es/login 200 in 1639ms (next.js: 11ms, proxy.ts: 5ms, application-code: 1622ms)
+  └─ ƒ login({}) in 796ms src/app/[locale]/login/actions.ts
+ GET /es/admin 200 in 209ms (next.js: 3ms, proxy.ts: 182ms, application-code: 25ms)
+ GET /es/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 307 in 143ms (proxy.ts: 135ms)
+ GET /es/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 776ms (next.js: 8ms, proxy.ts: 141ms, application-code: 627ms)
+ GET /es/admin/event/2f714871-c1d6-4fec-a057-a546b58faedd 200 in 337ms (next.js: 6ms, proxy.ts: 150ms, application-code: 181ms)
+ POST /auth/signout 307 in 151ms (next.js: 4ms, application-code: 148ms)
+ POST /es 200 in 220ms (next.js: 9ms, proxy.ts: 5ms, application-code: 207ms)
+ GET /es/login 200 in 20ms (next.js: 5ms, proxy.ts: 3ms, application-code: 12ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/recuperar 200 in 49ms (next.js: 7ms, proxy.ts: 4ms, application-code: 37ms)
+ GET /es/recuperar?error=false&message=Si+el+correo+est%C3%A1+registrado%2C+recibir%C3%A1s+un+enlace+de+recuperaci%C3%B3n+pronto.+Revisa+tu+bandeja+de+spam. 200 in 32ms (next.js: 7ms, proxy.ts: 5ms, application-code: 21ms)
+ POST /es/recuperar 200 in 2.5s (next.js: 8ms, proxy.ts: 9ms, application-code: 2.5s)
+  └─ ƒ resetPassword({}) in 2477ms src/app/[locale]/recuperar/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/recuperar?error=false&message=Si+el+correo+est%C3%A1+registrado%2C+recibir%C3%A1s+un+enlace+de+recuperaci%C3%B3n+pronto.+Revisa+tu+bandeja+de+spam. 200 in 35ms (next.js: 7ms, proxy.ts: 5ms, application-code: 23ms)
+ POST /es/recuperar?error=false&message=Si%20el%20correo%20est%C3%A1%20registrado%2C%20recibir%C3%A1s%20un%20enlace%20de%20recuperaci%C3%B3n%20pronto.%20Revisa%20tu%20bandeja%20de%20spam. 200 in 3.3s (next.js: 9ms, proxy.ts: 5ms, application-code: 3.2s)
+  └─ ƒ resetPassword({}) in 3200ms src/app/[locale]/recuperar/actions.ts
+ GET /auth/callback?code=3712eee7-bdf3-4357-9a94-fde35cd3d011&next=%2Factualizar-password 307 in 371ms (next.js: 163ms, application-code: 207ms)
+ GET /es/actualizar-password 200 in 363ms (next.js: 14ms, proxy.ts: 180ms, application-code: 169ms)
+ GET /es/actualizar-password?error=false&message=%C2%A1Contrase%C3%B1a+actualizada+con+%C3%A9xito%21 200 in 399ms (next.js: 8ms, proxy.ts: 134ms, application-code: 257ms)
+ POST /es/actualizar-password 200 in 994ms (next.js: 8ms, proxy.ts: 239ms, application-code: 748ms)
+  └─ ƒ updatePassword({}) in 340ms src/app/[locale]/actualizar-password/actions.ts
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/login 307 in 163ms (proxy.ts: 155ms)
+ GET /es/login 200 in 163ms (next.js: 8ms, proxy.ts: 137ms, application-code: 18ms)
+ GET /es/login?error=true&message=Credenciales+incorrectas 200 in 366ms (next.js: 9ms, proxy.ts: 135ms, application-code: 222ms)
+ POST /es/login 200 in 852ms (next.js: 9ms, proxy.ts: 206ms, application-code: 637ms)
+  └─ ƒ login({}) in 263ms src/app/[locale]/login/actions.ts
+ GET /es/admin 200 in 845ms (next.js: 10ms, proxy.ts: 144ms, application-code: 691ms)
+ POST /es/login?error=true&message=Credenciales%20incorrectas 200 in 1881ms (next.js: 15ms, proxy.ts: 142ms, application-code: 1724ms)
+  └─ ƒ login({}) in 867ms src/app/[locale]/login/actions.ts
+ GET /es/perfil 200 in 518ms (next.js: 10ms, proxy.ts: 155ms, application-code: 353ms)
+ GET /es/admin 307 in 233ms (proxy.ts: 226ms)
+ GET /es/admin 307 in 154ms (proxy.ts: 145ms)
+ GET /es/admin 200 in 824ms (next.js: 7ms, proxy.ts: 154ms, application-code: 662ms)
+ GET /es/admin 200 in 771ms (next.js: 1.7ms, proxy.ts: 138ms, application-code: 631ms)
+ POST /auth/signout 307 in 218ms (next.js: 4ms, application-code: 214ms)
+ POST /es 200 in 216ms (next.js: 9ms, proxy.ts: 4ms, application-code: 204ms)
+ GET /es/login 200 in 31ms (next.js: 8ms, proxy.ts: 4ms, application-code: 19ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /es/admin 200 in 768ms (next.js: 8ms, proxy.ts: 139ms, application-code: 621ms)
+ POST /es/login 200 in 1333ms (next.js: 7ms, proxy.ts: 5ms, application-code: 1321ms)
+  └─ ƒ login({}) in 540ms src/app/[locale]/login/actions.ts
+ GET /es/perfil 200 in 503ms (next.js: 9ms, proxy.ts: 141ms, application-code: 353ms)
+ GET /es/admin 307 in 158ms (proxy.ts: 152ms)
+ GET /es/admin 307 in 222ms (proxy.ts: 210ms)
+ GET /es/admin 200 in 909ms (next.js: 14ms, proxy.ts: 208ms, application-code: 687ms)
+ GET /es/admin 200 in 807ms (next.js: 1.7ms, proxy.ts: 136ms, application-code: 670ms)
+ GET /es/admin/eventos 307 in 146ms (proxy.ts: 135ms)
+ GET /es/admin/eventos 200 in 756ms (next.js: 10ms, proxy.ts: 138ms, application-code: 608ms)
+ POST /es/admin/eventos 200 in 1310ms (next.js: 8ms, proxy.ts: 295ms, application-code: 1007ms)
+  └─ ƒ <inline action>({}) in 495ms src/app/[locale]/admin/eventos/page.tsx
+ POST /es/admin/eventos 200 in 1302ms (next.js: 7ms, proxy.ts: 247ms, application-code: 1048ms)
+  └─ ƒ <inline action>({}) in 507ms src/app/[locale]/admin/eventos/page.tsx

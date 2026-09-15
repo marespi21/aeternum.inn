@@ -20,9 +20,11 @@ export default async function PerfilPage() {
     .eq('id', user.id)
     .single()
     
-  const isAdmin = profile?.role === 'ADMIN'
+  const userRole = profile?.role?.trim().toUpperCase()
+  const isAdmin = userRole === 'ADMIN'
+  const isStaff = userRole === 'STAFF'
   
-  if (isAdmin) {
+  if (isAdmin || isStaff) {
     redirect('/admin')
   }
 
@@ -47,18 +49,20 @@ export default async function PerfilPage() {
             <div>
               <div className="flex items-center gap-3">
                 <h1 className="text-3xl font-bold font-mono tracking-tighter text-white uppercase">Tu Perfil</h1>
-                {isAdmin && (
-                  <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-1 rounded-md font-mono font-bold uppercase border border-emerald-500/20">ADMIN</span>
+                {(isAdmin || isStaff) && (
+                  <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-1 rounded-md font-mono font-bold uppercase border border-emerald-500/20">
+                    {userRole}
+                  </span>
                 )}
               </div>
               <p className="text-zinc-400 font-mono text-sm mt-1">{user.email}</p>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-            {isAdmin && (
+            {(isAdmin || isStaff) && (
               <a href="/admin" className="w-full sm:w-auto flex justify-center items-center gap-2 px-4 py-2 bg-white hover:bg-zinc-200 text-black rounded-xl transition-colors font-mono font-bold text-sm uppercase">
                 <ShieldAlert className="w-4 h-4" />
-                Ir a Panel Admin
+                Ir a Panel {userRole}
               </a>
             )}
             <form action="/auth/signout" method="post" className="w-full sm:w-auto">

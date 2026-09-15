@@ -7,11 +7,13 @@ import { Video, MonitorPlay, Trash2, Edit2, X, Loader2, Save } from 'lucide-reac
 export function VideoCard({ 
   video, 
   deleteVideoAction, 
-  updateVideoAction 
+  updateVideoAction,
+  isAdmin = false
 }: { 
   video: any, 
   deleteVideoAction: (formData: FormData) => Promise<void>,
-  updateVideoAction: (formData: FormData) => Promise<void>
+  updateVideoAction: (formData: FormData) => Promise<void>,
+  isAdmin?: boolean
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -139,20 +141,23 @@ export function VideoCard({
           <a href={video.youtube_url} target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white flex items-center gap-1 text-xs font-mono transition-colors">
             <MonitorPlay className="w-3 h-3" /> Ver
           </a>
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={() => setIsEditing(true)} 
-              className="text-zinc-400 hover:text-white transition-colors p-2 bg-white/5 hover:bg-white/10 rounded-lg"
-            >
-              <Edit2 className="w-4 h-4" />
-            </button>
-            <form action={deleteVideoAction}>
-              <input type="hidden" name="id" value={video.id} />
-              <button type="submit" className="text-red-600 hover:text-red-500 transition-colors p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg">
-                <Trash2 className="w-4 h-4" />
+          
+          {isAdmin && (
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => setIsEditing(true)} 
+                className="text-zinc-400 hover:text-white transition-colors p-2 bg-white/5 hover:bg-white/10 rounded-lg"
+              >
+                <Edit2 className="w-4 h-4" />
               </button>
-            </form>
-          </div>
+              <form action={deleteVideoAction}>
+                <input type="hidden" name="id" value={video.id} />
+                <button type="submit" className="text-red-600 hover:text-red-500 transition-colors p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg">
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </div>

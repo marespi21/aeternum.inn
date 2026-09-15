@@ -24,17 +24,19 @@ export async function login(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser();
   let nextUrl = formData.get('nextUrl') as string || '/perfil';
 
-  if (user) {
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single();
+    if (user) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
+        
+      const userRole = profile?.role?.trim().toUpperCase();
 
-    if (profile?.role === 'ADMIN' && !nextUrl.startsWith('/admin') && !nextUrl.startsWith(`/${locale}/admin`)) {
-      nextUrl = `/${locale}/admin`;
+      if ((userRole === 'ADMIN' || userRole === 'STAFF') && !nextUrl.startsWith('/admin') && !nextUrl.startsWith(`/${locale}/admin`)) {
+        nextUrl = `/${locale}/admin`;
+      }
     }
-  }
 
   // Ensure nextUrl has locale
   if (!nextUrl.startsWith(`/${locale}`)) {

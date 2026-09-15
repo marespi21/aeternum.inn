@@ -10,7 +10,7 @@ export default async function AdminRadioPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
   const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
-  if (profile?.role !== 'ADMIN') redirect('/perfil')
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') redirect('/perfil')
 
   const { data: tracks } = await supabase
     .from('audio_tracks')
@@ -22,6 +22,11 @@ export default async function AdminRadioPage() {
     const id = formData.get('id') as string
     
     const supabase = await createClient()
+
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('No autorizado')
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    if (profile?.role !== 'ADMIN') throw new Error('Solo los administradores pueden borrar tracks')
 
     await supabase.from('audio_tracks').delete().eq('id', id)
     revalidatePath('/admin/radio')
@@ -43,7 +48,7 @@ export default async function AdminRadioPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           
           <div className="lg:col-span-1">
-            <RadioUploadForm />
+            {profile?.role === 'ADMIN' && <RadioUploadForm />}
           </div>
 
           <div className="lg:col-span-2 space-y-4">
@@ -63,12 +68,14 @@ export default async function AdminRadioPage() {
                   <div className="text-xs text-zinc-500 font-mono max-w-[150px] truncate hidden md:block">
                     {track.audio_url}
                   </div>
-                  <form action={deleteTrack}>
-                    <input type="hidden" name="id" value={track.id} />
-                    <button type="submit" className="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors border border-red-500/20" title="Eliminar">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </form>
+                  {profile?.role === 'ADMIN' && (
+                    <form action={deleteTrack}>
+                      <input type="hidden" name="id" value={track.id} />
+                      <button type="submit" className="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors border border-red-500/20" title="Eliminar">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </form>
+                  )}
                 </div>
               </div>
             ))}

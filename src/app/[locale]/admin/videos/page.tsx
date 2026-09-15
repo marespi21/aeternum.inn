@@ -12,7 +12,7 @@ export default async function AdminVideosPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
   const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
-  if (profile?.role !== 'ADMIN') redirect('/perfil')
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') redirect('/perfil')
 
   const { data: videos } = await supabase
     .from('videos')
@@ -22,6 +22,11 @@ export default async function AdminVideosPage() {
   async function createVideo(formData: FormData) {
     'use server'
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('No autorizado')
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') throw new Error('No autorizado para crear videos')
+
     const youtube_url = formData.get('youtube_url') as string
     
     // Robust YouTube ID extraction
@@ -55,6 +60,12 @@ export default async function AdminVideosPage() {
     'use server'
     const id = formData.get('id') as string
     const supabase = await createClient()
+    
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('No autorizado')
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    if (profile?.role !== 'ADMIN') throw new Error('Solo los administradores pueden borrar videos')
+
     await supabase.from('videos').delete().eq('id', id)
     revalidatePath('/admin/videos')
     revalidatePath('/')
@@ -65,6 +76,11 @@ export default async function AdminVideosPage() {
     const id = formData.get('id') as string
     const youtube_url = formData.get('youtube_url') as string
     const supabase = await createClient()
+    
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('No autorizado')
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') throw new Error('No autorizado para editar videos')
     
     // Robust YouTube ID extraction (same as create)
     const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -106,7 +122,7 @@ export default async function AdminVideosPage() {
         </div>
 
         <div className="space-y-12">
-          
+          {/* Formulario */}
           <VideoForm createVideoAction={createVideo} />
 
           <div>
@@ -119,7 +135,8 @@ export default async function AdminVideosPage() {
                   key={video.id} 
                   video={video} 
                   deleteVideoAction={deleteVideo} 
-                  updateVideoAction={updateVideo} 
+                  updateVideoAction={updateVideo}
+                  isAdmin={profile?.role === 'ADMIN'}
                 />
               ))}
               

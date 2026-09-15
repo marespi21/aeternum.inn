@@ -13,6 +13,11 @@ export async function addArtist(formData: FormData) {
   const soundcloud_url = formData.get("soundcloud_url") as string;
   const instagram_url = formData.get("instagram_url") as string;
 
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') throw new Error('No autorizado para crear artistas')
+
   if (!name || !image_url) {
     throw new Error("Nombre e imagen son requeridos");
   }
@@ -44,6 +49,11 @@ export async function updateArtist(id: string, formData: FormData) {
   const soundcloud_url = formData.get("soundcloud_url") as string;
   const instagram_url = formData.get("instagram_url") as string;
 
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') throw new Error('No autorizado para editar artistas')
+
   if (!name || !image_url) {
     throw new Error("Nombre e imagen son requeridos");
   }
@@ -68,6 +78,11 @@ export async function updateArtist(id: string, formData: FormData) {
 
 export async function deleteArtist(id: string) {
   const supabase = await createClient();
+  
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN') throw new Error('Solo ADMIN puede borrar artistas')
 
   // artist_gallery will cascade delete automatically due to ON DELETE CASCADE
   const { error } = await supabase.from("artists").delete().eq("id", id);
@@ -82,6 +97,11 @@ export async function deleteArtist(id: string) {
 
 export async function addArtistGalleryImage(artistId: string, url: string, type: 'image' | 'video' = 'image') {
   const supabase = await createClient();
+  
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') throw new Error('No autorizado para modificar artistas')
 
   const { error } = await supabase.from("artist_gallery").insert({
     artist_id: artistId,
@@ -99,6 +119,11 @@ export async function addArtistGalleryImage(artistId: string, url: string, type:
 
 export async function deleteArtistGalleryImage(imageId: string, artistId: string) {
   const supabase = await createClient();
+  
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN') throw new Error('Solo ADMIN puede modificar artistas')
 
   const { error } = await supabase.from("artist_gallery").delete().eq("id", imageId);
 

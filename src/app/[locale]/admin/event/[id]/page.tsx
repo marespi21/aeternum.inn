@@ -23,7 +23,9 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
     .eq('id', user.id)
     .single()
 
-  if (profile?.role !== 'ADMIN') {
+  const isAdmin = profile?.role === 'ADMIN'
+
+  if (!isAdmin && profile?.role !== 'STAFF') {
     redirect('/perfil')
   }
 
@@ -299,7 +301,7 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                               {ticket.status}
                             </span>
                             <MarkUsedButton ticketId={ticket.id} eventId={id} markAction={markTicketAsUsed} status={ticket.status} />
-                            <DeleteTicketButton ticketId={ticket.id} eventId={id} deleteAction={deleteTicket} />
+                            {isAdmin && <DeleteTicketButton ticketId={ticket.id} eventId={id} deleteAction={deleteTicket} />}
                           </div>
                         </td>
                       </tr>

@@ -4,14 +4,16 @@ import { useState } from 'react'
 import { Trash2, Edit2, X, Loader2 } from 'lucide-react'
 import { CloudinaryUpload } from '@/components/ui/CloudinaryUpload'
 
-export function EventCard({
-  event,
-  deleteEventAction,
-  updateEventAction
-}: {
-  event: any,
+export function EventCard({ 
+  event, 
+  deleteEventAction, 
+  updateEventAction,
+  isAdmin = false
+}: { 
+  event: any, 
   deleteEventAction: (formData: FormData) => Promise<void>,
-  updateEventAction: (formData: FormData) => Promise<void>
+  updateEventAction: (formData: FormData) => Promise<void>,
+  isAdmin?: boolean
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -179,17 +181,28 @@ export function EventCard({
         )}
       </div>
       
-      <div className="flex flex-col gap-2 shrink-0">
-        <button onClick={() => setIsEditing(true)} className="p-2.5 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 text-blue-500 rounded-lg transition-colors" title="Editar Evento">
-          <Edit2 className="w-4 h-4" />
-        </button>
-        <form action={deleteEventAction}>
-          <input type="hidden" name="id" value={event.id} />
-          <button type="submit" className="p-2.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-500 rounded-lg transition-colors" title="Eliminar Evento">
-            <Trash2 className="w-4 h-4" />
+      {isAdmin && (
+        <div className="flex gap-2">
+          <button 
+            onClick={() => setIsEditing(true)} 
+            className="text-zinc-400 hover:text-white p-2 hover:bg-white/10 rounded-lg transition-colors border border-transparent hover:border-white/10"
+            title="Editar Evento"
+          >
+            <Edit2 className="w-4 h-4" />
           </button>
-        </form>
-      </div>
+          
+          <form action={deleteEventAction}>
+            <input type="hidden" name="id" value={event.id} />
+            <button 
+              type="submit" 
+              className="text-red-500 hover:text-red-400 p-2 hover:bg-red-500/10 rounded-lg transition-colors border border-transparent hover:border-red-500/20"
+              title="Eliminar Evento"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   )
 }

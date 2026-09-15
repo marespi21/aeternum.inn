@@ -9,6 +9,11 @@ export async function approveTicketGroup(formData: FormData) {
   const eventId = formData.get('eventId') as string
   const supabase = await createClient()
   
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') throw new Error('No autorizado')
+  
   if (!ticketIdsStr) return;
   const ticketIds = ticketIdsStr.split(',')
   
@@ -43,6 +48,11 @@ export async function rejectTicketGroup(formData: FormData) {
   const eventId = formData.get('eventId') as string
   const supabase = await createClient()
   
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') throw new Error('No autorizado')
+  
   if (!ticketIdsStr) return;
   const ticketIds = ticketIdsStr.split(',')
   
@@ -66,6 +76,8 @@ export async function createManualTicket(formData: FormData) {
   // Verify auth
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') throw new Error('No autorizado')
 
   // Fetch event details for email
   const { data: event } = await supabase.from('events').select('title, date').eq('id', eventId).single()
@@ -124,6 +136,11 @@ export async function markTicketAsUsed(formData: FormData) {
   const ticketId = formData.get('ticketId') as string
   const eventId = formData.get('eventId') as string
   const supabase = await createClient()
+  
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autorizado')
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'STAFF') throw new Error('No autorizado')
 
   if (!ticketId) return;
 

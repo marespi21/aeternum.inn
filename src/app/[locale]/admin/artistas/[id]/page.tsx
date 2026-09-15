@@ -10,10 +10,15 @@ export default async function EditArtistPage({ params }: { params: Promise<{ id:
   const supabase = await createClient();
   const { id } = await params;
 
-  const [{ data: artist }, { data: gallery }] = await Promise.all([
+  const [{ data: artist }, { data: gallery }, { data: profile }] = await Promise.all([
     supabase.from("artists").select("*").eq("id", id).single(),
     supabase.from("artist_gallery").select("*").eq("artist_id", id).order("created_at", { ascending: false }),
+    supabase.auth.getUser().then(({ data: { user } }) => 
+      user ? supabase.from("profiles").select("role").eq("id", user.id).single() : { data: null }
+    ).then(res => res.data)
   ]);
+  
+  const isAdmin = profile?.role === 'ADMIN';
 
   if (!artist) {
     notFound();
@@ -63,20 +68,22 @@ export default async function EditArtistPage({ params }: { params: Promise<{ id:
                   <img src={item.url} alt="Gallery item" className="w-full h-full object-cover" />
                 )}
                 
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-                  <form action={async () => {
-                    "use server";
-                    await deleteArtistGalleryImage(item.id, artist.id);
-                  }}>
-                    <button
-                      type="submit"
-                      className="p-3 bg-red-500 text-white rounded-full hover:scale-110 transition-transform shadow-xl"
-                      title="Eliminar archivo"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </form>
-                </div>
+                {isAdmin && (
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                    <form action={async () => {
+                      "use server";
+                      await deleteArtistGalleryImage(item.id, artist.id);
+                    }}>
+                      <button
+                        type="submit"
+                        className="p-3 bg-red-500 text-white rounded-full hover:scale-110 transition-transform shadow-xl"
+                        title="Eliminar archivo"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
+                    </form>
+                  </div>
+                )}
               </div>
             ))
           )}

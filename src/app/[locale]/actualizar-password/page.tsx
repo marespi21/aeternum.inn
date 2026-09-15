@@ -7,10 +7,13 @@ import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import Link from 'next/link'
 
+import { useLocale } from 'next-intl'
+
 function ActualizarPasswordContent() {
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
   const message = searchParams.get('message')
+  const locale = useLocale()
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col justify-center items-center p-4 relative overflow-hidden">
@@ -52,6 +55,7 @@ function ActualizarPasswordContent() {
 
           {error !== 'false' && (
             <form action={updatePassword} className="space-y-6">
+              <input type="hidden" name="locale" value={locale} />
               <div className="space-y-2">
                 <label className="text-sm font-medium text-zinc-300">Nueva Contraseña</label>
                 <div className="relative">
