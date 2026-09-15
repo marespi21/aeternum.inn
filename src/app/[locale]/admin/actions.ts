@@ -63,7 +63,11 @@ export async function rejectTicketGroup(formData: FormData) {
     .in('id', ticketIds)
 
   // 2. Update to REJECTED
-  await supabase.from('tickets').update({ status: 'REJECTED' }).in('id', ticketIds)
+  const { error } = await supabase.from('tickets').update({ status: 'REJECTED' }).in('id', ticketIds)
+  if (error) {
+    console.error('Error rejecting tickets:', error)
+    throw new Error('Error al rechazar boletas. Verifica permisos en Supabase.')
+  }
   
   // 3. Send rejection email
   if (ticketsData && ticketsData.length > 0 && (ticketsData[0].profiles as any)?.email) {
@@ -161,7 +165,11 @@ export async function markTicketAsUsed(formData: FormData) {
 
   if (!ticketId) return;
 
-  await supabase.from('tickets').update({ status: 'USED' }).eq('id', ticketId)
+  const { error } = await supabase.from('tickets').update({ status: 'USED' }).eq('id', ticketId)
+  if (error) {
+    console.error('Error marking ticket as used:', error)
+    throw new Error('Error al actualizar la boleta. Verifica permisos en Supabase.')
+  }
 
   revalidatePath('/admin')
   if (eventId) {
