@@ -34,10 +34,10 @@ export function ExportExcelButton({ tickets, eventTitle, earlyPrice, anytimePric
 
       return {
         'Código Corto': `#${ticket.id.slice(0, 8).toUpperCase()}`,
+        'Cédula': cedulaStr,
         'Nombre': name || 'Sin nombre',
         'Correo': email || 'Sin correo',
         'Teléfono': phone || 'Sin teléfono',
-        'Cédula': cedulaStr,
         'Tipo de Boleta': ticket.ticket_type || 'ANYTIME',
         'Precio Pagado': pricePaid,
         'Estado': ticket.status,
@@ -55,9 +55,9 @@ export function ExportExcelButton({ tickets, eventTitle, earlyPrice, anytimePric
       const email = row['Correo']
       if (!summaryMap.has(email)) {
         summaryMap.set(email, {
+          'Cédula': row['Cédula'],
           'Nombre': row['Nombre'],
           'Correo': email,
-          'Cédula': row['Cédula'],
           'Teléfono': row['Teléfono'],
           'Cantidad de Boletas': 0,
           'Total Pagado': 0,

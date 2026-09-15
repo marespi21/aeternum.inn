@@ -274,19 +274,21 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                           </span>
                         </td>
                         <td className="p-4">
-                          <div className="font-medium text-white flex flex-col">
-                            <span>{name ? `${name} (${email})` : email}</span>
-                            {!isManual && (ticket.profiles?.document_number || ticket.profiles?.document_type) && (
-                              <span className="text-xs text-zinc-300 mt-1 font-mono">
-                                {ticket.profiles?.document_type || 'CC'}: {ticket.profiles?.document_number}
-                              </span>
+                          <div className="font-medium text-white flex flex-col gap-1">
+                            {!isManual && (
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs bg-zinc-800 text-zinc-300 px-2 py-0.5 rounded font-mono border border-zinc-700">
+                                  {ticket.profiles?.document_type || 'CC'}: {ticket.profiles?.document_number || 'Sin cédula'}
+                                </span>
+                              </div>
                             )}
+                            <span className="text-sm">{name ? `${name} (${email})` : email}</span>
                             {isManual ? (
-                              <span className="text-xs text-emerald-500 mt-1 capitalize">
+                              <span className="text-xs text-emerald-500 capitalize">
                                 {paymentMethod} {phone ? `· ${phone}` : ''}
                               </span>
                             ) : (
-                              <span className="text-xs text-zinc-500 mt-1">
+                              <span className="text-xs text-zinc-500">
                                 {phone || 'Sin teléfono'}
                               </span>
                             )}
