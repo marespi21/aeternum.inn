@@ -292,7 +292,7 @@ export function CheckoutForm({ eventId, eventTitle, earlyPrice, earlyTime, anyti
 
           <button
             type="submit"
-            disabled={loading || !receiptUrl}
+            disabled={loading}
             className="w-full bg-white text-black font-semibold rounded-xl py-4 flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : null}

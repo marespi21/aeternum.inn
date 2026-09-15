@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { TicketApprovalEmail } from '@/emails/TicketApprovalEmail';
+import { TicketRejectionEmail } from '@/emails/TicketRejectionEmail';
 
 const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key');
 
@@ -41,6 +42,40 @@ export async function sendTicketApprovalEmail({
     return { success: true, data };
   } catch (error) {
     console.error('Error sending email via Resend:', error);
+    return { success: false, error };
+  }
+}
+
+export async function sendTicketRejectionEmail({ 
+  to, 
+  eventTitle, 
+  eventDate,
+  guestName
+}: { 
+  to: string, 
+  eventTitle: string, 
+  eventDate: string,
+  guestName?: string 
+}) {
+  const formattedDate = new Date(eventDate).toLocaleDateString('es-CO', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  try {
+    const data = await resend.emails.send({
+      from: 'AETERNUM INN <tickets@aeternum-inn.com>',
+      to: [to],
+      subject: `Actualización sobre tu compra - Aeternum Inn ❌`,
+      react: TicketRejectionEmail({
+        eventTitle,
+        eventDate: formattedDate,
+        guestName,
+      }),
+    });
+    
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error sending rejection email via Resend:', error);
     return { success: false, error };
   }
 }

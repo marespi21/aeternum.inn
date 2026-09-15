@@ -2,7 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
-import { sendTicketApprovalEmail } from '@/utils/email'
+import { sendTicketApprovalEmail, sendTicketRejectionEmail } from '@/utils/email'
 
 export async function approveTicketGroup(formData: FormData) {
   const ticketIdsStr = formData.get('ticketIds') as string
@@ -56,7 +56,24 @@ export async function rejectTicketGroup(formData: FormData) {
   if (!ticketIdsStr) return;
   const ticketIds = ticketIdsStr.split(',')
   
+  // 1. Fetch info necessary for email before updating
+  const { data: ticketsData } = await supabase
+    .from('tickets')
+    .select('id, ticket_type, profiles(email, full_name), events(title, date)')
+    .in('id', ticketIds)
+
+  // 2. Update to REJECTED
   await supabase.from('tickets').update({ status: 'REJECTED' }).in('id', ticketIds)
+  
+  // 3. Send rejection email
+  if (ticketsData && ticketsData.length > 0 && (ticketsData[0].profiles as any)?.email) {
+    await sendTicketRejectionEmail({
+      to: (ticketsData[0].profiles as any).email,
+      eventTitle: (ticketsData[0].events as any).title,
+      eventDate: (ticketsData[0].events as any).date,
+      guestName: (ticketsData[0].profiles as any).full_name
+    })
+  }
   
   revalidatePath('/admin')
   if (eventId) {
