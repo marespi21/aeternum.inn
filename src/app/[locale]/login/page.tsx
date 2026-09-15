@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Mail, Lock, AlertCircle, Check, X, Eye, EyeOff } from 'lucide-react'
 import { login, signup } from './actions'
 import { useSearchParams } from 'next/navigation'
+import { useLocale } from 'next-intl'
 
 function LoginContent() {
   const searchParams = useSearchParams()
@@ -13,6 +14,7 @@ function LoginContent() {
   const [showPassword, setShowPassword] = useState(false)
   const error = searchParams.get('error')
   const message = searchParams.get('message')
+  const locale = useLocale()
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -154,7 +156,7 @@ function LoginContent() {
               <div className="flex justify-between items-center">
                 <label className="text-sm font-medium text-zinc-300">Contraseña</label>
                 {isLogin && (
-                  <a href="/recuperar" className="text-xs text-zinc-400 hover:text-emerald-400 transition-colors">
+                  <a href={`/${locale}/recuperar`} className="text-xs text-zinc-400 hover:text-emerald-400 transition-colors">
                     ¿Olvidaste tu contraseña?
                   </a>
                 )}
