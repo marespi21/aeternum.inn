@@ -24,7 +24,13 @@ export async function resetPassword(formData: FormData) {
   const locale = await getLocale()
 
   if (error) {
-    redirect(`/${locale}/recuperar?error=true&message=` + encodeURIComponent('No pudimos enviar el correo de recuperación. Verifica que esté bien escrito.'))
+    let msg = 'No pudimos enviar el correo. '
+    if (error.message.includes('rate limit') || error.message.includes('Too many requests')) {
+      msg = 'Has intentado demasiadas veces. Por favor espera unos minutos antes de volver a intentarlo.'
+    } else {
+      msg += error.message
+    }
+    redirect(`/${locale}/recuperar?error=true&message=` + encodeURIComponent(msg))
   }
 
   // Always show success message to prevent email enumeration attacks
