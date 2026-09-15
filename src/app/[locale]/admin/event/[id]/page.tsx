@@ -244,6 +244,7 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                 <thead className="bg-white/5 border-b border-white/10 text-xs uppercase font-mono tracking-widest text-zinc-400">
                   <tr>
                     <th className="p-4 font-medium">Código</th>
+                    <th className="p-4 font-medium">Cédula</th>
                     <th className="p-4 font-medium">Usuario / Cliente</th>
                     <th className="p-4 font-medium">Tipo / Valor</th>
                     <th className="p-4 font-medium">Fecha</th>
@@ -274,14 +275,18 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                           </span>
                         </td>
                         <td className="p-4">
-                          <div className="font-medium text-white flex flex-col gap-1">
-                            {!isManual && (
-                              <div className="flex items-center gap-2">
-                                <span className="text-xs bg-zinc-800 text-zinc-300 px-2 py-0.5 rounded font-mono border border-zinc-700">
-                                  {ticket.profiles?.document_type || 'CC'}: {ticket.profiles?.document_number || 'Sin cédula'}
-                                </span>
-                              </div>
+                          <div className="font-mono text-sm text-zinc-300">
+                            {isManual ? (
+                              <span className="text-zinc-600 italic">N/A</span>
+                            ) : (
+                              <span className="bg-zinc-800 px-2 py-1 rounded border border-zinc-700">
+                                {ticket.profiles?.document_type || 'CC'}: {ticket.profiles?.document_number || 'Sin cédula'}
+                              </span>
                             )}
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <div className="font-medium text-white flex flex-col gap-1">
                             <span className="text-sm">{name ? `${name} (${email})` : email}</span>
                             {isManual ? (
                               <span className="text-xs text-emerald-500 capitalize">
