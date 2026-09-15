@@ -187,10 +187,15 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                           ? firstTicket.receipt_url.split(':')[1] 
                           : firstTicket.profiles?.full_name || firstTicket.profiles?.email}
                       </p>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 flex-wrap">
                         <span className="px-2 py-1 bg-white/10 rounded text-xs font-mono font-bold text-white">
                           {firstTicket.ticket_type || 'ANYTIME'}
                         </span>
+                        {group.map((t) => (
+                          <span key={t.id} className="px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded text-xs font-mono font-bold">
+                            #{t.id.slice(0, 8).toUpperCase()}
+                          </span>
+                        ))}
                       </div>
                     </div>
 
@@ -238,6 +243,7 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
               <table className="w-full text-left">
                 <thead className="bg-white/5 border-b border-white/10 text-xs uppercase font-mono tracking-widest text-zinc-400">
                   <tr>
+                    <th className="p-4 font-medium">Código</th>
                     <th className="p-4 font-medium">Usuario / Cliente</th>
                     <th className="p-4 font-medium">Tipo / Valor</th>
                     <th className="p-4 font-medium">Fecha</th>
@@ -263,6 +269,11 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                     return (
                       <tr key={ticket.id} className="hover:bg-white/[0.02] transition-colors">
                         <td className="p-4">
+                          <span className="font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20">
+                            #{ticket.id.slice(0, 8).toUpperCase()}
+                          </span>
+                        </td>
+                        <td className="p-4">
                           <div className="font-medium text-white flex flex-col">
                             <span>{name ? `${name} (${email})` : email}</span>
                             {isManual ? (
@@ -274,11 +285,6 @@ export default async function AdminEventDetailsPage({ params }: { params: Promis
                                 {phone || 'Sin teléfono'}
                               </span>
                             )}
-                            <div className="mt-1.5">
-                              <span className="text-[10px] font-mono px-2 py-0.5 rounded border bg-zinc-900 border-zinc-700 text-zinc-400">
-                                #{ticket.id.slice(0, 8).toUpperCase()}
-                              </span>
-                            </div>
                           </div>
                         </td>
                         <td className="p-4">
